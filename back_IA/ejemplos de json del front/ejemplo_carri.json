@@ -1,0 +1,33 @@
+{
+  "cells": [
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 150,
+        "y": 70
+      },
+      "size": {
+        "width": 663.111083984375,
+        "height": 545.111083984375
+      },
+      "angle": 0,
+      "id": "3a3d65d2-f951-4962-86b6-9f5253f738f8",
+      "isSwimlane": true,
+      "z": -1,
+      "attrs": {
+        "body": {
+          "stroke": "#cbd5e1",
+          "fill": "#f8fafc",
+          "strokeDasharray": "5,5"
+        },
+        "label": {
+          "textVerticalAnchor": "top",
+          "refY": 10,
+          "fill": "#64748b",
+          "text": "Carril",
+          "fontWeight": "bold"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "cells": [
+    {
+      "type": "uml.ForkJoinNode",
+      "position": {
+        "x": 287.1111145019531,
+        "y": 329.1111145019531
+      },
+      "size": {
+        "width": 8,
+        "height": 120
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "p1",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "10%"
+            }
+          },
+          {
+            "id": "p2",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "30%"
+            }
+          },
+          {
+            "id": "p3",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "p4",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "70%"
+            }
+          },
+          {
+            "id": "p5",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "90%"
+            }
+          }
+        ]
+      },
+      "id": "1acbd09f-b164-4fe0-aa49-aaa7df6147e2",
+      "z": 1,
+      "attrs": {}
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "cells": [
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 410,
+        "y": 160
+      },
+      "size": {
+        "width": 150,
+        "height": 60
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "f84ed995-8a0a-4763-8d74-d480cdfbb242",
+      "z": 1,
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "Actividad"
+        }
+      }
+    }
+  ]
+}

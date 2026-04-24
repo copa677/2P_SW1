@@ -1,0 +1,151 @@
+.toolbar-container {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.header p {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+}
+
+.groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.group-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.tool-item {
+  background: #f8fafc;
+  border: 2px solid transparent;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: grab;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tool-item:hover {
+  background: white;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.tool-item.full {
+  grid-column: span 2;
+}
+
+.tool-item span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.icon.lane-v {
+  width: 14px;
+  height: 30px;
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+}
+
+.icon.lane-h {
+  width: 30px;
+  height: 14px;
+  border: 2px dashed #cbd5e1;
+  background: #f8fafc;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #3b82f6;
+}
+
+.icon.rect {
+  border-radius: 4px;
+}
+
+.icon.rhomb {
+  transform: rotate(45deg) scale(0.7);
+  border-color: #f59e0b;
+}
+
+.icon.circle-fill {
+  border-radius: 50%;
+  background: #1e293b;
+  border-color: #1e293b;
+}
+
+.icon.circle-double {
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: double;
+  border-color: #1e293b;
+}
+
+.icon.lane {
+  width: 40px;
+  border-style: dashed;
+  height: 20px;
+  border-color: #94a3b8;
+}
+
+.icon.fork {
+  height: 8px;
+  background: #1e293b;
+  border: none;
+  margin-top: 10px;
+}
+
+.icon.join {
+  width: 8px;
+  background: #1e293b;
+  border: none;
+}
+
+.footer-tips {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f1f5f9;
+  border-radius: 0.75rem;
+}
+
+.footer-tips p {
+  font-size: 0.7rem;
+  color: #64748b;
+  margin: 0.5rem 0;
+}

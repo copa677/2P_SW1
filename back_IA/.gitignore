@@ -1,0 +1,26 @@
+# Entorno Virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Variables de Entorno (Credenciales)
+.env
+
+# Python (Cache y temporales)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.python-version
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Distribución / Logs
+dist/
+build/
+*.log

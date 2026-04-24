@@ -1,0 +1,199 @@
+{
+  "cells": [
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 40,
+        "y": 330
+      },
+      "size": {
+        "width": 150,
+        "height": 60
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "87192a14-45b5-4c61-ae4c-7812dc56e5b7",
+      "z": 1,
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "Actividad 1"
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 450,
+        "y": 330
+      },
+      "size": {
+        "width": 150,
+        "height": 60
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "10f622d4-f31e-41ec-b809-347f1a69b263",
+      "z": 2,
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "Actividad 2"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "87192a14-45b5-4c61-ae4c-7812dc56e5b7",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "target": {
+        "id": "10f622d4-f31e-41ec-b809-347f1a69b263",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "id": "aa825214-ea62-470d-aaa1-a1349dd2a784",
+      "z": 3,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  background-color: #f8fafc;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: hidden;
+  position: relative;
+}
+#paper-element {
+  cursor: crosshair;
+}
+.pan-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 41, 59, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    z-index: 1000;
+    animation: fadein 0.3s;
+}
+@keyframes fadein { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* SELECTORES PARA PUERTOS */
+::ng-deep [port-group="ports"] circle {
+    fill: #3b82f6;
+    stroke: white;
+    stroke-width: 2;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+::ng-deep .joint-paper.joint-is-connecting [port-group="ports"] circle {
+    fill-opacity: 1 !important;
+    stroke-opacity: 1 !important;
+    r: 7;
+}
+
+::ng-deep [port-group="ports"]:hover circle {
+    fill: #2563eb !important;
+    r: 9 !important;
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+}
+
+.panning {
+    cursor: grabbing !important;
+}

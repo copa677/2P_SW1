@@ -1,0 +1,89 @@
+{
+  "cells": [
+    {
+      "type": "standard.Polygon",
+      "position": {
+        "x": 208.11111450195312,
+        "y": 213.11109924316406
+      },
+      "size": {
+        "width": 60,
+        "height": 60
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "1a37296f-8958-48c5-9995-493da95b8eee",
+      "z": 1,
+      "attrs": {
+        "body": {
+          "refPoints": "0,10 10,0 20,10 10,20",
+          "stroke": "#f59e0b",
+          "fill": "#ffffff"
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "¿?"
+        }
+      }
+    }
+  ]
+}
