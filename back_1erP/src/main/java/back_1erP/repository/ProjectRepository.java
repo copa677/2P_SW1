@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProjectRepository extends MongoRepository<Project, String> {
     
     // Buscar todos los proyectos capitaneados o colaborados por un usuario específico
-    List<Project> findByOwnerIdOrCollaboratorIdsContaining(String ownerId, String userId);
+    List<Project> findByOwnerIdOrCollaboratorIdsContainingOrAssignedOfficialId(String ownerId, String userId, String assignedId);
 }

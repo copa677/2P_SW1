@@ -10,12 +10,31 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 @RestController
 @RequestMapping("/api/projects")
 @RequiredArgsConstructor
 public class ProjectController {
 
     private final ProjectService projectService;
+
+    // Obtener todos los proyectos del sistema (Solo Admin)
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Project>> listAllProjects() {
+        return ResponseEntity.ok(projectService.getAllProjects());
+    }
+
+    // Asignar un proyecto a un funcionario (Solo Admin)
+    @PatchMapping("/{id}/assign")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Project> assignProject(
+            @PathVariable String id,
+            @RequestParam String userId,
+            @RequestParam String username) {
+        return ResponseEntity.ok(projectService.assignToOfficial(id, userId, username));
+    }
 
     // Obtener todos los proyectos del usuario (dueño o colaborador)
     @GetMapping
@@ -25,8 +44,10 @@ public class ProjectController {
 
     // Crear un nuevo proyecto
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody Project request, @AuthenticationPrincipal User currentUser) {
-        return ResponseEntity.ok(projectService.createProject(request.getName(), request.getDescription(), currentUser.getId()));
+    public ResponseEntity<Project> createProject(@RequestBody Project request,
+            @AuthenticationPrincipal User currentUser) {
+        return ResponseEntity
+                .ok(projectService.createProject(request.getName(), request.getDescription(), currentUser.getId()));
     }
 
     // Unirse a un proyecto existente mediante su ID
@@ -38,11 +59,12 @@ public class ProjectController {
     // Obtener un proyecto específico (debe ser dueño o colaborador)
     @GetMapping("/{id}")
     public ResponseEntity<Project> getProjectById(
-            @PathVariable String id, 
+            @PathVariable String id,
             @AuthenticationPrincipal User currentUser) {
         return projectService.getProjectById(id)
-                .filter(p -> p.getOwnerId().equals(currentUser.getId()) || 
-                           (p.getCollaboratorIds() != null && p.getCollaboratorIds().contains(currentUser.getId())))
+                .filter(p -> p.getOwnerId().equals(currentUser.getId()) ||
+                        (p.getCollaboratorIds() != null && p.getCollaboratorIds().contains(currentUser.getId())) ||
+                        (p.getAssignedOfficialId() != null && p.getAssignedOfficialId().equals(currentUser.getId())))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(403).build());
     }
@@ -50,9 +72,9 @@ public class ProjectController {
     // Actualizar un proyecto
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(
-             @PathVariable String id,
-             @RequestBody Project updatedData,
-             @AuthenticationPrincipal User currentUser) {
+            @PathVariable String id,
+            @RequestBody Project updatedData,
+            @AuthenticationPrincipal User currentUser) {
         try {
             Project project = projectService.updateProject(id, updatedData, currentUser.getId());
             return ResponseEntity.ok(project);

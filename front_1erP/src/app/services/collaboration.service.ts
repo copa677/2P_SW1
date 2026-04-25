@@ -234,11 +234,17 @@ export class CollaborationService {
     this.activeLocks.set(new Map());
   }
 
-  disconnect() {
+  disconnect(projectId?: string) {
     if (this.stompClient) {
+      // Enviar mensaje de salida explícito antes de desconectar si estamos en un proyecto
+      if (projectId && this.stompClient.connected) {
+        this.sendPresence(projectId, 'USER_LEFT');
+      }
+      
       this.stompClient.deactivate();
       this.isConnected.set(false);
       this.clearState();
+      this.stompClient = null;
     }
   }
 }

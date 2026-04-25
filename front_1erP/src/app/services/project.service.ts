@@ -38,7 +38,7 @@ export class ProjectService {
   updateProject(id: string, project: Project): Observable<Project> {
     return this.http.put<Project>(`${this.API_URL}/${id}`, project).pipe(
       tap(updated => {
-        this.projects.update(current => 
+        this.projects.update(current =>
           current.map(p => p.id === id ? updated : p)
         );
       })

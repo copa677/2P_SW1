@@ -15,10 +15,10 @@
     </div>
 
     <div class="modal-body" *ngIf="diagramService.selectedCell() as cell">
-      <div class="form-group" *ngIf="!cell.isLink()">
+      <div class="form-group">
         <label>Etiqueta / Texto</label>
-        <input type="text" [ngModel]="cell.attr('label/text')" (ngModelChange)="onLabelChange($event)"
-          placeholder="Ingrese el nombre del paso...">
+        <input type="text" [ngModel]="getLabel()" (ngModelChange)="onLabelChange($event)"
+          placeholder="Ingrese el nombre o condición...">
       </div>
 
       <div class="form-group" *ngIf="!cell.isLink() && !cell.get('isSwimlane')">

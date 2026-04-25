@@ -68,7 +68,7 @@ export class DiagrammerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.collabService.disconnect();
+    this.collabService.disconnect(this.currentProject?.id);
     this.diagramService.currentProjectId = null;
     this.subscriptions.unsubscribe();
   }

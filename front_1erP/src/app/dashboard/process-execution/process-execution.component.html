@@ -1,0 +1,144 @@
+<div class="execution-container">
+  <!-- Sidebar de Procesos -->
+  <aside class="process-sidebar">
+    <div class="sidebar-header">
+      <h3>Mis Procesos</h3>
+      <p class="subtitle">Trámites asignados</p>
+    </div>
+
+    <div class="sidebar-section">
+      <h4 class="section-title">Nuevas Asignaciones</h4>
+      <div class="assigned-projects">
+        <div *ngFor="let ap of assignedProjects()" class="assigned-card">
+          <div class="ap-info">
+            <span class="ap-name">{{ ap.name }}</span>
+            <span class="ap-desc">{{ ap.description || 'Sin descripción' }}</span>
+          </div>
+          <button class="btn-start" (click)="startNewProcess(ap)" title="Iniciar Trámite">
+            ▶
+          </button>
+        </div>
+        <div *ngIf="assignedProjects().length === 0" class="empty-mini">
+          <small>No hay nuevas asignaciones.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h4 class="section-title">Trámites en Curso</h4>
+      <div class="process-list">
+      <div *ngFor="let p of myProcesses()" 
+           class="process-item" 
+           [class.active]="selectedInstance()?.id === p.id"
+           (click)="selectInstance(p)">
+        <div class="process-info">
+          <span class="tracking-code">#{{ p.trackingCode }}</span>
+          <span class="project-name">{{ p.projectName }}</span>
+        </div>
+        <span class="status-badge" [ngClass]="getStatusBadgeClass(p.status)">
+          {{ p.status === 'IN_PROGRESS' ? 'En Curso' : 'Finalizado' }}
+        </span>
+      </div>
+
+      <div *ngIf="myProcesses().length === 0" class="empty-list">
+        <p>No tienes procesos activos.</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+  <!-- Panel de Detalle y Ejecución -->
+  <main class="execution-content" *ngIf="selectedInstance() as instance">
+    <div class="content-header">
+      <div class="header-main">
+        <h2>{{ instance.projectName }}</h2>
+        <div class="tracking-info">
+          Código de Seguimiento: <strong>{{ instance.trackingCode }}</strong>
+        </div>
+      </div>
+      <div class="instance-meta">
+        Iniciado por: {{ instance.initiatorName }} el {{ instance.startDate | date:'short' }}
+      </div>
+    </div>
+
+    <div class="execution-grid">
+      <!-- Formulario del Paso Actual -->
+      <section class="form-section card" *ngIf="instance.status === 'IN_PROGRESS'">
+        <div class="card-header step-header">
+          <div class="step-badge">Paso Actual</div>
+          <h3>{{ currentNodeLabel() }}</h3>
+        </div>
+        
+        <div class="dynamic-form">
+          <div *ngFor="let field of currentFields" class="form-group">
+            <label>{{ field.label }} <span *ngIf="field.required" class="required">*</span></label>
+            
+            <input *ngIf="field.type === 'text'" type="text" [(ngModel)]="formData[field.label]" class="form-control">
+            <input *ngIf="field.type === 'number'" type="number" [(ngModel)]="formData[field.label]" class="form-control">
+            <input *ngIf="field.type === 'date'" type="date" [(ngModel)]="formData[field.label]" class="form-control">
+            
+            <select *ngIf="field.type === 'select'" [(ngModel)]="formData[field.label]" class="form-control">
+              <option value="">Seleccione...</option>
+              <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+            </select>
+
+            <div *ngIf="field.type === 'checkbox'" class="checkbox-group">
+              <input type="checkbox" [(ngModel)]="formData[field.label]">
+              <span>Confirmar</span>
+            </div>
+          </div>
+
+          <div *ngIf="currentFields.length === 0" class="no-fields-msg">
+            <p>Este paso no requiere ingreso de datos. Presiona avanzar para continuar el flujo.</p>
+          </div>
+
+          <div class="form-actions">
+            <button *ngFor="let option of outgoingOptions()" 
+                    class="btn-advance" 
+                    [class.btn-decision]="outgoingOptions().length > 1"
+                    (click)="advance(option.label)">
+              {{ option.label }} {{ outgoingOptions().length === 1 ? '➔' : '' }}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mensaje de Finalizado -->
+      <section class="completed-section card" *ngIf="instance.status === 'COMPLETED'">
+        <div class="success-icon">🏆</div>
+        <h3>¡Proceso Finalizado!</h3>
+        <p>Este trámite ha concluido satisfactoriamente.</p>
+      </section>
+
+      <!-- Historial y Auditoría -->
+      <section class="history-section card">
+        <div class="card-header">
+          <h3>Historial de Movimientos</h3>
+        </div>
+        <div class="timeline">
+          <div *ngFor="let entry of instance.history" class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <span class="user">{{ entry.userName }}</span>
+                <span class="date">{{ entry.timestamp | date:'short' }}</span>
+              </div>
+              <p class="action">{{ entry.nodeLabel }}</p>
+              <div class="data-preview" *ngIf="entry.submittedData && (entry.submittedData | keyvalue).length > 0">
+                <small *ngFor="let kv of entry.submittedData | keyvalue">
+                  <strong>{{ kv.key }}:</strong> {{ kv.value }}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="empty-state" *ngIf="!selectedInstance()">
+    <div class="empty-icon">📂</div>
+    <h2>Selecciona un proceso</h2>
+    <p>Haz clic en un trámite de la lista para ver su estado y continuar la ejecución.</p>
+  </div>
+</div>

@@ -3,8 +3,9 @@ export interface User {
   nombres: string;
   apellidos: string;
   correo: string;
-  rol: string;
+  rol: 'ADMIN' | 'FUNCIONARIO' | 'DIAGRAMADOR';
   activo: boolean;
+  createdAt?: string;
 }
 
 export interface TokenResponse {

@@ -6,11 +6,21 @@ import { Project } from '../interfaces/project.interface';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { NotificationService } from '../services/notification.service';
+import { UsersMgmtComponent } from './users-mgmt/users-mgmt.component';
+import { AssignmentsComponent } from './assignments/assignments.component';
+import { ProcessExecutionComponent } from './process-execution/process-execution.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    FormsModule, 
+    UsersMgmtComponent, 
+    AssignmentsComponent,
+    ProcessExecutionComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -20,11 +30,18 @@ export class DashboardComponent implements OnInit {
   private notificationService = inject(NotificationService);
   private router = inject(Router);
 
+  // Vistas: 'projects' | 'users' | 'assignments' | 'execution'
+  currentView = signal<string>('projects');
+
   showCreateModal = signal<boolean>(false);
   showJoinModal = signal<boolean>(false);
   newProjectName = '';
   newProjectDescription = '';
   joinProjectId = '';
+
+  setView(view: string) {
+    this.currentView.set(view);
+  }
 
   ngOnInit() {
     this.projectService.loadProjects().subscribe({

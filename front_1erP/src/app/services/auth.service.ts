@@ -47,6 +47,10 @@ export class AuthService {
     );
   }
 
+  register(userData: any): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>(`${this.AUTH_URL}/register`, userData);
+  }
+
   logout() {
     localStorage.removeItem('uml_token');
     localStorage.removeItem('uml_user');

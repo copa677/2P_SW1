@@ -6,6 +6,8 @@ export interface Project {
   data?: any;
   elementCount?: number;
   collaboratorIds?: string[];
+  assignedOfficialId?: string;
+  assignedOfficialName?: string;
   createdAt?: string;
   updatedAt?: string;
   version?: number;

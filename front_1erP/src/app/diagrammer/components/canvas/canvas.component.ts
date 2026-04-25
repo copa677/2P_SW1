@@ -31,10 +31,6 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
   private lastX = 0;
   private lastY = 0;
 
-  // Doble Clic
-  private lastClickTime = 0;
-  private clickThreshold = 400;
-
   ngAfterViewInit(): void {
     this.zone.runOutsideAngular(() => {
       this.initPaper();
@@ -141,7 +137,12 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
       defaultLink: () => new joint.shapes.standard.Link({
         attrs: {
           line: { stroke: '#64748b', strokeWidth: 2, targetMarker: { 'type': 'path', 'd': 'M 10 -5 0 0 10 5 Z' } }
-        }
+        },
+        labels: [{
+          attrs: {
+            ['text']: { ['text']: '' }
+          }
+        }]
       })
     });
 
@@ -169,17 +170,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
       if (evt.button === 0) {
         const projectId = this.diagramService.currentProjectId;
         if (projectId) this.diagramService.collabService.lockCell(projectId, cellView.model.id);
-
-        const now = Date.now();
-        if (now - this.lastClickTime < this.clickThreshold) {
-          this.zone.run(() => {
-            this.diagramService.selectCell(cellView.model);
-            this.diagramService.openProperties();
-          });
-        } else {
-          this.zone.run(() => this.diagramService.selectCell(cellView.model));
-        }
-        this.lastClickTime = now;
+        this.zone.run(() => this.diagramService.selectCell(cellView.model));
       }
     });
 
@@ -197,8 +188,27 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
         evt.stopPropagation();
         return;
       }
-      const projectId = this.diagramService.currentProjectId;
-      if (projectId) this.diagramService.collabService.lockCell(projectId, linkView.model.id);
+      if (evt.button === 0) {
+        const projectId = this.diagramService.currentProjectId;
+        if (projectId) this.diagramService.collabService.lockCell(projectId, linkView.model.id);
+        this.zone.run(() => this.diagramService.selectCell(linkView.model));
+      }
+    });
+
+    // --- EVENTOS DE DOBLE CLIC (Solo para abrir propiedades) ---
+
+    this.diagramService.paper.on('cell:pointerdblclick', (cellView: any) => {
+      this.zone.run(() => {
+        this.diagramService.selectCell(cellView.model);
+        this.diagramService.openProperties();
+      });
+    });
+
+    this.diagramService.paper.on('link:pointerdblclick', (linkView: any) => {
+      this.zone.run(() => {
+        this.diagramService.selectCell(linkView.model);
+        this.diagramService.openProperties();
+      });
     });
 
     this.diagramService.paper.on('link:pointerup', (linkView: any) => {

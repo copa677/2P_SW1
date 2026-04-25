@@ -1,0 +1,1439 @@
+{
+  "cells": [
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 80,
+        "y": 80
+      },
+      "size": {
+        "width": 265.9259033203125,
+        "height": 900.092529296875
+      },
+      "angle": 0,
+      "id": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "isSwimlane": true,
+      "z": -1,
+      "embeds": [
+        "69eaff6e-99f1-413b-92aa-883a62f7b129",
+        "03a3eead-b2dc-4230-b557-be4be7502ca9",
+        "856002fd-442c-4e43-b473-8f7fab2df758",
+        "fd3190ef-3141-4edb-81db-fe1828cca6ef",
+        "9a9819a3-dcc7-4a9d-935d-a8d125af7e17",
+        "c6c7077b-975e-4960-af83-35b1b078d0af",
+        "11e27bc2-27b1-4a5d-8573-7f604d02dc3b",
+        "8ef60ce9-4731-4521-997d-62bf728d0a84",
+        "5a9f26eb-0fc2-486a-8447-f8b6ea93a90a"
+      ],
+      "attrs": {
+        "body": {
+          "stroke": "#cbd5e1",
+          "fill": "#f8fafc",
+          "strokeDasharray": "5,5"
+        },
+        "label": {
+          "textVerticalAnchor": "top",
+          "refY": 10,
+          "fill": "#64748b",
+          "text": "Cliente",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 360,
+        "y": 90
+      },
+      "size": {
+        "width": 251.75921630859375,
+        "height": 888.4259033203125
+      },
+      "angle": 0,
+      "id": "01a51961-3bf8-4d2a-a54f-f786b9eb8dcb",
+      "isSwimlane": true,
+      "z": -1,
+      "embeds": [
+        "9046838d-f907-4ab6-a7ea-97d46300dcca",
+        "2ff51a9f-8827-435d-a8bb-45fd0a0ffdd1",
+        "f094e6cf-c9a0-4b07-ace8-8564ca4a37a6"
+      ],
+      "attrs": {
+        "body": {
+          "stroke": "#cbd5e1",
+          "fill": "#f8fafc",
+          "strokeDasharray": "5,5"
+        },
+        "label": {
+          "textVerticalAnchor": "top",
+          "refY": 10,
+          "fill": "#64748b",
+          "text": "vendedor",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 130,
+        "y": 240
+      },
+      "size": {
+        "width": 125.92591857910156,
+        "height": 45.09259033203125
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "69eaff6e-99f1-413b-92aa-883a62f7b129",
+      "z": 1,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "pide un producto"
+        }
+      }
+    },
+    {
+      "type": "standard.Circle",
+      "position": {
+        "x": 180,
+        "y": 140
+      },
+      "size": {
+        "width": 30,
+        "height": 30
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "03a3eead-b2dc-4230-b557-be4be7502ca9",
+      "z": 4,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "stroke": "none",
+          "fill": "#1e293b"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "03a3eead-b2dc-4230-b557-be4be7502ca9",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "69eaff6e-99f1-413b-92aa-883a62f7b129",
+        "magnet": "circle",
+        "port": "top"
+      },
+      "id": "17f66380-b861-44f4-8918-96d5b0b16130",
+      "z": 5,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Polygon",
+      "position": {
+        "x": 420,
+        "y": 220
+      },
+      "size": {
+        "width": 106.66668701171875,
+        "height": 81.66667175292969
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "9046838d-f907-4ab6-a7ea-97d46300dcca",
+      "z": 6,
+      "parent": "01a51961-3bf8-4d2a-a54f-f786b9eb8dcb",
+      "attrs": {
+        "body": {
+          "refPoints": "0,10 10,0 20,10 10,20",
+          "stroke": "#f59e0b",
+          "fill": "#ffffff"
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "verifica el stock"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "69eaff6e-99f1-413b-92aa-883a62f7b129",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "target": {
+        "id": "9046838d-f907-4ab6-a7ea-97d46300dcca",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "id": "b3a001c6-bb25-406c-9de2-082c5cbc79bd",
+      "z": 7,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 120,
+        "y": 320
+      },
+      "size": {
+        "width": 176.75924682617188,
+        "height": 47.592559814453125
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "856002fd-442c-4e43-b473-8f7fab2df758",
+      "z": 8,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "avisa que noy el producto"
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 150,
+        "y": 390
+      },
+      "size": {
+        "width": 145.09259033203125,
+        "height": 46.759246826171875
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "fd3190ef-3141-4edb-81db-fe1828cca6ef",
+      "z": 9,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "Le dice el precio"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "9046838d-f907-4ab6-a7ea-97d46300dcca",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "856002fd-442c-4e43-b473-8f7fab2df758",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "id": "b81bb4fb-265e-47d9-a525-9ddc545c20d2",
+      "z": 10,
+      "vertices": [],
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "9046838d-f907-4ab6-a7ea-97d46300dcca",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "target": {
+        "id": "fd3190ef-3141-4edb-81db-fe1828cca6ef",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "id": "296001a1-40b2-4610-9301-e3d9a8ecb4ec",
+      "z": 11,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Polygon",
+      "position": {
+        "x": 170,
+        "y": 490
+      },
+      "size": {
+        "width": 104.25924682617188,
+        "height": 52.59259033203125
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "9a9819a3-dcc7-4a9d-935d-a8d125af7e17",
+      "z": 12,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "refPoints": "0,10 10,0 20,10 10,20",
+          "stroke": "#f59e0b",
+          "fill": "#ffffff"
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "compra ?"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "fd3190ef-3141-4edb-81db-fe1828cca6ef",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "9a9819a3-dcc7-4a9d-935d-a8d125af7e17",
+        "magnet": "circle",
+        "port": "top"
+      },
+      "id": "ddd07977-10f1-4e02-b629-7ffe290c11b9",
+      "z": 13,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 400,
+        "y": 500
+      },
+      "size": {
+        "width": 139.25921630859375,
+        "height": 35.9259033203125
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "2ff51a9f-8827-435d-a8bb-45fd0a0ffdd1",
+      "z": 14,
+      "parent": "01a51961-3bf8-4d2a-a54f-f786b9eb8dcb",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "pide el producto"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "9a9819a3-dcc7-4a9d-935d-a8d125af7e17",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "target": {
+        "id": "2ff51a9f-8827-435d-a8bb-45fd0a0ffdd1",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "id": "2c8e6e6c-c6bf-495b-9e2f-2785cacabb9a",
+      "z": 15,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 170,
+        "y": 620
+      },
+      "size": {
+        "width": 134.25921630859375,
+        "height": 44.25921630859375
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "c6c7077b-975e-4960-af83-35b1b078d0af",
+      "z": 16,
+      "actionType": "form",
+      "formFields": [
+        {
+          "label": "nombre completo",
+          "type": "text",
+          "required": true
+        },
+        {
+          "label": "precio",
+          "type": "text",
+          "required": true
+        },
+        {
+          "label": "cantidad",
+          "type": "number",
+          "required": true
+        },
+        {
+          "label": "producto",
+          "type": "text",
+          "required": true
+        },
+        {
+          "label": "fecha",
+          "type": "date",
+          "required": true
+        }
+      ],
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "strokeWidth": 4,
+          "stroke": "#10b981",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "le hace una factura"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "2ff51a9f-8827-435d-a8bb-45fd0a0ffdd1",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "c6c7077b-975e-4960-af83-35b1b078d0af",
+        "magnet": "circle",
+        "port": "top"
+      },
+      "id": "7c6f3a66-6552-4cf0-88c6-446160160b16",
+      "z": 17,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 410,
+        "y": 620
+      },
+      "size": {
+        "width": 97.59259033203125,
+        "height": 43.4259033203125
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "f094e6cf-c9a0-4b07-ace8-8564ca4a37a6",
+      "z": 18,
+      "parent": "01a51961-3bf8-4d2a-a54f-f786b9eb8dcb",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "paga"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "c6c7077b-975e-4960-af83-35b1b078d0af",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "target": {
+        "id": "f094e6cf-c9a0-4b07-ace8-8564ca4a37a6",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "id": "43711128-eeb9-4cd8-b0d1-6abca06923ca",
+      "z": 19,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Rectangle",
+      "position": {
+        "x": 160,
+        "y": 700
+      },
+      "size": {
+        "width": 158.4259033203125,
+        "height": 41.75921630859375
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "11e27bc2-27b1-4a5d-8573-7f604d02dc3b",
+      "z": 20,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {
+        "body": {
+          "stroke": "#3b82f6",
+          "fill": "#ffffff",
+          "rx": 10,
+          "ry": 10
+        },
+        "label": {
+          "fill": "#1e293b",
+          "text": "le entrega el producto"
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "f094e6cf-c9a0-4b07-ace8-8564ca4a37a6",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "11e27bc2-27b1-4a5d-8573-7f604d02dc3b",
+        "magnet": "circle",
+        "port": "right"
+      },
+      "id": "eb15b63c-9167-49ca-b82b-93bdc69e1548",
+      "z": 21,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "uml.FinalNode",
+      "markup": [
+        {
+          "tagName": "circle",
+          "selector": "body"
+        },
+        {
+          "tagName": "circle",
+          "selector": "inner"
+        }
+      ],
+      "position": {
+        "x": 130,
+        "y": 920
+      },
+      "size": {
+        "width": 30,
+        "height": 30
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "top",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "0%"
+            }
+          },
+          {
+            "id": "bottom",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "100%"
+            }
+          },
+          {
+            "id": "left",
+            "group": "ports",
+            "args": {
+              "x": "0%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "right",
+            "group": "ports",
+            "args": {
+              "x": "100%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "5a9f26eb-0fc2-486a-8447-f8b6ea93a90a",
+      "z": 22,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {}
+    },
+    {
+      "type": "uml.ForkJoinNode",
+      "position": {
+        "x": 80,
+        "y": 860
+      },
+      "size": {
+        "width": 120,
+        "height": 8
+      },
+      "angle": 0,
+      "ports": {
+        "groups": {
+          "ports": {
+            "position": {
+              "name": "absolute"
+            },
+            "attrs": {
+              "circle": {
+                "r": 6,
+                "magnet": true,
+                "fill": "#3b82f6",
+                "stroke": "#ffffff",
+                "stroke-width": 2,
+                "fill-opacity": 0.5,
+                "stroke-opacity": 0.5
+              }
+            },
+            "markup": [
+              {
+                "tagName": "circle",
+                "selector": "circle"
+              }
+            ]
+          }
+        },
+        "items": [
+          {
+            "id": "p1",
+            "group": "ports",
+            "args": {
+              "x": "10%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "p2",
+            "group": "ports",
+            "args": {
+              "x": "30%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "p3",
+            "group": "ports",
+            "args": {
+              "x": "50%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "p4",
+            "group": "ports",
+            "args": {
+              "x": "70%",
+              "y": "50%"
+            }
+          },
+          {
+            "id": "p5",
+            "group": "ports",
+            "args": {
+              "x": "90%",
+              "y": "50%"
+            }
+          }
+        ]
+      },
+      "id": "8ef60ce9-4731-4521-997d-62bf728d0a84",
+      "z": 23,
+      "parent": "a3f4cade-89e0-46ac-ac3a-7602a935d853",
+      "attrs": {}
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "8ef60ce9-4731-4521-997d-62bf728d0a84",
+        "magnet": "circle",
+        "port": "p3"
+      },
+      "target": {
+        "id": "5a9f26eb-0fc2-486a-8447-f8b6ea93a90a",
+        "magnet": "circle",
+        "port": "top"
+      },
+      "id": "539d086c-f43d-4732-8aa7-2c430ba492ec",
+      "z": 24,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "11e27bc2-27b1-4a5d-8573-7f604d02dc3b",
+        "magnet": "circle",
+        "port": "bottom"
+      },
+      "target": {
+        "id": "8ef60ce9-4731-4521-997d-62bf728d0a84",
+        "magnet": "circle",
+        "port": "p5"
+      },
+      "id": "0c37fcda-a11c-4354-9121-67483a11016b",
+      "z": 25,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "9a9819a3-dcc7-4a9d-935d-a8d125af7e17",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "target": {
+        "id": "8ef60ce9-4731-4521-997d-62bf728d0a84",
+        "magnet": "circle",
+        "port": "p3"
+      },
+      "id": "d4c52bfd-7266-481b-b90e-850d8464d5f5",
+      "z": 26,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    },
+    {
+      "type": "standard.Link",
+      "source": {
+        "id": "856002fd-442c-4e43-b473-8f7fab2df758",
+        "magnet": "circle",
+        "port": "left"
+      },
+      "target": {
+        "id": "8ef60ce9-4731-4521-997d-62bf728d0a84",
+        "magnet": "circle",
+        "port": "p1"
+      },
+      "id": "5037d407-f5c2-4043-8ded-32620719283c",
+      "z": 27,
+      "attrs": {
+        "line": {
+          "stroke": "#64748b",
+          "targetMarker": {
+            "d": "M 10 -5 0 0 10 5 Z"
+          }
+        }
+      }
+    }
+  ]
+}

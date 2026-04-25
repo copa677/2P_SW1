@@ -1,0 +1,63 @@
+<div class="assignments-container">
+    <header class="section-header">
+        <div class="title-area">
+            <h2>Asignación de Flujos</h2>
+            <p>Vincula diagramas UML con los funcionarios responsables de su ejecución.</p>
+        </div>
+    </header>
+
+    <div class="assignment-grid">
+        <!-- Formulario de Asignación -->
+        <div class="card assignment-form">
+            <h3>Nueva Asignación</h3>
+            <div class="form-group">
+                <label>Seleccionar Proyecto (Flujo)</label>
+                <select class="modern-select" [ngModel]="selectedProjectId()" (ngModelChange)="selectedProjectId.set($event)">
+                    <option value="">-- Elija un diagrama --</option>
+                    @for (p of projects(); track p.id) {
+                        <option [value]="p.id">{{ p.name }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Seleccionar Funcionario</label>
+                <select class="modern-select" [ngModel]="selectedUserId()" (ngModelChange)="selectedUserId.set($event)">
+                    <option value="">-- Elija un funcionario --</option>
+                    @for (u of officials(); track u.id) {
+                        <option [value]="u.id">{{ u.nombres }} {{ u.apellidos }}</option>
+                    }
+                </select>
+            </div>
+
+            <button class="btn-primary full-width" 
+                    (click)="assign()" 
+                    [disabled]="!selectedProjectId() || !selectedUserId() || isLoading()">
+                Confirmar Asignación
+            </button>
+        </div>
+
+        <!-- Lista de Asignaciones Actuales -->
+        <div class="card current-assignments">
+            <h3>Flujos Asignados</h3>
+            <div class="assignments-list">
+                @for (p of projects(); track p.id) {
+                    @if (p.assignedOfficialId) {
+                        <div class="assignment-item">
+                            <div class="item-info">
+                                <div class="project-title">{{ p.name }}</div>
+                                <div class="official-name">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    Responsable: {{ p.assignedOfficialName }}
+                                </div>
+                            </div>
+                            <div class="status-badge">Asignado</div>
+                        </div>
+                    }
+                } @empty {
+                    <div class="empty-list">No hay asignaciones activas.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

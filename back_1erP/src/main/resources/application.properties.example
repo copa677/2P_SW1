@@ -1,0 +1,16 @@
+# --- Server Configuration ---
+server.port=8080
+spring.threads.virtual.enabled=true
+
+# --- Database Configuration (MongoDB) ---
+# Reemplazar con tu propia conexión de MongoDB
+# Ejemplo: mongodb+srv://usuario:password@cluster.mongodb.net/nombre_db
+spring.data.mongodb.uri=mongodb+srv://USUARIO:PASSWORD@CLUSTER_URL/DATABASE_NAME?appName=Cluster0
+
+# --- JSON Strategy ---
+# spring.jackson.property-naming-strategy=SNAKE_CASE
+
+# --- Security & JWT ---
+# Importante: Cambiar este secreto por una cadena hexadecimal de 64 caracteres
+application.security.jwt.secret-key=TU_LLAVE_SECRETA_AQUI
+application.security.jwt.expiration=86400000

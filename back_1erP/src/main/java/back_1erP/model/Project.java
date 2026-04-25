@@ -27,12 +27,16 @@ public class Project {
 
     private String name;
     private String description;
-    
+
     // ID del usuario dueño del proyecto
     private String ownerId;
 
     // Lista de IDs de usuarios colaboradores
     private List<String> collaboratorIds;
+
+    // Campos de asignación administrativa
+    private String assignedOfficialId;
+    private String assignedOfficialName;
 
     public List<String> getCollaboratorIds() {
         if (collaboratorIds == null) {

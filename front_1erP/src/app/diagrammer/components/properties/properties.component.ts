@@ -65,10 +65,28 @@ export class PropertiesComponent {
     cell.attr('body/strokeWidth', type === 'none' ? 2 : 4);
   }
 
+  getLabel(): string {
+    const cell = this.diagramService.selectedCell();
+    if (!cell) return '';
+    if (cell.isLink()) {
+      const link = cell as joint.shapes.standard.Link;
+      return link.label(0)?.attrs?.['text']?.['text'] || '';
+    }
+    return cell.attr('label/text') || '';
+  }
+
   onLabelChange(newLabel: string) {
     const cell = this.diagramService.selectedCell();
     if (cell) {
-      cell.attr('label/text', newLabel);
+      if (cell.isLink()) {
+        (cell as joint.shapes.standard.Link).label(0, {
+          attrs: { 
+            ['text']: { ['text']: newLabel } 
+          }
+        });
+      } else {
+        cell.attr('label/text', newLabel);
+      }
     }
   }
 
