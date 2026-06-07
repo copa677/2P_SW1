@@ -1,0 +1,531 @@
+{
+  "elementos": [
+    {
+      "id": "f7223b1f-080b-401d-b59e-03d77f1e01bc",
+      "tipo": "start",
+      "nombre": "",
+      "posicion": {
+        "x": 140,
+        "y": 120
+      },
+      "tamano": {
+        "width": 30,
+        "height": 30
+      },
+      "color": "#1e293b",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+      "tipo": "activity",
+      "nombre": "seleccionar producto",
+      "posicion": {
+        "x": 90,
+        "y": 200
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
+      "tipo": "activity",
+      "nombre": "solicitar compra",
+      "posicion": {
+        "x": 90,
+        "y": 310
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+      "tipo": "activity",
+      "nombre": "Recibir solicitud",
+      "posicion": {
+        "x": 350,
+        "y": 310
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "ac9b2c49-276f-47a8-833d-6d487e659aef",
+      "tipo": "activity",
+      "nombre": "informar precios y datos de pago ",
+      "posicion": {
+        "x": 360,
+        "y": 490
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "30b2685d-7c76-430a-a044-6328f3d51f04",
+      "tipo": "decision",
+      "nombre": "¿hay stock del producto?",
+      "posicion": {
+        "x": 550,
+        "y": 390
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#fef08a",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+      "tipo": "activity",
+      "nombre": "recibir informacion",
+      "posicion": {
+        "x": 90,
+        "y": 490
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "01577ea2-8a2a-4e2e-bd88-4b9f277c2bf1",
+      "tipo": "activity",
+      "nombre": "realizar pago",
+      "posicion": {
+        "x": 90,
+        "y": 600
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "6f8eb4ff-2987-42b5-8684-b21e7d6c3d6e",
+      "tipo": "activity",
+      "nombre": "recibir pago",
+      "posicion": {
+        "x": 470,
+        "y": 600
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "a8787826-8e4a-45d3-b15b-e69128dcea14",
+      "tipo": "decision",
+      "nombre": "¿pago es correcto?",
+      "posicion": {
+        "x": 470,
+        "y": 720
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#fef08a",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "045b0412-b1fd-4b79-9587-89c5b0299c9c",
+      "tipo": "activity",
+      "nombre": "rechazar operacion ",
+      "posicion": {
+        "x": 580,
+        "y": 820
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "00264176-d586-4566-b609-f119d41b596e",
+      "tipo": "activity",
+      "nombre": "preparar y enviar el producto",
+      "posicion": {
+        "x": 340,
+        "y": 820
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "151320d8-6d7d-4152-b734-44493854ae48",
+      "tipo": "activity",
+      "nombre": "notificar falta de stock",
+      "posicion": {
+        "x": 650,
+        "y": 490
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    },
+    {
+      "id": "d8548876-acb0-4da7-87a8-338874121fd3",
+      "tipo": "activity",
+      "nombre": "recibibr producto o notificaion",
+      "posicion": {
+        "x": 100,
+        "y": 930
+      },
+      "tamano": {
+        "width": 130,
+        "height": 60
+      },
+      "color": "#4f46e5",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "97cb090a-321d-409c-88c7-0d684ce5fa53",
+      "tipo": "end",
+      "nombre": "",
+      "posicion": {
+        "x": 150,
+        "y": 1040
+      },
+      "tamano": {
+        "width": 30,
+        "height": 30
+      },
+      "color": "#ffffff",
+      "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "formulario": []
+    },
+    {
+      "id": "9966b027-8ccb-4cf8-a183-e2a1aa605219",
+      "tipo": "fork",
+      "nombre": "",
+      "posicion": {
+        "x": 530,
+        "y": 910
+      },
+      "tamano": {
+        "width": 8,
+        "height": 140
+      },
+      "color": "#1e293b",
+      "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "formulario": []
+    }
+  ],
+  "enlaces": [
+    {
+      "id": "cf8ce3af-e057-47da-9ec1-bcbb517092e6",
+      "origen": {
+        "elementoId": "f7223b1f-080b-401d-b59e-03d77f1e01bc",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "2f8c87ef-c3af-4235-a106-eb19df6f70eb",
+      "origen": {
+        "elementoId": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "30b2685d-7c76-430a-a044-6328f3d51f04",
+        "puertoId": "top"
+      },
+      "condicion": "verificar  disponibilidad",
+      "vertices": []
+    },
+    {
+      "id": "6f69b4f6-0a6f-4cb2-9430-d18c6bb306fc",
+      "origen": {
+        "elementoId": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "5b516f38-db25-4d3e-9a06-9e42e0f5c552",
+      "origen": {
+        "elementoId": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
+        "puertoId": "right"
+      },
+      "destino": {
+        "elementoId": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+        "puertoId": "left"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "f86bcace-f82e-4290-b637-42d273d531ae",
+      "origen": {
+        "elementoId": "30b2685d-7c76-430a-a044-6328f3d51f04",
+        "puertoId": "left"
+      },
+      "destino": {
+        "elementoId": "ac9b2c49-276f-47a8-833d-6d487e659aef",
+        "puertoId": "top"
+      },
+      "condicion": "SI",
+      "vertices": []
+    },
+    {
+      "id": "57601099-ee26-4877-9d9b-7b5acb78b3ca",
+      "origen": {
+        "elementoId": "30b2685d-7c76-430a-a044-6328f3d51f04",
+        "puertoId": "right"
+      },
+      "destino": {
+        "elementoId": "151320d8-6d7d-4152-b734-44493854ae48",
+        "puertoId": "top"
+      },
+      "condicion": "NO",
+      "vertices": []
+    },
+    {
+      "id": "4505b555-c6b3-49d0-a258-73004697eb73",
+      "origen": {
+        "elementoId": "ac9b2c49-276f-47a8-833d-6d487e659aef",
+        "puertoId": "left"
+      },
+      "destino": {
+        "elementoId": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+        "puertoId": "right"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "3bb23c8b-2b60-4a4d-b7b9-c3317e6f891e",
+      "origen": {
+        "elementoId": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "01577ea2-8a2a-4e2e-bd88-4b9f277c2bf1",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "21798fe0-a212-4425-a7c4-b1ef785d4006",
+      "origen": {
+        "elementoId": "01577ea2-8a2a-4e2e-bd88-4b9f277c2bf1",
+        "puertoId": "right"
+      },
+      "destino": {
+        "elementoId": "6f8eb4ff-2987-42b5-8684-b21e7d6c3d6e",
+        "puertoId": "left"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "e95d1660-baf5-4163-835b-474229510088",
+      "origen": {
+        "elementoId": "6f8eb4ff-2987-42b5-8684-b21e7d6c3d6e",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "a8787826-8e4a-45d3-b15b-e69128dcea14",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "86d72818-1335-446b-9130-57f29d65e757",
+      "origen": {
+        "elementoId": "a8787826-8e4a-45d3-b15b-e69128dcea14",
+        "puertoId": "left"
+      },
+      "destino": {
+        "elementoId": "00264176-d586-4566-b609-f119d41b596e",
+        "puertoId": "top"
+      },
+      "condicion": "SI",
+      "vertices": []
+    },
+    {
+      "id": "ce8c34bc-c542-437a-be40-fe37e96cc868",
+      "origen": {
+        "elementoId": "a8787826-8e4a-45d3-b15b-e69128dcea14",
+        "puertoId": "right"
+      },
+      "destino": {
+        "elementoId": "045b0412-b1fd-4b79-9587-89c5b0299c9c",
+        "puertoId": "top"
+      },
+      "condicion": "NO",
+      "vertices": []
+    },
+    {
+      "id": "d738dcd0-728d-42b9-b759-dca766b6af42",
+      "origen": {
+        "elementoId": "d8548876-acb0-4da7-87a8-338874121fd3",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "97cb090a-321d-409c-88c7-0d684ce5fa53",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "0b9f91e4-95cf-4afa-a5b7-8338a408bada",
+      "origen": {
+        "elementoId": "151320d8-6d7d-4152-b734-44493854ae48",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "9966b027-8ccb-4cf8-a183-e2a1aa605219",
+        "puertoId": "p1"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "de2adad3-59a5-4b09-a4be-8b5b965ec583",
+      "origen": {
+        "elementoId": "045b0412-b1fd-4b79-9587-89c5b0299c9c",
+        "puertoId": "bottom"
+      },
+      "destino": {
+        "elementoId": "9966b027-8ccb-4cf8-a183-e2a1aa605219",
+        "puertoId": "p2"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "c23d9359-b038-4230-8311-ca1622a78081",
+      "origen": {
+        "elementoId": "9966b027-8ccb-4cf8-a183-e2a1aa605219",
+        "puertoId": "p3"
+      },
+      "destino": {
+        "elementoId": "d8548876-acb0-4da7-87a8-338874121fd3",
+        "puertoId": "right"
+      },
+      "condicion": "",
+      "vertices": []
+    },
+    {
+      "id": "84b45065-4c24-4dc1-8704-9ff940a09bc2",
+      "origen": {
+        "elementoId": "00264176-d586-4566-b609-f119d41b596e",
+        "puertoId": "left"
+      },
+      "destino": {
+        "elementoId": "d8548876-acb0-4da7-87a8-338874121fd3",
+        "puertoId": "top"
+      },
+      "condicion": "",
+      "vertices": []
+    }
+  ],
+  "calles": [
+    {
+      "id": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+      "tipo": "lane-v",
+      "nombre": "Vendedor",
+      "posicion": {
+        "x": 310,
+        "y": 80
+      },
+      "tamano": {
+        "width": 498.89996337890625,
+        "height": 1012.5999755859375
+      },
+      "elementosContenidos": [
+        "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+        "ac9b2c49-276f-47a8-833d-6d487e659aef",
+        "30b2685d-7c76-430a-a044-6328f3d51f04",
+        "6f8eb4ff-2987-42b5-8684-b21e7d6c3d6e",
+        "a8787826-8e4a-45d3-b15b-e69128dcea14",
+        "045b0412-b1fd-4b79-9587-89c5b0299c9c",
+        "00264176-d586-4566-b609-f119d41b596e",
+        "151320d8-6d7d-4152-b734-44493854ae48",
+        "9966b027-8ccb-4cf8-a183-e2a1aa605219"
+      ]
+    },
+    {
+      "id": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+      "tipo": "lane-v",
+      "nombre": "Cliente",
+      "posicion": {
+        "x": 70,
+        "y": 80
+      },
+      "tamano": {
+        "width": 223.62496948242188,
+        "height": 1014.5
+      },
+      "elementosContenidos": [
+        "f7223b1f-080b-401d-b59e-03d77f1e01bc",
+        "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+        "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
+        "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+        "01577ea2-8a2a-4e2e-bd88-4b9f277c2bf1",
+        "d8548876-acb0-4da7-87a8-338874121fd3",
+        "97cb090a-321d-409c-88c7-0d684ce5fa53"
+      ]
+    }
+  ]
+}

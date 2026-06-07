@@ -1165,8 +1165,12 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
           id: link.id,
           router: { name: 'manhattan' },
           connector: { name: 'rounded' },
-          source: { id: link.origen.elementoId, port: link.origen.puertoId },
-          target: { id: link.destino.elementoId, port: link.destino.puertoId },
+          source: link.origen.puertoId 
+            ? { id: link.origen.elementoId, port: link.origen.puertoId } 
+            : { id: link.origen.elementoId },
+          target: link.destino.puertoId 
+            ? { id: link.destino.elementoId, port: link.destino.puertoId } 
+            : { id: link.destino.elementoId },
           vertices: link.vertices || [],
           labels: [{
             attrs: {
@@ -1200,6 +1204,16 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
         }
       }
     });
+
+    // Forzar actualización diferida de las rutas de enlace una vez el DOM esté listo
+    setTimeout(() => {
+      this.graph.getLinks().forEach((link: any) => {
+        const view = this.paper.findViewByModel(link) as any;
+        if (view) {
+          view.update();
+        }
+      });
+    }, 150);
   }
 
   saveDiagram() {

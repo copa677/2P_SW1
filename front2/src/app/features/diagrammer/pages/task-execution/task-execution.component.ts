@@ -328,8 +328,12 @@ export class TaskExecutionComponent implements OnInit, AfterViewInit, OnDestroy 
           id: link.id,
           router: { name: 'manhattan' },
           connector: { name: 'rounded' },
-          source: { id: link.origen.elementoId, port: link.origen.puertoId },
-          target: { id: link.destino.elementoId, port: link.destino.puertoId },
+          source: link.origen.puertoId 
+            ? { id: link.origen.elementoId, port: link.origen.puertoId } 
+            : { id: link.origen.elementoId },
+          target: link.destino.puertoId 
+            ? { id: link.destino.elementoId, port: link.destino.puertoId } 
+            : { id: link.destino.elementoId },
           vertices: link.vertices || [],
           labels: [{
             attrs: {
@@ -354,8 +358,16 @@ export class TaskExecutionComponent implements OnInit, AfterViewInit, OnDestroy 
       }
     });
 
-    // Ajustar el zoom para que se adapte al tamaño del papel
-    this.paper.scaleContentToFit({ padding: 20 });
+    // Forzar actualización diferida de las rutas de enlace y escala una vez renderizado en el DOM
+    setTimeout(() => {
+      this.graph.getLinks().forEach((link: any) => {
+        const view = this.paper.findViewByModel(link) as any;
+        if (view) {
+          view.update();
+        }
+      });
+      this.paper.scaleContentToFit({ padding: 20 });
+    }, 150);
   }
 
   highlightActiveNode(nodeId: string) {
