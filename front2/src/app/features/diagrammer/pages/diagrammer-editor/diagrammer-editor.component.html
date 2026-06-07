@@ -1,0 +1,224 @@
+<div class="space-y-6 animate-fade-in flex flex-col h-[calc(100vh-7rem)] min-h-[600px]">
+  
+  <!-- CABECERA DEL EDITOR / BARRA DE HERRAMIENTAS -->
+  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4 transition-all duration-300">
+    
+    <!-- Título y Volver -->
+    <div class="flex items-center gap-3">
+      <a 
+        routerLink="/diagramas" 
+        class="w-9 h-9 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center border border-slate-200 dark:border-plomo-border transition-all"
+        title="Volver al Listado"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4.5 h-4.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        </svg>
+      </a>
+      
+      <div>
+        <h2 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">
+          {{ diagramName() }}
+        </h2>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <span class="text-[10px] text-slate-400">
+            Código de Sala:
+          </span>
+          <span class="font-mono text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-350 px-1.5 py-0.5 rounded font-bold">
+            {{ diagramId() }}
+          </span>
+          <button 
+            (click)="copyRoomCode()"
+            class="text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 text-[10px] font-bold flex items-center gap-0.5 ml-1 transition-colors"
+            title="Copiar Código de Sala"
+          >
+            @if (copied()) {
+              <span>¡Copiado!</span>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0A2.25 2.25 0 0113.5 5.25h-3a2.25 2.25 0 01-2.166-1.63m7.332 0c.055.194.084.4.084.612v1.511c0 .719-.102 1.415-.294 2.07m-7.986-2.07c0-.213.03-.418.084-.612m0 0c.01-.037.02-.073.03-.109m0 0A2.25 2.25 0 019 5.25h3.75a2.25 2.25 0 012.24 2.153m-9 0a2.25 2.25 0 002.25 2.25h1.5m10.307-2.82c.19.483.293.997.293 1.522v6.59c0 2.21-1.79 4-4 4h-9.75a4 4 0 01-4-4V7.83c0-2.21 1.79-4 4-4h1.5" />
+              </svg>
+              <span>Copiar</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles de Operaciones & Zoom -->
+    <div class="flex items-center gap-2.5 flex-wrap">
+      
+
+
+      <!-- Barra de Presencia / Colaboradores Activos -->
+      @if (collabService.isConnected() && collabService.activeUsers().length > 0) {
+        <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-plomo-hover/30 border border-slate-200 dark:border-plomo-border px-3 h-9 rounded-xl shadow-sm animate-fade-in">
+          <div class="flex -space-x-2 overflow-hidden">
+            @for (user of collabService.activeUsers(); track user.id) {
+              <div 
+                [style.background-color]="user.color" 
+                [title]="user.username"
+                class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-plomo-card text-[9px] font-extrabold text-white flex items-center justify-center shrink-0"
+              >
+                {{ user.initials }}
+              </div>
+            }
+          </div>
+          <span class="text-[9px] font-bold text-slate-500 dark:text-slate-450">
+            {{ collabService.activeUsers().length }} activo(s)
+          </span>
+        </div>
+      }
+
+      <!-- Zoom Indicator & Controls -->
+      <div class="h-9 px-2 bg-slate-50 dark:bg-plomo-hover/30 border border-slate-200 dark:border-plomo-border rounded-xl flex items-center gap-1 shadow-sm">
+        
+        <!-- Zoom Out -->
+        <button 
+          (click)="adjustZoom(-0.1)" 
+          class="w-7 h-7 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all text-xs font-bold"
+          title="Zoom Out"
+        >
+          -
+        </button>
+
+        <span class="text-[10px] font-bold font-mono px-1 w-12 text-center text-slate-600 dark:text-slate-300">
+          {{ getZoomPercentage() }}%
+        </span>
+
+        <!-- Zoom In -->
+        <button 
+          (click)="adjustZoom(0.1)" 
+          class="w-7 h-7 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all text-xs font-bold"
+          title="Zoom In"
+        >
+          +
+        </button>
+
+        <!-- Reset Zoom -->
+        <button 
+          (click)="resetZoom()" 
+          class="w-7 h-7 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all text-[9px] font-bold"
+          title="Ajustar a 100%"
+        >
+          1:1
+        </button>
+      </div>
+
+      <!-- Limpiar Pizarra -->
+      @if (editable()) {
+        <button 
+          (click)="clearCanvas()" 
+          class="h-9 px-3 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-plomo-hover/50 font-semibold text-xs transition-all flex items-center gap-1.5 shadow-sm"
+          title="Limpiar toda la pizarra"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4.5 h-4.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Limpiar
+        </button>
+      }
+
+      <div class="h-6 w-[1px] bg-slate-200 dark:bg-plomo-border"></div>
+
+      <!-- Exportar JSON -->
+      <button 
+        (click)="exportJson()" 
+        class="h-9 px-3.5 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs shadow-md shadow-teal-500/10 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5"
+        title="Exportar archivo de diagrama"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+        </svg>
+        Exportar JSON
+      </button>
+
+      <!-- Guardar Diagrama -->
+      @if (editable()) {
+        <button 
+          (click)="saveDiagram()" 
+          class="h-9 px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md shadow-indigo-500/10 transition-all transform hover:-translate-y-0.5"
+          title="Guardar cambios en memoria"
+        >
+          Guardar Cambios
+        </button>
+      }
+
+    </div>
+
+  </div>
+
+  <!-- SECCIÓN CENTRAL DEL AREA DE TRABAJO -->
+  <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-0">
+    
+    <!-- COLUMNA IZQUIERDA: PALETA DE COMPONENTES -->
+    <div class="lg:col-span-1 min-h-0 overflow-y-auto">
+      <app-palette (elementSelected)="onElementSelected($event)" />
+    </div>
+
+    <!-- COLUMNA CENTRAL: PIZARRA DE DIBUJO JOINTJS (COL-SPAN 2) -->
+    <div class="lg:col-span-2 bg-slate-100/50 dark:bg-plomo-strong border border-slate-200 dark:border-plomo-border rounded-2xl relative shadow-inner min-h-[400px] overflow-hidden flex flex-col justify-between group transition-all duration-300">
+      
+      <!-- Indicador de Paneo / Arrastre (Excelente UX) -->
+      <div class="absolute top-3 left-3 z-10 px-2.5 py-1 bg-white/90 dark:bg-plomo-card/90 border border-slate-200 dark:border-plomo-border text-[9px] font-bold text-slate-500 rounded-lg flex items-center gap-1.5 shadow-sm pointer-events-none">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+        <span>Clic derecho + arrastrar para desplazar lienzo | Shift + Clic en flechas para desviar</span>
+      </div>
+
+      <!-- Capa de Punteros Remotos -->
+      <div 
+        #cursorLayer
+        class="absolute inset-0 pointer-events-none z-30 overflow-hidden origin-top-left"
+        [style.transform]="'translate(' + paperTranslateX() + 'px, ' + paperTranslateY() + 'px) scale(' + zoomScale() + ')'"
+      >
+        @for (entry of collabService.remoteCursors() | keyvalue; track entry.key) {
+          <div 
+            class="absolute pointer-events-none z-40 transition-all duration-75"
+            [style.left.px]="entry.value.x"
+            [style.top.px]="entry.value.y"
+            [style.color]="entry.value.color"
+          >
+            <!-- Icono del cursor -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="drop-shadow-md">
+              <path d="M7 2l12 11.23-5.26 1.41 4.54 6.76-2.22 1.34-4.52-6.73-4.54 4.5V2z"/>
+            </svg>
+            <!-- Etiqueta del nombre -->
+            <div 
+              class="absolute left-3 top-4 px-2 py-0.5 rounded text-[9px] font-extrabold text-white whitespace-nowrap shadow-md"
+              [style.background-color]="entry.value.color"
+            >
+              {{ entry.value.username }}
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- CONTENEDOR DONDE JOINTJS RENDERIZA EL PAPER SVG -->
+      <div 
+        #paperHolder 
+        (mousedown)="onMouseDown($event)"
+        (mousemove)="onPaperMouseMove($event)"
+        class="w-full h-full min-h-[450px] cursor-grab active:cursor-grabbing bg-slate-50 dark:bg-[#161b22]"
+      ></div>
+
+    </div>
+
+    <!-- COLUMNA DERECHA: PANEL DE PROPIEDADES -->
+    <div class="lg:col-span-1 min-h-0 overflow-y-auto">
+      <app-properties 
+        [cellId]="selectedCellId()"
+        [cellType]="selectedCellType()"
+        [cellText]="selectedCellText()"
+        [cellColor]="selectedCellColor()"
+        [customFields]="selectedCustomFields()"
+        [elementType]="selectedElementType()"
+        [editable]="editable()"
+        (textChanged)="onTextChanged($event)"
+        (colorChanged)="onColorChanged($event)"
+        (customFieldsChanged)="onCustomFieldsChanged($event)"
+        (deleteRequested)="onDeleteRequested()"
+      />
+    </div>
+
+  </div>
+
+</div>

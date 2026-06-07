@@ -1,0 +1,191 @@
+@import "jointjs/dist/joint.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html,
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  /* Scrollbar personalizado premium */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-[#161b22];
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-700 rounded-full hover:bg-slate-400 dark:hover:bg-slate-600 transition-all;
+  }
+}
+
+/* Efectos y clases de cristaleria / glassmorphism para interfaces premium */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-effect {
+  background: rgba(31, 36, 44, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(48, 54, 61, 0.5);
+}
+
+/* Animaciones suaves para micro-interacciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.40s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Ocultar puertos de conexión de JointJS por defecto */
+.joint-paper .port {
+  display: none !important;
+}
+
+/* Mostrar puertos de conexión de JointJS al pasar el mouse o cuando el nodo está seleccionado */
+.joint-paper .joint-cell:hover .port,
+.joint-paper .selected-node .port {
+  display: block !important;
+}
+
+/* Estilos personalizados para los puntos de división (vértices) de los enlaces */
+.joint-paper .marker-vertices {
+  display: none !important;
+}
+
+.joint-paper .link-tools .marker-vertices,
+.joint-paper .joint-link:hover .marker-vertices {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+/* El círculo del vértice */
+.joint-paper .marker-vertex {
+  fill: #6366f1 !important; /* Indigo */
+  stroke: #ffffff !important;
+  stroke-dasharray: none !important;
+  stroke-width: 2px !important;
+  r: 8px !important; /* Hacer el punto un poco más grande */
+  transition: transform 0.2s ease-in-out, fill 0.2s;
+  cursor: move !important;
+}
+
+.joint-paper .marker-vertex:hover {
+  transform: scale(1.15);
+  transform-origin: center;
+  fill: #4f46e5 !important;
+}
+
+/* La 'X' de eliminación del vértice */
+.joint-paper .marker-vertex-remove {
+  opacity: 1 !important; /* Siempre visible cuando se selecciona */
+  pointer-events: auto !important;
+  fill: #ffffff !important; /* Cruz blanca */
+  stroke: #ffffff !important;
+  stroke-width: 1px !important;
+  cursor: pointer !important;
+}
+
+/* El círculo de área interactiva detrás de la 'X' */
+.joint-paper .marker-vertex-remove-area {
+  cursor: pointer !important;
+  fill: #ef4444 !important; /* Rojo */
+  stroke: #ffffff !important;
+  stroke-width: 1.5px !important;
+  opacity: 1 !important; /* Siempre visible */
+  pointer-events: auto !important;
+  transition: fill 0.2s;
+}
+
+.joint-paper .marker-vertex-remove-area:hover {
+  fill: #b91c1c !important; /* Rojo oscuro al hover */
+}
+
+/* Estilos para las etiquetas de los enlaces (legibilidad en modo claro y oscuro) */
+.joint-paper .link-label-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
+  fill: #ffffff !important; /* Texto blanco siempre para alto contraste */
+}
+
+.joint-paper .link-label-rect {
+  fill: #4f46e5 !important; /* Fondo Indigo en modo claro */
+  stroke: #3730a3 !important;
+  stroke-width: 1px !important;
+  rx: 6px !important;
+  ry: 6px !important;
+}
+
+/* Ajustes de contraste para modo oscuro en las etiquetas de los enlaces */
+.dark .joint-paper .link-label-rect {
+  fill: #6366f1 !important; /* Indigo más brillante en modo oscuro */
+  stroke: #4f46e5 !important;
+}
+
+/* Animación para el nodo de flujo activo */
+@keyframes activeNodePulse {
+  0% {
+    stroke: #10b981;
+    stroke-width: 3.5px;
+    filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5));
+  }
+  50% {
+    stroke: #3b82f6;
+    stroke-width: 5.5px;
+    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.9));
+  }
+  100% {
+    stroke: #10b981;
+    stroke-width: 3.5px;
+    filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.5));
+  }
+}
+
+.active-workflow-node {
+  animation: activeNodePulse 2s infinite ease-in-out !important;
+}
+
+/* Estilos de las calles (swimlanes) */
+.joint-paper .lane-label {
+  fill: #4338ca !important; /* Indigo 700 */
+  font-weight: 800 !important;
+  font-size: 12px !important;
+}
+
+.dark .joint-paper .lane-label {
+  fill: #a5b4fc !important; /* Indigo 300 */
+}
+
+.joint-paper .lane-body {
+  stroke: #6366f1 !important; /* Indigo 500 */
+  stroke-width: 2.5px !important;
+  fill: rgba(99, 102, 241, 0.015) !important;
+}
+
+.dark .joint-paper .lane-body {
+  stroke: #818cf8 !important; /* Indigo 400 */
+  fill: rgba(129, 140, 248, 0.015) !important;
+}

@@ -1,0 +1,173 @@
+<div class="space-y-6 animate-fade-in">
+  
+  <!-- Cabecera -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+      <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+        Asignación de Responsabilidades por Calle (Swimlanes)
+      </h2>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+        Asigna funcionarios a las diferentes calles de tus flujos de negocio. Las calles de tipo "Cliente" se resolverán dinámicamente.
+      </p>
+    </div>
+  </div>
+
+  <!-- Contenedor Principal -->
+  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border shadow-sm rounded-2xl overflow-hidden p-6 space-y-6">
+    
+    <!-- Selección de Diagrama -->
+    <div class="max-w-md">
+      <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wider">
+        Seleccionar Diagrama de Flujo
+      </label>
+      <select 
+        [(ngModel)]="selectedProjectId"
+        (change)="onProjectChange()"
+        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-plomo-border bg-slate-50 dark:bg-plomo-hover text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all focus:outline-none"
+      >
+        <option value="">-- Seleccionar un diagrama --</option>
+        @for (diag of diagramService.diagrams(); track diag.id) {
+          <option [value]="diag.id">{{ diag.name }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Indicador de carga -->
+    @if (loading()) {
+      <div class="py-12 flex justify-center items-center gap-3 text-slate-500 dark:text-slate-400">
+        <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-xs font-semibold">Cargando calles y asignaciones...</span>
+      </div>
+    }
+
+    <!-- Calles del Diagrama -->
+    @if (selectedProjectId() && !loading()) {
+      @if (selectedProjectLanes().length > 0) {
+        <div class="space-y-4">
+          <h3 class="text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider border-b border-slate-100 dark:border-plomo-border/30 pb-2">
+            Calles encontradas en el diagrama
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @for (lane of selectedProjectLanes(); track lane.id) {
+              <div class="bg-slate-50 dark:bg-plomo-hover/20 border border-slate-150 dark:border-plomo-border/40 rounded-2xl p-5 relative overflow-hidden group transition-all duration-300">
+                <div class="absolute top-0 left-0 bottom-0 w-1.5 bg-indigo-500"></div>
+
+                <div class="pl-2 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-sm text-slate-900 dark:text-white leading-none">
+                      {{ lane.nombre }}
+                    </span>
+                    <span 
+                      [class]="isClientLane(lane.nombre) 
+                        ? 'bg-teal-500/10 text-teal-600 border-teal-500/20' 
+                        : 'bg-indigo-550/10 text-indigo-650 border-indigo-550/20'"
+                      class="text-[9px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider"
+                    >
+                      {{ isClientLane(lane.nombre) ? 'Cliente' : 'Funcionario' }}
+                    </span>
+                  </div>
+
+                  <!-- Campo de Selección -->
+                  <div>
+                    @if (isClientLane(lane.nombre)) {
+                      <div class="text-[11px] text-teal-600 dark:text-teal-400 bg-teal-500/5 dark:bg-teal-950/10 border border-teal-500/10 rounded-xl p-2.5 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Asignación automática al cliente iniciador</span>
+                      </div>
+                    } @else {
+                      <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1 uppercase">
+                        Funcionario Responsable
+                      </label>
+                      <select 
+                        [(ngModel)]="currentAssignments()[lane.id]"
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-950 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 focus:outline-none transition-all"
+                      >
+                        <option value="">-- Seleccionar Funcionario --</option>
+                        @for (user of officials(); track user.id) {
+                          <option [value]="user.id">{{ user.nombres }} {{ user.apellidos }} ({{ user.correo }})</option>
+                        }
+                      </select>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Botón de Guardar y Mensajes -->
+          <div class="pt-6 border-t border-slate-150 dark:border-plomo-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <!-- Mensaje de Estado -->
+            <div>
+              @if (statusMessage()) {
+                <div 
+                  [class]="statusType() === 'success' 
+                    ? 'text-emerald-600 bg-emerald-500/10 border-emerald-500/20' 
+                    : 'text-red-650 bg-red-500/10 border-red-500/20'"
+                  class="text-xs font-semibold px-4.5 py-2.5 rounded-xl border flex items-center gap-2 animate-fade-in"
+                >
+                  @if (statusType() === 'success') {
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                    </svg>
+                  }
+                  <span>{{ statusMessage() }}</span>
+                </div>
+              }
+            </div>
+
+            <!-- Botones -->
+            <div class="flex items-center gap-2">
+              <a 
+                routerLink="/diagramas"
+                class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-plomo-border text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-plomo-hover/55 font-semibold text-xs transition-all"
+              >
+                Volver a Diagramas
+              </a>
+              <button 
+                [disabled]="saving()"
+                (click)="saveAssignments()"
+                class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-500 hover:from-indigo-700 hover:to-teal-650 text-white font-semibold text-xs shadow-md shadow-indigo-500/10 hover:shadow-indigo-500/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+              >
+                @if (saving()) {
+                  <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>Guardando...</span>
+                } @else {
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Guardar Asignaciones</span>
+                }
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      } @else {
+        <div class="py-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-plomo-border rounded-2xl">
+          Este diagrama no tiene calles (swimlanes) modeladas. Crea al menos una calle en el editor.
+        </div>
+      }
+    } @else if (!selectedProjectId()) {
+      <div class="py-12 text-center text-slate-400 border border-dashed border-slate-200 dark:border-plomo-border rounded-2xl">
+        Por favor, seleccione un diagrama arriba para ver y configurar sus calles.
+      </div>
+    }
+
+  </div>
+
+</div>

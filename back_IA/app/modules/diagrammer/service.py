@@ -1,13 +1,18 @@
-from app.core.config import get_client, Config
-from pydantic import BaseModel
-from typing import List, Optional, Any
 import json
 import re
+from typing import List, Optional, Any
+from pydantic import BaseModel
+from app.core.config import get_client, Config
+
 
 class DiagramState(BaseModel):
+    """Modelo Pydantic para validar el estado del diagrama."""
     cells: List[Any]
 
+
 class DiagrammerService:
+    """Servicio para interactuar con la IA de Groq y generar comandos."""
+
     def __init__(self):
         self.client = get_client()
         self.system_prompt = """
@@ -40,11 +45,22 @@ class DiagrammerService:
         - RESPONDE EXCLUSIVAMENTE CON EL ARRAY JSON. SIN EXPLICACIONES.
         """
 
-    async def generate_commands(self, prompt: str, state: Optional[DiagramState] = None):
+    async def generate_commands(
+        self, prompt: str, state: Optional[DiagramState] = None
+    ) -> Any:
+        """
+        Genera comandos JSON para modificar el diagrama según el prompt.
+        
+        Args:
+            prompt (str): La solicitud del usuario.
+            state (Optional[DiagramState]): El estado actual del diagrama.
+            
+        Returns:
+            Any: Un objeto JSON parseado (lista/dict) o texto plano si es una sugerencia.
+        """
         if not self.client:
-            return {"error": "Cliente de Gemini no inicializado."}
+            return {"error": "Cliente de Groq no inicializado."}
 
-        # Construir el contexto con el estado actual
         current_state_str = "Vacio"
         if state and state.cells:
             current_state_str = json.dumps([c for c in state.cells], indent=2)
@@ -58,19 +74,50 @@ class DiagrammerService:
         REQUERIMIENTO DEL USUARIO:
         {prompt}
         """
-        
+
         try:
-            # Nueva sintaxis de la SDK google-genai
-            response = self.client.models.generate_content(
-                model=Config.GEMINI_MODEL,
-                contents=full_prompt
+            # Llamada a la API de Groq según el formato requerido
+            completion = self.client.chat.completions.create(
+                model=Config.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": full_prompt
+                    }
+                ],
+                temperature=0.2,
+                max_completion_tokens=8000,
+                top_p=1,
+                stream=False,
+                stop=None,
+                compound_custom={
+                    "tools": {
+                        "enabled_tools": [
+                            "web_search",
+                            "code_interpreter",
+                            "visit_website"
+                        ]
+                    }
+                }
             )
-            
-            # Limpieza robusta de Markdown
-            text = response.text.strip()
-            clean_json = re.sub(r"^```json\s*|\s*```$", "", text, flags=re.MULTILINE)
-            
-            return json.loads(clean_json)
-        except Exception as e:
-            print(f"Error en Gemini (New SDK): {e}")
-            return {"error": f"Error al procesar comandos: {str(e)}"}
+
+            # Extraer el texto de la respuesta
+            text = completion.choices[0].message.content or ""
+            text = text.strip()
+
+            # Intentar extraer JSON de bloques de código markdown o entre corchetes
+            json_match = re.search(r"```json\s*([\s\S]*?)\s*```", text)
+            if not json_match:
+                json_match = re.search(r"(\[[\s\S]*\]|\{[\s\S]*\})", text)
+
+            clean_json = json_match.group(1) if json_match else text
+
+            try:
+                return json.loads(clean_json)
+            except json.JSONDecodeError:
+                # Si falla el parseo, devolvemos el texto original (mensaje/sugerencia)
+                return text
+
+        except Exception as error:
+            print(f"Error en Groq: {error}")
+            return {"error": f"Error al procesar comandos: {str(error)}"}

@@ -1,0 +1,141 @@
+<div class="space-y-6 animate-fade-in">
+  
+  <!-- Cabecera -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+      <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+        Bandeja de Entrada de Tareas
+      </h2>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+        Aquí verás los pasos del flujo que requieren de tu intervención, formularios que debes llenar y aprobaciones pendientes.
+      </p>
+    </div>
+
+    <button 
+      (click)="loadTasks()"
+      class="px-4 py-2 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-plomo-hover/50 font-semibold text-xs transition-all flex items-center gap-1.5 shadow-sm transform hover:-translate-y-0.5"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-indigo-500">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+      </svg>
+      Actualizar Bandeja
+    </button>
+  </div>
+
+  <!-- Contenedor Principal (Tabla) -->
+  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border shadow-sm rounded-2xl overflow-hidden">
+    
+    @if (loading()) {
+      <div class="py-16 flex flex-col justify-center items-center gap-3 text-slate-500 dark:text-slate-400">
+        <svg class="animate-spin h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-xs font-semibold">Cargando tus tareas pendientes...</span>
+      </div>
+    } @else {
+      @if (tasks().length > 0) {
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-left">
+            <thead>
+              <tr class="bg-slate-50/75 dark:bg-plomo-hover/20 border-b border-slate-150 dark:border-plomo-border/40">
+                <th class="px-6 py-4 text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider pl-8">
+                  Proceso / Trámite
+                </th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+                  Tarea Requerida
+                </th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+                  Fecha de Asignación
+                </th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+                  Estado
+                </th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-650 dark:text-slate-400 uppercase tracking-wider text-right pr-8">
+                  Acción
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-plomo-border/30">
+              @for (task of tasks(); track task.id) {
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-plomo-hover/10 transition-colors group">
+                  
+                  <!-- Proceso -->
+                  <td class="px-6 py-4 pl-8">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
+                        P
+                      </div>
+                      <div>
+                        <span class="font-bold text-xs text-slate-900 dark:text-white block group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                          {{ getProjectName(task.projectId) }}
+                        </span>
+                        <span class="text-[10px] text-slate-400 block mt-0.5">
+                          ID Instancia: {{ task.processInstanceId }}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <!-- Tarea -->
+                  <td class="px-6 py-4">
+                    <div class="flex flex-col">
+                      <span class="font-semibold text-xs text-slate-800 dark:text-slate-200">
+                        {{ task.nodeLabel }}
+                      </span>
+                      <span class="text-[10px] text-slate-450 mt-0.5">
+                        ID Nodo: {{ task.nodeId }}
+                      </span>
+                    </div>
+                  </td>
+
+                  <!-- Fecha -->
+                  <td class="px-6 py-4 text-xs text-slate-600 dark:text-slate-400">
+                    {{ formatDate(task.createdAt) }}
+                  </td>
+
+                  <!-- Estado -->
+                  <td class="px-6 py-4">
+                    <span class="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-md border bg-amber-500/10 text-amber-600 border-amber-500/20">
+                      Pendiente
+                    </span>
+                  </td>
+
+                  <!-- Acciones -->
+                  <td class="px-6 py-4 text-right pr-8">
+                    <button 
+                      (click)="executeTask(task.id)"
+                      class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-all shadow-sm shadow-indigo-500/10 hover:shadow-indigo-500/20 transform hover:-translate-y-0.5 inline-flex items-center gap-1"
+                    >
+                      <span>Ejecutar</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                      </svg>
+                    </button>
+                  </td>
+
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="py-20 text-center space-y-4">
+          <div class="w-16 h-16 rounded-full bg-slate-50 dark:bg-plomo-hover/20 flex items-center justify-center mx-auto text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.03 0 1.9.693 2.166 1.638m-7.377 2.24l-.407 14.583c-.015.533.428.972.962.972h9.75c.533 0 .977-.439.962-.972l-.407-14.583M9.75 9.75h.008v.008H9.75V9.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+            </svg>
+          </div>
+          <div class="max-w-xs mx-auto">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Bandeja Vacía</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-450 mt-1 leading-relaxed">
+              No tienes ninguna tarea asignada pendiente de resolución en este momento. ¡Todo al día!
+            </p>
+          </div>
+        </div>
+      }
+    }
+
+  </div>
+
+</div>

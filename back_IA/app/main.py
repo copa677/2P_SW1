@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.modules.diagrammer.router import router as diagrammer_router
-from app.modules.agent.router import router as agent_router
+from app.api.v1.api import api_router
 from app.core.config import Config
 
 app = FastAPI(
     title="UML Activity Agent API",
-    description="Backend modular de IA para generación de diagramas y asistencia interactiva.",
-    version="1.0.0"
+    description="Backend profesional de IA con arquitectura por capas.",
+    version="1.1.0"
 )
 
 # Configurar CORS
@@ -15,14 +14,13 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"]
 )
 
-# Registrar Routers con prefijo de versión
-app.include_router(diagrammer_router, prefix="/api/v1")
-app.include_router(agent_router, prefix="/api/v1")
+# Registrar Router principal
+app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/health")
 def health_check():

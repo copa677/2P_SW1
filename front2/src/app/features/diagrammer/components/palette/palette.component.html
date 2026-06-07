@@ -1,0 +1,139 @@
+<div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-5 shadow-sm space-y-5 transition-all duration-300">
+  
+  <div>
+    <h3 class="font-bold text-slate-900 dark:text-white text-sm">
+      Paleta de Elementos
+    </h3>
+    <p class="text-[10px] text-slate-500 mt-0.5">
+      Haz clic en un elemento para colocarlo en el centro del lienzo.
+    </p>
+  </div>
+
+  <!-- Rejilla de Elementos UML -->
+  <div class="space-y-2.5">
+    
+    <!-- Nodo de Inicio -->
+    <button 
+      (click)="selectElement('start')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Nodo de Inicio"
+    >
+      <div class="w-5 h-5 rounded-full bg-slate-800 dark:bg-slate-300 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform"></div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Inicio</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Punto de arranque</span>
+      </div>
+    </button>
+
+    <!-- Nodo Fin -->
+    <button 
+      (click)="selectElement('end')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Nodo de Fin"
+    >
+      <div class="w-6 h-6 rounded-full border-2 border-slate-800 dark:border-slate-350 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+        <div class="w-2.5 h-2.5 rounded-full bg-slate-800 dark:bg-slate-350"></div>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Fin</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Punto de conclusión</span>
+      </div>
+    </button>
+
+    <!-- Actividad -->
+    <button 
+      (click)="selectElement('activity')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Actividad"
+    >
+      <div class="w-7 h-5 rounded-lg bg-indigo-600 border border-indigo-700 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform"></div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Actividad / Proceso</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Operación o tarea</span>
+      </div>
+    </button>
+
+    <!-- Condicional (Decisión) -->
+    <button 
+      (click)="selectElement('decision')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Condicional / Decisión"
+    >
+      <div class="w-7 h-4 rotate-45 bg-yellow-200 border border-yellow-500 dark:bg-yellow-500/20 dark:border-yellow-400/40 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform"></div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Condición / Decisión</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Bifurcación por respuesta</span>
+      </div>
+    </button>
+
+    <!-- Separador suave -->
+    <div class="border-t border-slate-100 dark:border-plomo-border my-2"></div>
+
+    <!-- Fork Horizontal -->
+    <button 
+      (click)="selectElement('fork-h')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Fork Horizontal"
+    >
+      <div class="w-8 h-2 bg-slate-800 dark:bg-slate-300 rounded shrink-0 shadow-sm group-hover:scale-105 transition-transform"></div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Fork Horizontal</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Sincronización horizontal</span>
+      </div>
+    </button>
+
+    <!-- Fork Vertical -->
+    <button 
+      (click)="selectElement('fork-v')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Fork Vertical"
+    >
+      <div class="w-2 h-8 bg-slate-800 dark:bg-slate-300 rounded shrink-0 shadow-sm group-hover:scale-105 transition-transform"></div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Fork Vertical</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Sincronización vertical</span>
+      </div>
+    </button>
+
+    <!-- Separador suave -->
+    <div class="border-t border-slate-100 dark:border-plomo-border my-2"></div>
+
+    <!-- Calle Horizontal -->
+    <button 
+      (click)="selectElement('lane-h')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Calle Horizontal"
+    >
+      <!-- Lane Icon -->
+      <div class="w-8 h-5 border border-slate-300 border-dashed flex flex-col shrink-0 group-hover:scale-105 transition-transform">
+        <div class="h-2 w-full bg-slate-100 dark:bg-plomo-hover"></div>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Calle Horizontal</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Carril horizontal de sector</span>
+      </div>
+    </button>
+
+    <!-- Calle Vertical -->
+    <button 
+      (click)="selectElement('lane-v')"
+      class="w-full p-3 rounded-xl border border-slate-200 dark:border-plomo-border hover:bg-slate-50 dark:hover:bg-plomo-hover/50 flex items-center gap-3 transition-all text-left group"
+      title="Calle Vertical"
+    >
+      <!-- Lane Icon -->
+      <div class="w-5 h-8 border border-slate-300 border-dashed flex shrink-0 group-hover:scale-105 transition-transform">
+        <div class="w-2 h-full bg-slate-100 dark:bg-plomo-hover"></div>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Calle Vertical</span>
+        <span class="text-[9px] text-slate-400 mt-0.5">Carril vertical de sector</span>
+      </div>
+    </button>
+
+  </div>
+
+  <div class="p-3 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/30 rounded-xl text-[10px] text-indigo-750 dark:text-indigo-400 leading-normal">
+    **Herramienta Conectar:** Actívala en la cabecera del editor para trazar enlaces haciendo clic en el origen y luego en el destino.
+  </div>
+
+</div>

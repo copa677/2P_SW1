@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./back_1erP
+    ports:
+      - "8000:8000"
+    environment:
+      - IA_SERVICE_URL=http://back-ia:5000
+    volumes:
+      - ./back_1erP/src/main/resources/firebase-service-account.json:/app/resources/firebase-service-account.json
+    depends_on:
+      - back-ia
+
+  back-ia:
+    build: ./back_IA
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./back_IA/.env
+    restart: always
+
+  frontend:
+    build: ./front_1erP
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
