@@ -418,25 +418,7 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
       this.selectedElementType.set('link');
     });
 
-    // 3. Crear particiones de flecha (vértices de enlace) mediante Shift + Clic
-    this.paper.on('link:pointerclick', (linkView: any, evt, x, y) => {
-      if (evt.shiftKey && this.editable()) {
-        const link = linkView.model;
-        const currentVertices = link.vertices() || [];
-        link.vertices([...currentVertices, { x, y }]);
-        this.showLinkTools(linkView);
-        
-        // También marcar la celda como seleccionada en properties panel
-        this.selectedCellId.set(link.id as string);
-        this.selectedCellType.set('link');
-        const labels = link.labels();
-        const text = labels && labels.length > 0 ? (labels[0] as any).attrs.text.text : '';
-        this.selectedCellText.set(text);
-        this.selectedCellColor.set('');
-        this.selectedCustomFields.set([]);
-        this.selectedElementType.set('link');
-      }
-    });
+
 
     // 4. Conectar nodos de forma interactiva cuando la herramienta está activa
     this.paper.on('element:pointerdown', (cellView: any, evt) => {
@@ -622,14 +604,6 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
   showLinkTools(linkView: any) {
     this.hideLinkTools();
     if (!this.editable()) return;
-
-    const verticesTool = new joint.linkTools.Vertices();
-    const segmentsTool = new joint.linkTools.Segments();
-    const toolsView = new joint.dia.ToolsView({
-      tools: [verticesTool, segmentsTool]
-    });
-
-    linkView.addTools(toolsView);
     this.activeToolsLinkView = linkView;
   }
 
