@@ -2,11 +2,11 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DiagramService, Diagram } from '../../../../core/services/diagram.service';
-import { UserService } from '../../../../core/services/user.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { FlowAssignmentService } from '../../../../core/services/flow-assignment.service';
-import { User } from '../../../../core/models/user.model';
+import { DiagramService, Diagram } from '../../core/services/diagram.service';
+import { UserService } from '../../core/services/user.service';
+import { AuthService } from '../../core/services/auth.service';
+import { FlowAssignmentService } from '../../core/services/flow-assignment.service';
+import { User } from '../../core/models/user.model';
 
 export interface LaneAssignment {
   calleId: string;
@@ -39,7 +39,7 @@ export class FlowAssignmentsComponent implements OnInit {
   readonly selectedProjectId = signal<string>('');
   readonly selectedProjectLanes = signal<any[]>([]);
   readonly currentAssignments = signal<Record<string, string>>({}); // { calleId: assignedUserId }
-  
+
   readonly loading = signal<boolean>(false);
   readonly saving = signal<boolean>(false);
   readonly statusMessage = signal<string>('');
@@ -78,7 +78,7 @@ export class FlowAssignmentsComponent implements OnInit {
       const parsed = JSON.parse(project.data);
       const lanes = parsed.calles || [];
       this.selectedProjectLanes.set(lanes);
-      
+
       // Cargar asignaciones guardadas en backend
       this.loading.set(true);
       this.flowAssignmentService.getAssignmentByProjectId(projectId).subscribe({
@@ -125,7 +125,7 @@ export class FlowAssignmentsComponent implements OnInit {
     for (const lane of lanes) {
       const isClient = this.isClientLane(lane.nombre);
       const assignedUserId = assMap[lane.id] || '';
-      
+
       if (!isClient && !assignedUserId) {
         this.statusMessage.set(`Por favor, asigne un funcionario a la calle: "${lane.nombre}".`);
         this.statusType.set('error');

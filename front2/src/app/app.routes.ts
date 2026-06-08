@@ -10,7 +10,7 @@ const authGuard: CanActivateFn = () => {
   if (authService.isAuthenticated()) {
     return true;
   }
-  
+
   router.navigate(['/login']);
   return false;
 };
@@ -40,7 +40,7 @@ export const routes: Routes = [
       }
     ]
   },
-  
+
   // Rutas Principales protegidas por AuthGuard
   {
     path: '',
@@ -69,15 +69,19 @@ export const routes: Routes = [
       },
       {
         path: 'asignaciones',
-        loadComponent: () => import('./features/diagrammer/pages/flow-assignments/flow-assignments.component').then(m => m.FlowAssignmentsComponent)
+        loadComponent: () => import('./features/flow-assignments/flow-assignments.component').then(m => m.FlowAssignmentsComponent)
       },
       {
         path: 'mis-tareas',
-        loadComponent: () => import('./features/diagrammer/pages/my-tasks/my-tasks.component').then(m => m.MyTasksComponent)
+        loadComponent: () => import('./features/my-tasks/my-tasks.component').then(m => m.MyTasksComponent)
       },
       {
         path: 'mis-tareas/ejecutar/:taskId',
-        loadComponent: () => import('./features/diagrammer/pages/task-execution/task-execution.component').then(m => m.TaskExecutionComponent)
+        loadComponent: () => import('./features/task-execution/task-execution.component').then(m => m.TaskExecutionComponent)
+      },
+      {
+        path: 'mis-tareas/seguimiento/:instanceId',
+        loadComponent: () => import('./features/task-execution/task-execution.component').then(m => m.TaskExecutionComponent)
       },
       {
         path: '',
@@ -86,7 +90,7 @@ export const routes: Routes = [
       }
     ]
   },
-  
+
   // Redirección comodín para URLs no válidas
   {
     path: '**',

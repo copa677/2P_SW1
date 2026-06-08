@@ -67,25 +67,27 @@ export class UserService {
   }
 
   // Actualizar los permisos granulares de un usuario
-  updateUserPermissions(userId: string, permissions: string[]) {
+  updateUserPermissions(userId: string, permissions: string[]): Observable<User> {
     const user = this._users().find(u => u.id === userId);
-    if (user) {
-      const payload = {
-        ...user,
-        permisos: permissions
-      };
-      this.http.put<User>(`${this.API_URL}/${userId}`, payload).subscribe({
-        next: () => this.loadUsers().subscribe(),
-        error: err => console.error('Error updating user permissions', err)
-      });
+    if (!user) {
+      throw new Error('User not found');
     }
+    const payload = {
+      ...user,
+      permisos: permissions
+    };
+    return this.http.put<User>(`${this.API_URL}/${userId}`, payload).pipe(
+      tap(() => this.loadUsers().subscribe())
+    );
   }
 
   // Restablecer permisos de un usuario al preset de su rol
   resetUserPermissionsToPreset(userId: string) {
     const user = this._users().find(u => u.id === userId);
     if (user) {
-      this.updateUserPermissions(userId, this.roleService.getPresetPermissions(user.rol));
+      this.updateUserPermissions(userId, this.roleService.getPresetPermissions(user.rol)).subscribe({
+        error: err => console.error('Error resetting user permissions to preset', err)
+      });
     }
   }
 

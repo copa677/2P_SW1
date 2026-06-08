@@ -32,4 +32,9 @@ public class TaskInstanceController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/process/{processInstanceId}")
+    public ResponseEntity<List<TaskInstance>> getTasksByProcessInstance(@PathVariable String processInstanceId) {
+        return ResponseEntity.ok(taskInstanceRepository.findByProcessInstanceId(processInstanceId));
+    }
 }

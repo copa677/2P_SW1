@@ -1,4 +1,5 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, effect } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RoleService } from '../../core/services/role.service';
 import { UserService } from '../../core/services/user.service';
@@ -8,7 +9,7 @@ import { Role, User } from '../../core/models/user.model';
 @Component({
   selector: 'app-permisos',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './permisos.component.html'
 })
 export class PermisosComponent {
@@ -20,6 +21,12 @@ export class PermisosComponent {
   readonly selectedUserId = signal<string>('');
   readonly selectedTabId = signal<string>('dashboard');
 
+  // Estado temporal de los permisos modificados
+  readonly tempPermissions = signal<string[]>([]);
+  readonly isSaving = signal<boolean>(false);
+  readonly statusMessage = signal<string>('');
+  readonly statusType = signal<'success' | 'error' | ''>('');
+
   // Computed Signal: Obtiene el usuario seleccionado reactivamente
   readonly selectedUser = computed(() => {
     const list = this.userService.users();
@@ -29,6 +36,21 @@ export class PermisosComponent {
     if (found) return found;
     return list[0];
   });
+
+  constructor() {
+    // Sincronizar el estado temporal de permisos cuando cambia el usuario seleccionado
+    effect(() => {
+      const user = this.selectedUser();
+      if (user) {
+        this.tempPermissions.set(user.permisos || []);
+        // Resetear mensajes
+        this.statusMessage.set('');
+        this.statusType.set('');
+      } else {
+        this.tempPermissions.set([]);
+      }
+    }, { allowSignalWrites: true });
+  }
 
   canEdit(): boolean {
     return this.authService.hasPermission('permisos', 'editar');
@@ -48,7 +70,7 @@ export class PermisosComponent {
     if (user.rol === 'ADMIN') return true;
 
     const permKey = `${this.selectedTabId()}:${actionId}`;
-    return user.permisos && user.permisos.includes(permKey);
+    return this.tempPermissions().includes(permKey);
   }
 
   // Cambiar usuario seleccionado
@@ -61,28 +83,57 @@ export class PermisosComponent {
     this.selectedTabId.set(tabId);
   }
 
-  // Alternar permisos dinámicos en caliente para el usuario seleccionado
+  // Alternar permisos dinámicos localmente para el usuario seleccionado
   togglePermission(actionId: string) {
     const user = this.selectedUser();
     if (!user || !this.canEdit() || user.rol === 'ADMIN') return;
 
     const permKey = `${this.selectedTabId()}:${actionId}`;
-    let updatedPerms: string[];
+    const current = this.tempPermissions();
+    let updated: string[];
 
-    if (user.permisos && user.permisos.includes(permKey)) {
-      updatedPerms = user.permisos.filter(p => p !== permKey);
+    if (current.includes(permKey)) {
+      updated = current.filter(p => p !== permKey);
     } else {
-      updatedPerms = user.permisos ? [...user.permisos, permKey] : [permKey];
+      updated = [...current, permKey];
     }
 
-    this.userService.updateUserPermissions(user.id, updatedPerms);
+    this.tempPermissions.set(updated);
   }
 
-  // Restablecer permisos de fábrica (Presets por Rol)
+  // Guardar los permisos temporales en el backend
+  savePermissions() {
+    const user = this.selectedUser();
+    if (!user || !this.canEdit() || user.rol === 'ADMIN') return;
+
+    this.isSaving.set(true);
+    this.statusMessage.set('');
+    this.statusType.set('');
+
+    this.userService.updateUserPermissions(user.id, this.tempPermissions()).subscribe({
+      next: () => {
+        this.isSaving.set(false);
+        this.statusMessage.set('Permisos actualizados correctamente en el sistema.');
+        this.statusType.set('success');
+      },
+      error: (err) => {
+        this.isSaving.set(false);
+        this.statusMessage.set('Error al actualizar los permisos en el servidor.');
+        this.statusType.set('error');
+        console.error(err);
+      }
+    });
+  }
+
+  // Restablecer permisos de fábrica (Presets por Rol) al estado temporal
   resetPermissions() {
     const user = this.selectedUser();
-    if (!user || !this.canEdit()) return;
-    this.userService.resetUserPermissionsToPreset(user.id);
+    if (!user || !this.canEdit() || user.rol === 'ADMIN') return;
+
+    const presetPerms = this.roleService.getPresetPermissions(user.rol);
+    this.tempPermissions.set(presetPerms);
+    this.statusMessage.set('Permisos restablecidos temporalmente al preset del rol. Haz clic en "Guardar Permisos" para aplicar.');
+    this.statusType.set('success');
   }
 
   // Clases y badges estéticos

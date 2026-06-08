@@ -1,6 +1,7 @@
 package back_1erP.controller;
 
 import back_1erP.model.ProcessInstance;
+import back_1erP.model.ProcessHistoryLog;
 import back_1erP.model.User;
 import back_1erP.service.ProcessService;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +55,11 @@ public class ProcessController {
         return processService.getProcessById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{instanceId}/history")
+    @PreAuthorize("hasAuthority('procesos:leer') or isAuthenticated()")
+    public ResponseEntity<List<ProcessHistoryLog>> getProcessHistory(@PathVariable String instanceId) {
+        return ResponseEntity.ok(processService.getProcessHistory(instanceId));
     }
 }

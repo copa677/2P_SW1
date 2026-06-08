@@ -36,11 +36,13 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.assignToOfficial(id, userId, username));
     }
 
-    // Obtener todos los proyectos del usuario (dueño o colaborador), o todos si es ADMIN
+    // Obtener todos los proyectos del usuario (dueño o colaborador), o todos si es ADMIN/CLIENTE/FUNCIONARIO
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Project>> listProjects(@AuthenticationPrincipal User currentUser) {
-        if (currentUser.getRol() == back_1erP.model.Role.ADMIN) {
+        if (currentUser.getRol() == back_1erP.model.Role.ADMIN ||
+            currentUser.getRol() == back_1erP.model.Role.CLIENTE ||
+            currentUser.getRol() == back_1erP.model.Role.FUNCIONARIO) {
             return ResponseEntity.ok(projectService.getAllProjects());
         }
         return ResponseEntity.ok(projectService.getProjectsForUser(currentUser.getId()));

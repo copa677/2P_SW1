@@ -412,5 +412,9 @@ public class ProcessService {
             return true;
         }).orElse(false);
     }
+
+    public List<ProcessHistoryLog> getProcessHistory(String processInstanceId) {
+        return processHistoryLogRepository.findByProcessInstanceId(processInstanceId);
+    }
 }
 

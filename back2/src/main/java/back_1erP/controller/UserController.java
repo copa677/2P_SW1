@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('usuarios:editar') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('usuarios:editar') or hasAuthority('permisos:editar') or hasRole('ADMIN')")
     public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User userDetails) {
         return userRepository.findById(id)
                 .map(user -> {

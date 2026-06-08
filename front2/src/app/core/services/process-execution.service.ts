@@ -57,4 +57,12 @@ export class ProcessExecutionService {
   advanceProcess(instanceId: string, payload: any): Observable<ProcessInstance> {
     return this.http.post<ProcessInstance>(`${this.PROCESS_API}/${instanceId}/advance`, payload);
   }
+
+  getTasksByProcess(processInstanceId: string): Observable<TaskInstance[]> {
+    return this.http.get<TaskInstance[]>(`${this.TASKS_API}/process/${processInstanceId}`);
+  }
+
+  getProcessHistory(instanceId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.PROCESS_API}/${instanceId}/history`);
+  }
 }
