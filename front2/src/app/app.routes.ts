@@ -84,6 +84,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/task-execution/task-execution.component').then(m => m.TaskExecutionComponent)
       },
       {
+        path: 'documentos',
+        loadComponent: () => import('./features/document-explorer/document-explorer.component').then(m => m.DocumentExplorerComponent)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

@@ -65,4 +65,25 @@ export class ProcessExecutionService {
   getProcessHistory(instanceId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.PROCESS_API}/${instanceId}/history`);
   }
+
+  uploadDocument(file: File, userId: string, projectId: string, instanceId: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', userId);
+    formData.append('projectId', projectId);
+    formData.append('instanceId', instanceId);
+    return this.http.post<any>(`${environment.apiUrl}/documents/upload`, formData);
+  }
+
+  getDocumentDownloadUrl(s3Key: string): string {
+    return `${environment.apiUrl}/documents/download?key=${encodeURIComponent(s3Key)}`;
+  }
+
+  getS3DocumentTree(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/documents/list`);
+  }
+
+  deleteS3Document(key: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/documents?key=${encodeURIComponent(key)}`);
+  }
 }

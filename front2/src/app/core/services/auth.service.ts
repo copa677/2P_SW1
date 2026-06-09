@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, tap, map, catchError, of } from 'rxjs';
 import { User, Role } from '../models/user.model';
 import { environment } from '../../../environments/environment';
+import { RoleService } from './role.service';
 
 interface LoginResponse {
   access_token: string;
@@ -16,6 +17,7 @@ interface LoginResponse {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly roleService = inject(RoleService);
   private readonly AUTH_URL = `${environment.apiUrl}/auth`;
 
   private readonly _currentUser = signal<User | null>(null);
@@ -68,7 +70,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  // Comprobar si el usuario actual posee un permiso dinámico específico
+  // Comprobar si el usuario actual posee un permiso dinámico específico (traducido para el backend)
   hasPermission(tab: string, action: string): boolean {
     const user = this.currentUser();
     if (!user) return false;
@@ -76,7 +78,7 @@ export class AuthService {
     // Si es administrador, le otorgamos pase libre por defecto a todo
     if (user.rol === 'ADMIN') return true;
 
-    const permKey = `${tab}:${action}`;
+    const permKey = this.roleService.mapToBackendPermission(tab, action);
     return user.permisos && user.permisos.includes(permKey);
   }
 }

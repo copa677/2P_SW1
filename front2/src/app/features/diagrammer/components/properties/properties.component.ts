@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 export interface CustomField {
   id: string;
   name: string;
-  type: 'text' | 'number' | 'date' | 'checkbox' | 'select' | 'file';
+  type: 'text' | 'number' | 'date' | 'checkbox' | 'select' | 'file' | 'table' | 'label' | 'list';
   value: any;
   required?: boolean;
   options?: string;
   fileName?: string;
+  rowsCount?: number;
 }
 
 @Component({
@@ -47,20 +48,45 @@ export class PropertiesComponent {
 
   // Creador de campos dinámicos
   newFieldName = '';
-  newFieldType: 'text' | 'number' | 'date' | 'checkbox' | 'select' | 'file' = 'text';
+  newFieldType: 'text' | 'number' | 'date' | 'checkbox' | 'select' | 'file' | 'table' | 'label' | 'list' = 'text';
   newFieldOptions = '';
+  newFieldRowsCount = 1;
   newFieldRequired = false;
 
   addField() {
     if (!this.newFieldName.trim()) return;
+
+    let defaultValue: any = '';
+    if (this.newFieldType === 'checkbox') {
+      defaultValue = false;
+    } else if (this.newFieldType === 'number') {
+      defaultValue = 0;
+    } else if (this.newFieldType === 'list') {
+      defaultValue = '[]';
+    } else if (this.newFieldType === 'table') {
+      const cols = this.newFieldOptions.split(',').map(c => c.trim()).filter(c => c.length > 0);
+      const rows = [];
+      const rowsNum = this.newFieldRowsCount || 1;
+      for (let i = 0; i < rowsNum; i++) {
+        const row: Record<string, string> = {};
+        cols.forEach(c => {
+          row[c] = '';
+        });
+        rows.push(row);
+      }
+      defaultValue = JSON.stringify(rows);
+    } else if (this.newFieldType === 'label') {
+      defaultValue = this.newFieldOptions.trim() || 'Texto Informativo';
+    }
 
     const newField: CustomField = {
       id: 'field_' + Math.random().toString(36).substring(2, 9),
       name: this.newFieldName.trim(),
       type: this.newFieldType,
       required: this.newFieldRequired,
-      value: this.newFieldType === 'checkbox' ? false : (this.newFieldType === 'number' ? 0 : ''),
-      options: this.newFieldType === 'select' ? this.newFieldOptions.trim() : undefined
+      value: defaultValue,
+      options: ['select', 'table', 'label'].includes(this.newFieldType) ? this.newFieldOptions.trim() : undefined,
+      rowsCount: this.newFieldType === 'table' ? this.newFieldRowsCount : undefined
     };
 
     const updated = [...this.customFields(), newField];
@@ -68,6 +94,7 @@ export class PropertiesComponent {
 
     this.newFieldName = '';
     this.newFieldOptions = '';
+    this.newFieldRowsCount = 1;
     this.newFieldRequired = false;
   }
 
@@ -120,6 +147,9 @@ export class PropertiesComponent {
       case 'checkbox': return 'Casilla (Boolean)';
       case 'select': return 'Lista (Select)';
       case 'file': return 'Archivo (Imagen, Video, Doc, etc.)';
+      case 'table': return 'Tabla';
+      case 'label': return 'Etiqueta (Texto Fijo)';
+      case 'list': return 'Lista Dinámica';
       default: return type;
     }
   }

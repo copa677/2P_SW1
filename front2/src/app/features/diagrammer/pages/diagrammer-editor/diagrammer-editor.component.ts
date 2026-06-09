@@ -975,7 +975,8 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
         name: f.name,
         type: f.type,
         required: f.required || false,
-        options: f.options
+        options: f.options,
+        rowsCount: f.rowsCount
       }));
 
       elements.push({

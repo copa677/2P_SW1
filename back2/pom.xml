@@ -85,6 +85,13 @@
 			<artifactId>firebase-admin</artifactId>
 			<version>9.2.0</version>
 		</dependency>
+
+		<!-- AWS SDK for Java S3 -->
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>2.25.15</version>
+		</dependency>
 	</dependencies>
 
 	<build>

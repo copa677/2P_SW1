@@ -69,7 +69,7 @@ export class PermisosComponent {
     // El administrador tiene todo marcado siempre
     if (user.rol === 'ADMIN') return true;
 
-    const permKey = `${this.selectedTabId()}:${actionId}`;
+    const permKey = this.roleService.mapToBackendPermission(this.selectedTabId(), actionId);
     return this.tempPermissions().includes(permKey);
   }
 
@@ -88,7 +88,7 @@ export class PermisosComponent {
     const user = this.selectedUser();
     if (!user || !this.canEdit() || user.rol === 'ADMIN') return;
 
-    const permKey = `${this.selectedTabId()}:${actionId}`;
+    const permKey = this.roleService.mapToBackendPermission(this.selectedTabId(), actionId);
     const current = this.tempPermissions();
     let updated: string[];
 
