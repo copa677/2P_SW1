@@ -8,6 +8,7 @@ app = FastAPI(
     description="Backend profesional de IA con arquitectura por capas.",
     version="1.1.0"
 )
+#uvicorn app.main:app --host 127.0.0.1 --port 5000 --reload
 
 # Configurar CORS
 app.add_middleware(
@@ -26,7 +27,7 @@ app.include_router(api_router, prefix="/api/v1")
 def health_check():
     return {
         "status": "ok",
-        "gemini_configured": Config.GOOGLE_API_KEY is not None
+        "groq_configured": Config.GROQ_API_KEY is not None
     }
 
 if __name__ == "__main__":

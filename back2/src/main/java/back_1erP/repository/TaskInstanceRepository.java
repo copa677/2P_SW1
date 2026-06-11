@@ -8,4 +8,5 @@ public interface TaskInstanceRepository extends MongoRepository<TaskInstance, St
     List<TaskInstance> findByProcessInstanceId(String processInstanceId);
     List<TaskInstance> findByAssignedUserIdAndStatus(String assignedUserId, String status);
     List<TaskInstance> findByProcessInstanceIdAndStatus(String processInstanceId, String status);
+    List<TaskInstance> findByProjectId(String projectId);
 }

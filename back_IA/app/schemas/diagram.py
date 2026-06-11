@@ -4,7 +4,10 @@ from typing import List, Optional, Any
 
 class DiagramState(BaseModel):
     """Modelo Pydantic para validar el estado del diagrama."""
-    cells: List[Any]
+    cells: Optional[List[Any]] = None
+    elementos: Optional[List[Any]] = None
+    enlaces: Optional[List[Any]] = None
+    calles: Optional[List[Any]] = None
 
 
 class AIRequest(BaseModel):

@@ -38,173 +38,598 @@
     </div>
   }
 
-  <!-- Grid de Indicadores/Widgets Clave -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    
-    <!-- Tarjeta 1: Total Usuarios -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
-      <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A3.318 3.318 0 0111.625 21 3.318 3.318 0 018.25 19.237v-.109m7.41-3.07a5.15 5.15 0 00-2.457-3.07M11.625 15c-1.63 0-3.136.552-4.333 1.485M18.25 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zm-11.25 0a9 9 0 011.5 5.398M7.5 15H5.625a3.375 3.375 0 00-3.375 3.375v.11A3.375 3.375 0 005.625 21h1.875m-.375-6H4.125a5.15 5.15 0 00-2.456 3.07" />
-        </svg>
-      </div>
-      <div>
-        <span class="block text-2xl font-bold text-slate-900 dark:text-white">{{ userService.users().length }}</span>
-        <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Usuarios Registrados</span>
-      </div>
-    </div>
-
-    <!-- Tarjeta 2: Roles Definidos -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
-      <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
-        </svg>
-      </div>
-      <div>
-        <span class="block text-2xl font-bold text-slate-900 dark:text-white">4</span>
-        <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Roles del Dominio</span>
-      </div>
-    </div>
-
-    <!-- Tarjeta 3: Pestañas Reguladas -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
-      <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-        </svg>
-      </div>
-      <div>
-        <span class="block text-2xl font-bold text-slate-900 dark:text-white">
-          {{ roleService.tabs.length }}
-        </span>
-        <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Pestañas Reguladas</span>
-      </div>
-    </div>
-
-    <!-- Tarjeta 4: Permisos Asignados Activos -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
-      <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-        </svg>
-      </div>
-      <div>
-        <span class="block text-2xl font-bold text-slate-900 dark:text-white">
-          {{ getActivePermissionsCount() }}
-        </span>
-        <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Acciones Habilitadas</span>
-      </div>
-    </div>
-
+  <!-- Sistema de Pestañas Horizontales -->
+  <div class="border-b border-slate-200 dark:border-plomo-border flex items-center gap-6 mt-4">
+    <button 
+      (click)="activeTab.set('general')"
+      [class.border-indigo-600]="activeTab() === 'general'"
+      [class.text-indigo-600]="activeTab() === 'general'"
+      [class.dark:text-indigo-400]="activeTab() === 'general'"
+      [class.dark:border-indigo-400]="activeTab() === 'general'"
+      [class.border-transparent]="activeTab() !== 'general'"
+      [class.text-slate-500]="activeTab() !== 'general'"
+      class="pb-3 text-sm font-bold border-b-2 transition-all focus:outline-none flex items-center gap-2"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+      </svg>
+      Panel General
+    </button>
+    <button 
+      (click)="activeTab.set('ia')"
+      [class.border-indigo-600]="activeTab() === 'ia'"
+      [class.text-indigo-600]="activeTab() === 'ia'"
+      [class.dark:text-indigo-400]="activeTab() === 'ia'"
+      [class.dark:border-indigo-400]="activeTab() === 'ia'"
+      [class.border-transparent]="activeTab() !== 'ia'"
+      [class.text-slate-500]="activeTab() !== 'ia'"
+      class="pb-3 text-sm font-bold border-b-2 transition-all focus:outline-none flex items-center gap-2"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 animate-pulse">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21m0 0-.813-5.096c-.143-.896-.838-1.592-1.734-1.734L1.356 13.5m0 0L6.452 12.687c.896-.143 1.592-.838 1.734-1.734L9 5.854m0 0 .813 5.096c.143.896.838 1.592 1.734 1.734l5.096.813m0 0-5.096.813c-.896.143-1.592.838-1.734 1.734ZM21 16.25c-.215 0-.417-.118-.527-.299l-.89-1.464a.625.625 0 0 0-1.066 0l-.89 1.464A.624.624 0 0 1 17.1 16.25H15.75c-.414 0-.75-.336-.75-.75v-1.35c0-.215.118-.417.299-.527l1.464-.89a.625.625 0 0 0 0-1.066l-1.464-.89a.624.624 0 0 1-.299-.527V9.5c0-.414.336-.75.75-.75h1.35c.215 0 .417.118.527.299l.89 1.464a.625.625 0 0 0 1.066 0l.89-1.464A.624.624 0 0 1 21 9.5h1.35c.414 0 .75.336.75.75v1.35c0 .215-.118.417-.299.527l-1.464.89a.625.625 0 0 0 0 1.066l1.464.89c.181.11.299.312.299.527V15.5c0 .414-.336.75-.75.75H21Z" />
+      </svg>
+      Reportes Inteligentes (IA)
+    </button>
   </div>
 
-  <!-- Auditoría de Seguridad & Simulación en Caliente -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    
-    <!-- Panel Izquierdo: Permisos de esta Sesión -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 lg:col-span-2 transition-all duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="text-base font-bold text-slate-900 dark:text-white">
-            Auditor de Permisos en Tiempo Real (Tus políticas activas)
-          </h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Muestra las acciones granulares (Ver, Crear, Editar, Eliminar) permitidas por cada pestaña en tu sesión.
-          </p>
+  @if (activeTab() === 'general') {
+    <!-- Grid de Indicadores/Widgets Clave -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- Tarjeta 1: Total Usuarios -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A3.318 3.318 0 0111.625 21 3.318 3.318 0 018.25 19.237v-.109m7.41-3.07a5.15 5.15 0 00-2.457-3.07M11.625 15c-1.63 0-3.136.552-4.333 1.485M18.25 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zm-11.25 0a9 9 0 011.5 5.398M7.5 15H5.625a3.375 3.375 0 00-3.375 3.375v.11A3.375 3.375 0 005.625 21h1.875m-.375-6H4.125a5.15 5.15 0 00-2.456 3.07" />
+          </svg>
         </div>
-        
-        <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
-          En Línea
-        </span>
+        <div>
+          <span class="block text-2xl font-bold text-slate-900 dark:text-white">{{ userService.users().length }}</span>
+          <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Usuarios Registrados</span>
+        </div>
       </div>
 
-      <!-- Listado de Pestañas y sus Acciones Habilitadas -->
-      <div class="space-y-3">
-        @for (tab of roleService.tabs; track tab.id) {
-          <div class="p-3.5 bg-slate-50/50 dark:bg-plomo-hover/20 rounded-xl border border-slate-150 dark:border-plomo-border">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-slate-800 dark:text-white">{{ tab.name }}</span>
-              <span class="text-[9px] text-slate-400 font-mono">{{ tab.id }}</span>
-            </div>
-            
-            <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mb-2.5">
-              {{ tab.description }}
-            </p>
+      <!-- Tarjeta 2: Roles Definidos -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+          </svg>
+        </div>
+        <div>
+          <span class="block text-2xl font-bold text-slate-900 dark:text-white">4</span>
+          <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Roles del Dominio</span>
+        </div>
+      </div>
 
-            <div class="flex flex-wrap gap-2">
-              @for (act of roleService.actions; track act.id) {
-                @if (authService.hasPermission(tab.id, act.id)) {
-                  <span class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30 flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    {{ act.name }}
-                  </span>
-                } @else {
-                  <span class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-400 dark:bg-plomo-hover/40 dark:text-slate-650 border border-slate-200 dark:border-plomo-border/30 flex items-center gap-1.5 opacity-40">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span>
-                    {{ act.name }} (Bloqueado)
-                  </span>
-                }
-              }
-            </div>
+      <!-- Tarjeta 3: Pestañas Reguladas -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+          </svg>
+        </div>
+        <div>
+          <span class="block text-2xl font-bold text-slate-900 dark:text-white">
+            {{ roleService.tabs.length }}
+          </span>
+          <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Pestañas Reguladas</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 4: Permisos Asignados Activos -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2050/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
+        </div>
+        <div>
+          <span class="block text-2xl font-bold text-slate-900 dark:text-white">
+            {{ getActivePermissionsCount() }}
+          </span>
+          <span class="block text-xs font-semibold text-slate-500 dark:text-slate-400">Acciones Habilitadas</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Auditoría de Seguridad & Simulación en Caliente -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Panel Izquierdo: Permisos de esta Sesión -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 lg:col-span-2 transition-all duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">
+              Auditor de Permisos en Tiempo Real (Tus políticas activas)
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Muestra las acciones granulares (Ver, Crear, Editar, Eliminar) permitidas por cada pestaña en tu sesión.
+            </p>
           </div>
+          
+          <span class="px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
+            En Línea
+          </span>
+        </div>
+
+        <!-- Listado de Pestañas y sus Acciones Habilitadas -->
+        <div class="space-y-3">
+          @for (tab of roleService.tabs; track tab.id) {
+            <div class="p-3.5 bg-slate-50/50 dark:bg-plomo-hover/20 rounded-xl border border-slate-150 dark:border-plomo-border">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-800 dark:text-white">{{ tab.name }}</span>
+                <span class="text-[9px] text-slate-400 font-mono">{{ tab.id }}</span>
+              </div>
+              
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight mb-2.5">
+                {{ tab.description }}
+              </p>
+
+              <div class="flex flex-wrap gap-2">
+                @for (act of roleService.actions; track act.id) {
+                  @if (authService.hasPermission(tab.id, act.id)) {
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30 flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      {{ act.name }}
+                    </span>
+                  } @else {
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-lg bg-slate-100 text-slate-400 dark:bg-plomo-hover/40 dark:text-slate-650 border border-slate-200 dark:border-plomo-border/30 flex items-center gap-1.5 opacity-40">
+                      <span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                      {{ act.name }} (Bloqueado)
+                    </span>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <!-- Panel Derecho: Explicación de Caso de Simulación -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 transition-all duration-300 space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">
+            ¿Cómo probar el sistema de permisos granulares?
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+            Sigue estos pasos para validar que los permisos afectan directamente al usuario de forma individual:
+          </p>
+        </div>
+
+        <!-- Pasos estructurados -->
+        <div class="space-y-3">
+          <div class="flex gap-3">
+            <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
+              1
+            </span>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+              **Configuración Granular:** Dirígete a la nueva pestaña **Permisos**. Selecciona al usuario Carlos Flores (carlos.f@politicas.com) de la lista.
+            </p>
+          </div>
+
+          <div class="flex gap-3">
+            <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
+              2
+            </span>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+              **Asignación de Acciones:** Elige la pestaña **Usuarios** en el combobox de la derecha. Activa la acción **Eliminar** para este usuario.
+            </p>
+          </div>
+
+          <div class="flex gap-3">
+            <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
+              3
+            </span>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+              **Efecto Inmediato:** Inicia sesión rápido como **Funcionario** (`funcionario`). En la pestaña **Usuarios**, ¡verás que ahora sí tienes habilitado el botón de eliminar!
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-slate-50 dark:bg-plomo-hover/30 rounded-xl border border-slate-100 dark:border-plomo-border">
+          <h4 class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1">
+            Roles como Presets
+          </h4>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">
+            Los roles cargan un conjunto de permisos prearmados, pero el Administrador puede personalizarlos individualmente por cada usuario.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+  @if (activeTab() === 'ia') {
+    <!-- SECCIÓN DE REPORTES INTELIGENTES (IA) -->
+    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-6 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 transition-all duration-300">
+      <div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">
+          Auditoría de Procesos con Redes Neuronales
+        </h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+          Selecciona un diagrama modelado para evaluar el comportamiento histórico de sus tareas mediante Autoencoders de IA.
+        </p>
+      </div>
+      
+      <!-- Selector de Proyecto -->
+      <div class="shrink-0 flex items-center gap-2">
+        <label for="project-select-dashboard" class="text-xs font-bold text-slate-500 dark:text-slate-400">Proyecto:</label>
+        <select 
+          id="project-select-dashboard"
+          (change)="onProjectSelected($event)"
+          class="bg-slate-50 dark:bg-plomo-hover/50 border border-slate-200 dark:border-plomo-border text-slate-800 dark:text-white text-xs rounded-xl px-3 py-2 font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all min-w-[200px]"
+        >
+          <option value="">-- Seleccionar Proyecto --</option>
+          @for (diag of diagramService.diagrams(); track diag.id) {
+            <option [value]="diag.id" [selected]="selectedProjectId() === diag.id">
+              {{ diag.name }}
+            </option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!-- Estado 1: Ningún proyecto seleccionado -->
+    @if (!selectedProjectId()) {
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-12 rounded-2xl text-center shadow-sm max-w-xl mx-auto mt-6 transition-all duration-300">
+        <div class="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4 shadow-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+          </svg>
+        </div>
+        <h3 class="text-sm font-bold text-slate-800 dark:text-white">Selecciona un Proyecto de Trabajo</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-sm mx-auto leading-relaxed">
+          Elige uno de los diagramas de actividad modelados para evaluar el comportamiento histórico de sus tareas con Inteligencia Artificial.
+        </p>
+      </div>
+    }
+
+    <!-- Estado 2: Cargando métricas -->
+    @if (isLoadingMetrics()) {
+      <div class="flex flex-col items-center justify-center py-20 space-y-3">
+        <div class="w-10 h-10 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 animate-pulse">
+          El motor de Deep Learning está procesando los logs...
+        </span>
+      </div>
+    }
+
+    <!-- Estado 3: Métricas cargadas exitosamente -->
+    @if (selectedProjectId() && !isLoadingMetrics() && iaMetrics()) {
+      
+      <!-- SECTOR DE PROMPT DE BÚSQUEDA Y FILTRADO DENTRO DEL DASHBOARD -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl shadow-sm space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></div>
+          <h3 class="text-sm font-bold text-slate-800 dark:text-white">Filtro y Consulta Inteligente de Reportes (Prompt)</h3>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+          Escribe o dicta tu instrucción en lenguaje natural. Ejemplos: <code class="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-[10px] text-indigo-600 dark:text-indigo-400 font-bold">quiero los flujos del dia 10</code>. El motor de IA filtrará y recalculará las métricas.
+        </p>
+        <div class="flex gap-2">
+          <div class="relative flex-1">
+            <input 
+              type="text" 
+              [ngModel]="filterPrompt()"
+              (ngModelChange)="filterPrompt.set($event)"
+              placeholder="Escribe o dicta tu consulta..."
+              class="w-full bg-slate-50 dark:bg-plomo-hover/40 border border-slate-200 dark:border-plomo-border text-xs rounded-xl pl-4 pr-10 py-3 text-slate-850 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-medium shadow-inner"
+              (keyup.enter)="onApplyPromptFilter()"
+            />
+            <!-- Botón de micrófono interactivo -->
+            <button
+              (click)="toggleSpeechListening()"
+              [title]="isListeningSpeech() ? 'Detener dictado' : 'Dictar consulta por voz'"
+              class="absolute right-2.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-lg flex items-center justify-center transition-all focus:outline-none"
+              [class.bg-red-500]="isListeningSpeech()"
+              [class.text-white]="isListeningSpeech()"
+              [class.hover:bg-red-650]="isListeningSpeech()"
+              [class.text-slate-400]="!isListeningSpeech()"
+              [class.hover:text-slate-600]="!isListeningSpeech()"
+              [class.dark:hover:text-slate-200]="!isListeningSpeech()"
+            >
+              @if (isListeningSpeech()) {
+                <span class="absolute w-full h-full rounded-lg bg-red-500 animate-ping opacity-75"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 relative z-10">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                  <path d="M11.75 19.938V22H12.25V19.938A8.004 8.004 0 0 0 20 12h-1.5a6.5 6.5 0 0 1-13 0H4a8.004 8.004 0 0 0 7.75 7.938Z" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
+                </svg>
+              }
+            </button>
+          </div>
+          <button
+            (click)="onApplyPromptFilter()"
+            class="px-5 h-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-xs shadow-md shadow-indigo-500/10 transition-all flex items-center gap-1.5 hover:-translate-y-0.5 active:translate-y-0 transform shrink-0"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.637 10.637Z" />
+            </svg>
+            Consultar IA
+          </button>
+        </div>
+        @if (speechError()) {
+          <p class="text-[10px] text-red-500 font-semibold animate-pulse mt-1">
+            ⚠️ {{ speechError() }}
+          </p>
         }
       </div>
 
-    </div>
-
-    <!-- Panel Derecho: Explicación de Caso de Simulación -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 transition-all duration-300 space-y-4">
-      <div>
-        <h3 class="text-base font-bold text-slate-900 dark:text-white">
-          ¿Cómo probar el sistema de permisos granulares?
-        </h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
-          Sigue estos pasos para validar que los permisos afectan directamente al usuario de forma individual:
-        </p>
-      </div>
-
-      <!-- Pasos estructurados -->
-      <div class="space-y-3">
-        <div class="flex gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
-            1
-          </span>
-          <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-            **Configuración Granular:** Dirígete a la nueva pestaña **Permisos**. Selecciona al usuario Carlos Flores (carlos.f@politicas.com) de la lista.
+      <!-- Explicación de la IA sobre el filtro aplicado -->
+      @if (iaMetrics().explanation) {
+        <div class="bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-900/30 p-4 rounded-xl text-xs shadow-inner animate-fade-in">
+          <span class="font-extrabold text-indigo-700 dark:text-indigo-400 block mb-1">Resultado de Filtrado Inteligente:</span>
+          <p class="text-slate-700 dark:text-slate-350 italic">
+            "{{ iaMetrics().explanation }}"
           </p>
         </div>
+      }
 
-        <div class="flex gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
-            2
-          </span>
-          <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-            **Asignación de Acciones:** Elige la pestaña **Usuarios** en el combobox de la derecha. Activa la acción **Eliminar** para este usuario.
-          </p>
+      <!-- GRID DE KPIS DINÁMICOS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- KPI 1: Tasa de Anomalías (Autoencoder) -->
+        <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex flex-col justify-between hover:shadow-md transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Tasa de Anomalía</span>
+            <div class="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-950/20 text-red-500 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4.5 h-4.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <span class="text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
+              {{ iaMetrics().anomalyRate | number:'1.1-2' }}%
+            </span>
+            <!-- Barra de Progreso Visual -->
+            <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+              <div 
+                class="h-full bg-gradient-to-r from-teal-500 via-yellow-500 to-red-500 transition-all duration-500"
+                [style.width.%]="iaMetrics().anomalyRate"
+              ></div>
+            </div>
+          </div>
         </div>
 
-        <div class="flex gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
-            3
-          </span>
-          <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
-            **Efecto Inmediato:** Inicia sesión rápido como **Funcionario** (`funcionario`). En la pestaña **Usuarios**, ¡verás que ahora sí tienes habilitado el botón de eliminar!
-          </p>
+        <!-- KPI 2: Tareas Totales -->
+        <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex flex-col justify-between hover:shadow-md transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Tareas Evaluadas</span>
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/20 text-indigo-500 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4.5 h-4.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.03 0 1.9.693 2.166 1.638m-7.377 2.24l-.407 14.583c-.015.533.428.972.962.972h9.75c.533 0 .977-.439.962-.972l-.407-14.583M9.75 9.75h.008v.008H9.75V9.75zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <span class="text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
+              {{ iaMetrics().totalTasks }}
+            </span>
+            <span class="block text-[10px] text-slate-400 mt-1 font-semibold">Instancias filtradas en BD</span>
+          </div>
         </div>
+
+        <!-- KPI 3: Desvíos Críticos -->
+        <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl flex flex-col justify-between hover:shadow-md transition-all duration-300">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Desvíos Críticos</span>
+            <div 
+              [class.bg-emerald-50]="iaMetrics().anomalousTasks === 0"
+              [class.text-emerald-500]="iaMetrics().anomalousTasks === 0"
+              [class.bg-red-50]="iaMetrics().anomalousTasks > 0"
+              [class.text-red-500]="iaMetrics().anomalousTasks > 0"
+              class="w-8 h-8 rounded-lg flex items-center justify-center"
+            >
+              @if (iaMetrics().anomalousTasks === 0) {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4.5 h-4.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4.5 h-4.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              }
+            </div>
+          </div>
+          <div>
+            <span class="text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
+              {{ iaMetrics().anomalousTasks }}
+            </span>
+            <span class="block text-[10px] text-slate-400 mt-1 font-semibold">Tareas marcadas por el Autoencoder</span>
+          </div>
+        </div>
+
       </div>
 
-      <div class="p-3 bg-slate-50 dark:bg-plomo-hover/30 rounded-xl border border-slate-100 dark:border-plomo-border">
-        <h4 class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-1">
-          Roles como Presets
-        </h4>
-        <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">
-          Los roles cargan un conjunto de permisos prearmados, pero el Administrador puede personalizarlos individualmente por cada usuario.
-        </p>
+      <!-- SECCIÓN DE REPORTES & CONTROLES -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Listado detallado de tareas del Autoencoder (Col-Span 2) -->
+        <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 lg:col-span-2 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1">
+            Historial y Auditoría de Actividades
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-450 mb-4">
+            Resumen detallado de las tareas que cumplen con el criterio del prompt, analizadas por el Autoencoder.
+          </p>
+
+          <!-- Tabla -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-slate-400 border-b border-slate-250 dark:border-plomo-border/50">
+                  <th class="py-2.5 font-bold">Actividad</th>
+                  <th class="py-2.5 font-bold">Calle / Rol</th>
+                  <th class="py-2.5 font-bold text-center">Fecha de Ejecución</th>
+                  <th class="py-2.5 font-bold text-center">Duración</th>
+                  <th class="py-2.5 font-bold text-center">Score de Desvío</th>
+                  <th class="py-2.5 font-bold text-right">Estado</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-plomo-border/30">
+                @for (item of paginatedAnomalies(); track item.nodeId) {
+                  <tr class="hover:bg-slate-50/50 dark:hover:bg-plomo-hover/20">
+                    <td class="py-3 font-semibold text-slate-800 dark:text-slate-200">{{ item.nodeLabel }}</td>
+                    <td class="py-3 text-slate-500 dark:text-slate-400">{{ item.calleNombre }}</td>
+                    <td class="py-3 text-center text-slate-600 dark:text-slate-350">{{ item.timestamp | date:'dd/MM/yyyy HH:mm' }}</td>
+                    <td class="py-3 text-center font-mono text-slate-600 dark:text-slate-350">{{ item.durationHours | number:'1.1-2' }}h</td>
+                    <td class="py-3 text-center font-mono text-slate-600 dark:text-slate-350">{{ item.anomalyScore }}%</td>
+                    <td class="py-3 text-right">
+                      @if (item.isAnomaly) {
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-extrabold uppercase bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-400 border border-red-100 dark:border-red-900/30">
+                          <span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>
+                          Anómalo
+                        </span>
+                      } @else {
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-extrabold uppercase bg-emerald-50 text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30">
+                          <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                          Normal
+                        </span>
+                      }
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="6" class="py-6 text-center text-slate-400 font-semibold text-xs">
+                      Ningún registro coincide con el criterio ingresado.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Controles de Paginación -->
+          @if (iaMetrics()?.anomalies?.length > pageSize) {
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100 dark:border-plomo-border/30">
+              <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                Mostrando {{ showingStart() }} - {{ showingEnd() }} de {{ iaMetrics().anomalies.length }} actividades
+              </span>
+              <div class="flex items-center gap-2">
+                <button 
+                  (click)="currentPage.set(currentPage() - 1)" 
+                  [disabled]="currentPage() === 1"
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-plomo-border bg-slate-50 dark:bg-plomo-card text-[10px] font-bold text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-plomo-hover/50 disabled:opacity-40 transition-all focus:outline-none"
+                >
+                  Anterior
+                </button>
+                <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400">
+                  {{ currentPage() }} / {{ totalPages() }}
+                </span>
+                <button 
+                  (click)="currentPage.set(currentPage() + 1)" 
+                  [disabled]="currentPage() === totalPages()"
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-plomo-border bg-slate-50 dark:bg-plomo-card text-[10px] font-bold text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-plomo-hover/50 disabled:opacity-40 transition-all focus:outline-none"
+                >
+                  Siguiente
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Controles de Descarga y Reentrenamiento (Col-Span 1) -->
+        <div class="space-y-6 lg:col-span-1">
+          
+          <!-- Tarjeta de Descarga de Reportes PDF -->
+          <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-6 rounded-2xl shadow-sm text-center">
+            <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-600 dark:text-teal-400 flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+              </svg>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white">Generar Reporte PDF</h4>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 max-w-xs mx-auto leading-relaxed">
+              Descarga un documento PDF formal adaptado de forma dinámica al criterio del prompt actual ingresado.
+            </p>
+
+            <button
+              (click)="downloadPDFReport()"
+              [disabled]="isDownloadingReport() || iaMetrics().totalTasks === 0"
+              class="w-full mt-4 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-500 hover:from-indigo-700 hover:to-teal-600 text-white font-bold text-xs shadow-md shadow-indigo-500/10 transition-all flex items-center justify-center gap-2 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none"
+            >
+              @if (isDownloadingReport()) {
+                <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Generando PDF...</span>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 flex-shrink-0">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <span>Descargar PDF Filtrado</span>
+              }
+            </button>
+          </div>
+
+          <!-- Tarjeta de Reentrenamiento de Modelos -->
+          <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-6 rounded-2xl shadow-sm text-center">
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 animate-pulse">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white">Reentrenamiento en Caliente</h4>
+            <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-1 max-w-xs mx-auto leading-relaxed">
+              Reajusta las redes neuronales de anomalías y NLP alimentándolas con las transacciones de MongoDB más recientes.
+            </p>
+
+            <button
+              (click)="trainModels()"
+              [disabled]="isTraining()"
+              class="w-full mt-4 h-10 rounded-xl border border-slate-200 dark:border-plomo-border bg-slate-50 dark:bg-plomo-card hover:bg-slate-100 dark:hover:bg-plomo-hover/50 text-slate-700 dark:text-slate-300 font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              @if (isTraining()) {
+                <div class="w-4 h-4 border-2 border-slate-500 border-t-transparent rounded-full animate-spin"></div>
+                <span>{{ trainingStatus() }}</span>
+              } @else {
+                <span>Entrenar Modelos</span>
+              }
+            </button>
+          </div>
+
+          <!-- Clasificación MLP de Texto (Logs de Formulario) -->
+          <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border p-5 rounded-2xl shadow-sm">
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+              Clasificación NLP de Comentarios
+            </h4>
+            
+            <div class="space-y-3.5 max-h-[200px] overflow-y-auto pr-1">
+              @for (c of iaMetrics().classifications; track c.text) {
+                <div class="p-3 bg-slate-50/50 dark:bg-plomo-hover/20 border border-slate-150 dark:border-plomo-border/50 rounded-xl space-y-1">
+                  <p class="text-[10px] text-slate-600 dark:text-slate-300 leading-snug">
+                    "{{ c.text }}"
+                  </p>
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase bg-teal-50 text-teal-700 dark:bg-teal-950/20 dark:text-teal-400">
+                      {{ c.category }}
+                    </span>
+                    <span class="text-[8px] font-mono text-slate-400 font-bold">
+                      Confianza: {{ c.confidence * 100 | number:'1.0-0' }}%
+                    </span>
+                  </div>
+                </div>
+              } @empty {
+                <span class="block text-[10px] text-slate-400 text-center py-4">
+                  No hay comentarios clasificados aún.
+                </span>
+              }
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
-    </div>
+    @}
 
-  </div>
+  }
 
 </div>

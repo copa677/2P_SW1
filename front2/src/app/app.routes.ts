@@ -88,6 +88,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/document-explorer/document-explorer.component').then(m => m.DocumentExplorerComponent)
       },
       {
+        path: 'reportes',
+        loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent)
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'

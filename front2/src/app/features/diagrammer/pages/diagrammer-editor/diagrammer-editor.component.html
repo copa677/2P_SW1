@@ -202,21 +202,70 @@
 
     </div>
 
-    <!-- COLUMNA DERECHA: PANEL DE PROPIEDADES -->
-    <div class="lg:col-span-1 min-h-0 overflow-y-auto">
-      <app-properties 
-        [cellId]="selectedCellId()"
-        [cellType]="selectedCellType()"
-        [cellText]="selectedCellText()"
-        [cellColor]="selectedCellColor()"
-        [customFields]="selectedCustomFields()"
-        [elementType]="selectedElementType()"
-        [editable]="editable()"
-        (textChanged)="onTextChanged($event)"
-        (colorChanged)="onColorChanged($event)"
-        (customFieldsChanged)="onCustomFieldsChanged($event)"
-        (deleteRequested)="onDeleteRequested()"
-      />
+    <!-- COLUMNA DERECHA: PANEL DE PROPIEDADES / ASISTENTE IA -->
+    <div class="lg:col-span-1 min-h-0 flex flex-col gap-4">
+      
+      <!-- Selector de Pestañas Moderno -->
+      <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-1.5 shadow-sm flex shrink-0 transition-all duration-300">
+        <button 
+          (click)="activeTab.set('properties')"
+          [class.bg-indigo-600]="activeTab() === 'properties'"
+          [class.text-white]="activeTab() === 'properties'"
+          [class.bg-transparent]="activeTab() !== 'properties'"
+          [class.text-slate-600]="activeTab() !== 'properties'"
+          [class.dark:text-slate-400]="activeTab() !== 'properties'"
+          [class.hover:bg-slate-50]="activeTab() !== 'properties'"
+          [class.dark:hover:bg-plomo-hover/50]="activeTab() !== 'properties'"
+          class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+          </svg>
+          Propiedades
+        </button>
+        <button 
+          (click)="activeTab.set('chat')"
+          [class.bg-indigo-600]="activeTab() === 'chat'"
+          [class.text-white]="activeTab() === 'chat'"
+          [class.bg-transparent]="activeTab() !== 'chat'"
+          [class.text-slate-600]="activeTab() !== 'chat'"
+          [class.dark:text-slate-400]="activeTab() !== 'chat'"
+          [class.hover:bg-slate-50]="activeTab() !== 'chat'"
+          [class.dark:hover:bg-plomo-hover/50]="activeTab() !== 'chat'"
+          class="flex-1 py-2 px-3 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-3.658A7.965 7.965 0 0 1 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+          </svg>
+          Asistente IA
+        </button>
+      </div>
+
+      <!-- Contenido de la pestaña activa -->
+      <div class="flex-1 min-h-0 overflow-y-auto">
+        @if (activeTab() === 'properties') {
+          <app-properties 
+            [cellId]="selectedCellId()"
+            [cellType]="selectedCellType()"
+            [cellText]="selectedCellText()"
+            [cellColor]="selectedCellColor()"
+            [customFields]="selectedCustomFields()"
+            [elementType]="selectedElementType()"
+            [editable]="editable()"
+            (textChanged)="onTextChanged($event)"
+            (colorChanged)="onColorChanged($event)"
+            (customFieldsChanged)="onCustomFieldsChanged($event)"
+            (deleteRequested)="onDeleteRequested()"
+          />
+        } @else {
+          <app-ai-chat
+            [diagramState]="buildStructuredJson()"
+            [editable]="editable()"
+            (diagramUpdated)="onDiagramUpdatedByAgent($event)"
+          />
+        }
+      </div>
+
     </div>
 
   </div>

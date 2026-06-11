@@ -4,3 +4,6 @@ google-genai
 python-dotenv
 pydantic
 groq
+numpy
+scikit-learn
+reportlab

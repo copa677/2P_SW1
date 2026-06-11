@@ -1,43 +1,54 @@
-<div class="h-full flex flex-col space-y-6">
+<div class="h-full flex flex-col space-y-6 animate-fade-in select-none">
+  
   <!-- Cabecera de la Página -->
   <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
     <div>
-      <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Gestor Documental</h2>
-      <p class="text-sm text-slate-500 dark:text-slate-400">
-        Explora y gestiona los archivos de los trámites almacenados de manera organizada.
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 text-indigo-500">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+        </svg>
+        Gestor Documental
+      </h2>
+      <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+        Explora y gestiona los archivos de los trámites almacenados de manera organizada en la nube.
       </p>
     </div>
     <div class="flex items-center gap-3">
       <button (click)="loadTree()" [disabled]="loading()"
-        class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition-all shadow-md shadow-indigo-500/20 disabled:opacity-50 disabled:cursor-not-allowed">
+        class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-600/50 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-500/20 disabled:cursor-not-allowed transform active:scale-95">
         @if (loading()) {
-          <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+          <svg class="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          Refrescando...
+          <span>Refrescando...</span>
         } @else {
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-3.5 h-3.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
           </svg>
-          Refrescar
+          <span>Refrescar</span>
         }
       </button>
     </div>
   </div>
 
   <!-- Barra de Filtros y Navegación (Breadcrumbs) -->
-  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-    <!-- Breadcrumbs -->
-    <div class="flex items-center flex-wrap gap-2 text-sm">
+  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm transition-all duration-300">
+    
+    <!-- Breadcrumbs (Migas de Pan) -->
+    <div class="flex items-center flex-wrap gap-1 text-xs">
       <button (click)="navigateToBreadcrumb(-1)"
-        class="flex items-center text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
-        📂 Mi Unidad
+        class="flex items-center gap-1 text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 shrink-0 text-indigo-500">
+          <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+        </svg>
+        Mi Unidad
       </button>
+      
       @for (folder of currentPath(); track folder.id; let idx = $index) {
-        <span class="text-slate-400">/</span>
+        <span class="text-slate-400 dark:text-slate-600 font-medium">/</span>
         <button (click)="navigateToBreadcrumb(idx)"
-          class="text-indigo-600 dark:text-indigo-400 hover:underline max-w-[150px] truncate font-medium"
+          class="text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 max-w-[150px] truncate font-bold transition-colors"
           [title]="folder.name">
           {{ folder.name }}
         </button>
@@ -48,10 +59,10 @@
     <div class="flex items-center gap-3 w-full md:w-auto">
       <!-- Buscador -->
       <div class="relative w-full md:w-64">
-        <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar archivos..."
-          class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-plomo-strong border border-slate-200 dark:border-plomo-border rounded-xl text-sm focus:outline-none focus:border-indigo-600 dark:focus:border-indigo-400 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500" />
-        <span class="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+        <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" placeholder="Buscar en esta carpeta..."
+          class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-plomo-strong border border-slate-200 dark:border-plomo-border rounded-xl text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 dark:focus:border-indigo-400 transition-all text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none" />
+        <span class="absolute left-3 top-2.5 text-slate-450 dark:text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.637 10.637z" />
           </svg>
         </span>
@@ -65,10 +76,10 @@
           [class.dark:bg-plomo-card]="viewMode() === 'grid'"
           [class.shadow-sm]="viewMode() === 'grid'"
           [class.text-indigo-600]="viewMode() === 'grid'"
-          [class.dark:text-indigo-400]="viewMode() === 'grid'"
-          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-all animate-fade-in"
+          [class.dark:text-indigo-450]="viewMode() === 'grid'"
+          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-all"
           title="Vista de Cuadrícula">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
           </svg>
         </button>
@@ -78,10 +89,10 @@
           [class.dark:bg-plomo-card]="viewMode() === 'list'"
           [class.shadow-sm]="viewMode() === 'list'"
           [class.text-indigo-600]="viewMode() === 'list'"
-          [class.dark:text-indigo-400]="viewMode() === 'list'"
-          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-all animate-fade-in"
+          [class.dark:text-indigo-450]="viewMode() === 'list'"
+          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-all"
           title="Vista de Lista">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-3.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
         </button>
@@ -93,77 +104,107 @@
   <div class="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-0">
     
     <!-- Explorador de Archivos (Grid / Listado) -->
-    <div class="lg:col-span-3 bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 shadow-sm flex flex-col overflow-hidden">
+    <div class="lg:col-span-3 bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-5 shadow-sm flex flex-col overflow-hidden transition-all duration-300">
       
       @if (loading() && documentTree().length === 0) {
-        <div class="flex-1 flex flex-col items-center justify-center space-y-4">
-          <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-slate-500 dark:text-slate-400 font-medium">Cargando explorador de archivos...</p>
+        <div class="flex-1 flex flex-col items-center justify-center space-y-3">
+          <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold">Cargando explorador de archivos...</p>
         </div>
       } @else if (error()) {
-        <div class="flex-1 flex flex-col items-center justify-center space-y-3 text-center">
-          <span class="text-4xl">⚠️</span>
-          <p class="text-red-500 font-semibold">{{ error() }}</p>
-          <button (click)="loadTree()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-plomo-hover dark:hover:bg-slate-700 rounded-xl text-sm font-semibold transition-all">
+        <div class="flex-1 flex flex-col items-center justify-center space-y-3 text-center p-6">
+          <span class="text-3xl">⚠️</span>
+          <p class="text-red-500 text-xs font-bold">{{ error() }}</p>
+          <button (click)="loadTree()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-plomo-hover dark:hover:bg-slate-700 rounded-xl text-xs font-semibold transition-all">
             Intentar de nuevo
           </button>
         </div>
       } @else {
-        <div class="flex-1 overflow-y-auto pr-1">
-          <!-- Botón de subir un nivel si no está en la raíz -->
+        <div class="flex-1 overflow-y-auto pr-1 flex flex-col">
+          
+          <!-- Botón de subir un nivel (Atrás) si no está en la raíz -->
           @if (currentPath().length > 0) {
             <button (click)="navigateUp()"
-              class="flex items-center gap-2 px-3 py-2 mb-4 hover:bg-slate-50 dark:hover:bg-plomo-hover rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-300 transition-all border border-slate-200 dark:border-plomo-border w-fit">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              class="flex items-center gap-1.5 px-3 py-1.5 mb-4 hover:bg-slate-50 dark:hover:bg-plomo-hover/50 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-350 transition-all border border-slate-200 dark:border-plomo-border w-fit shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
               </svg>
-              Atrás
+              Volver Atrás
             </button>
           }
 
           <!-- Grid de Elementos -->
           @if (filteredItems().length === 0) {
-            <div class="flex flex-col items-center justify-center py-20 text-center space-y-4">
-              <span class="text-5xl">📁</span>
-              <div class="space-y-1">
-                <p class="text-lg font-bold text-slate-700 dark:text-slate-350">Esta carpeta está vacía</p>
-                <p class="text-sm text-slate-500 dark:text-slate-400">No hay elementos que coincidan con la búsqueda o la ruta actual.</p>
+            <div class="flex-1 flex flex-col items-center justify-center py-20 text-center space-y-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-12 h-12 text-slate-300 dark:text-slate-750">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.008 1.24l.885 1.77a2.25 2.25 0 0 0 2.007 1.24h1.98a2.25 2.25 0 0 0 2.007-1.24l.885-1.77a2.25 2.25 0 0 1 2.007-1.24h3.86m-18 0h18a2.25 2.25 0 0 1 2.25 2.25v4.5A2.25 2.25 0 0 1 19.5 21h-15a2.25 2.25 0 0 1-2.25-2.25v-4.5a2.25 2.25 0 0 1 2.25-2.25Zm-1.35-3 3.75-7.485A2.25 2.25 0 0 1 6.649 3h10.702a2.25 2.25 0 0 1 2.009 1.244L23.1 10.5" />
+              </svg>
+              <div class="space-y-0.5">
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-350">Esta carpeta está vacía</p>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400">No hay archivos cargados en este nivel o no coinciden con tu búsqueda.</p>
               </div>
             </div>
           } @else {
             @if (viewMode() === 'grid') {
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pb-4">
                 @for (item of filteredItems(); track item.id) {
-                  <div (click)="selectNode(item)" (dblclick)="enterFolder(item)"
-                    [class.border-indigo-600]="selectedNode()?.id === item.id"
-                    [class.bg-indigo-50\/40]="selectedNode()?.id === item.id"
-                    [class.dark:border-indigo-500]="selectedNode()?.id === item.id"
-                    [class.dark:bg-indigo-950\/20]="selectedNode()?.id === item.id"
-                    class="flex flex-col border border-slate-200 dark:border-plomo-border rounded-2xl p-4 hover:shadow-md cursor-pointer transition-all bg-slate-50/50 dark:bg-plomo-strong/30 hover:bg-white dark:hover:bg-plomo-hover group">
+                  <!-- Tarjeta en Cuadrícula -->
+                  <div 
+                    (click)="selectNode(item)" 
+                    (dblclick)="enterFolder(item)"
+                    [class.ring-2]="selectedNode()?.id === item.id"
+                    [class.ring-indigo-500/50]="selectedNode()?.id === item.id"
+                    [class.border-indigo-500]="selectedNode()?.id === item.id"
+                    [class.bg-indigo-50\/20]="selectedNode()?.id === item.id"
+                    [class.dark:bg-indigo-950\/10]="selectedNode()?.id === item.id"
+                    class="flex flex-col border border-slate-200 dark:border-plomo-border rounded-2xl p-4 hover:shadow-md cursor-pointer transition-all duration-300 bg-slate-50/40 dark:bg-plomo-strong/20 hover:bg-white dark:hover:bg-plomo-hover/40 transform hover:-translate-y-0.5 select-none relative"
+                  >
                     
                     <!-- Icono superior -->
                     <div class="flex items-center justify-between mb-4">
                       @if (item.type === 'folder') {
-                        <span class="text-3xl">📁</span>
+                        <!-- Folder SVG -->
+                        <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 shrink-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7">
+                            <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                          </svg>
+                        </div>
                       } @else {
-                        <span class="text-3xl">{{ getFileIcon(item.name) }}</span>
+                        <!-- File Type SVG dynamic -->
+                        <div 
+                          [ngClass]="{
+                            'bg-red-500/10 text-red-500': item.name.toLowerCase().endsWith('.pdf'),
+                            'bg-blue-500/10 text-blue-500': item.name.toLowerCase().endsWith('.docx') || item.name.toLowerCase().endsWith('.doc'),
+                            'bg-emerald-500/10 text-emerald-500': item.name.toLowerCase().endsWith('.xlsx') || item.name.toLowerCase().endsWith('.xls'),
+                            'bg-purple-500/10 text-purple-500': item.name.toLowerCase().endsWith('.png') || item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.jpeg'),
+                            'bg-amber-500/10 text-amber-500': item.name.toLowerCase().endsWith('.zip') || item.name.toLowerCase().endsWith('.rar'),
+                            'bg-slate-500/10 text-slate-500': !item.name.includes('.')
+                          }"
+                          class="p-2 rounded-xl shrink-0"
+                        >
+                          <!-- File generic SVG -->
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7">
+                            <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm9 9a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm-9-5.25a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                            <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+                          </svg>
+                        </div>
                       }
 
                       <!-- Indicador carpeta -->
                       @if (item.type === 'folder') {
-                        <span class="text-[10px] bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                        <span class="text-[8px] bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                           Carpeta
                         </span>
                       }
                     </div>
 
-                    <!-- Título del elemento -->
-                    <p class="text-sm font-semibold text-slate-800 dark:text-white truncate" [title]="item.name">
+                    <!-- Título del elemento (select-none bloquea la marca azul del navegador) -->
+                    <p class="text-xs font-bold text-slate-800 dark:text-white truncate select-none leading-snug" [title]="item.name">
                       {{ item.name }}
                     </p>
 
-                    <!-- Descripción / Peso -->
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    <!-- Detalle del Peso / Elementos -->
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 mt-1 select-none font-medium">
                       @if (item.type === 'folder') {
                         {{ (item.children || []).length }} elementos
                       } @else {
@@ -175,47 +216,70 @@
               </div>
             } @else {
               <!-- Vista de Lista -->
-              <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+              <div class="overflow-x-auto pb-4 select-none">
+                <table class="w-full text-left border-collapse select-none">
                   <thead>
-                    <tr class="border-b border-slate-200 dark:border-plomo-border text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                    <tr class="border-b border-slate-200 dark:border-plomo-border text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider select-none">
                       <th class="pb-3 pl-4">Nombre</th>
                       <th class="pb-3">Tipo</th>
                       <th class="pb-3">Tamaño</th>
-                      <th class="pb-3">Modificado</th>
+                      <th class="pb-3">Última Modificación</th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-slate-100 dark:divide-plomo-border text-sm">
+                  <tbody class="divide-y divide-slate-100 dark:divide-plomo-border/50 text-xs">
                     @for (item of filteredItems(); track item.id) {
-                      <tr (click)="selectNode(item)" (dblclick)="enterFolder(item)"
-                        [class.bg-indigo-50\/40]="selectedNode()?.id === item.id"
-                        [class.dark:bg-indigo-950\/20]="selectedNode()?.id === item.id"
-                        [class.border-indigo-600]="selectedNode()?.id === item.id"
-                        [class.dark:border-indigo-500]="selectedNode()?.id === item.id"
-                        class="hover:bg-slate-50/50 dark:hover:bg-plomo-hover/30 cursor-pointer transition-all border-l-2 border-transparent">
-                        <td class="py-3 pl-4 font-semibold text-slate-800 dark:text-white flex items-center gap-3">
+                      <!-- Fila de Lista -->
+                      <tr 
+                        (click)="selectNode(item)" 
+                        (dblclick)="enterFolder(item)"
+                        [class.bg-indigo-50\/25]="selectedNode()?.id === item.id"
+                        [class.dark:bg-indigo-950\/10]="selectedNode()?.id === item.id"
+                        [class.border-l-indigo-500]="selectedNode()?.id === item.id"
+                        class="hover:bg-slate-50/50 dark:hover:bg-plomo-hover/20 cursor-pointer transition-all border-l-2 border-transparent select-none"
+                      >
+                        <td class="py-3 pl-4 font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2.5 select-none">
                           @if (item.type === 'folder') {
-                            <span class="text-xl">📁</span>
+                            <!-- Folder icon small -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-indigo-500 dark:text-indigo-400 shrink-0">
+                              <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                            </svg>
                           } @else {
-                            <span class="text-xl">{{ getFileIcon(item.name) }}</span>
+                            <!-- File type icon small -->
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              fill="currentColor" 
+                              viewBox="0 0 24 24" 
+                              [ngClass]="{
+                                'text-red-500': item.name.toLowerCase().endsWith('.pdf'),
+                                'text-blue-500': item.name.toLowerCase().endsWith('.docx') || item.name.toLowerCase().endsWith('.doc'),
+                                'text-emerald-500': item.name.toLowerCase().endsWith('.xlsx') || item.name.toLowerCase().endsWith('.xls'),
+                                'text-purple-500': item.name.toLowerCase().endsWith('.png') || item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.jpeg'),
+                                'text-amber-500': item.name.toLowerCase().endsWith('.zip') || item.name.toLowerCase().endsWith('.rar'),
+                                'text-slate-500': !item.name.includes('.')
+                              }"
+                              class="w-5 h-5 shrink-0"
+                            >
+                              <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm9 9a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm-9-5.25a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                              <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+                            </svg>
                           }
-                          <span class="truncate max-w-[240px]" [title]="item.name">{{ item.name }}</span>
+                          <span class="truncate max-w-[240px] select-none" [title]="item.name">{{ item.name }}</span>
                         </td>
-                        <td class="py-3 text-slate-500 dark:text-slate-400">
+                        <td class="py-3 text-slate-500 dark:text-slate-400 select-none">
                           @if (item.type === 'folder') {
-                            <span class="text-xs bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                            <span class="text-[9px] bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
                               Carpeta
                             </span>
                           } @else {
-                            <span class="text-xs bg-teal-50/70 dark:bg-teal-950/40 text-teal-700 dark:text-teal-400 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                            <span class="text-[9px] bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-400 px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
                               Archivo
                             </span>
                           }
                         </td>
-                        <td class="py-3 text-slate-500 dark:text-slate-400">
+                        <td class="py-3 text-slate-550 dark:text-slate-400 font-mono text-[11px] select-none">
                           {{ item.type === 'folder' ? '-' : formatBytes(item.size) }}
                         </td>
-                        <td class="py-3 text-slate-500 dark:text-slate-400">
+                        <td class="py-3 text-slate-550 dark:text-slate-400 font-mono text-[11px] select-none">
                           {{ item.type === 'folder' ? '-' : formatDate(item.lastModified) }}
                         </td>
                       </tr>
@@ -228,71 +292,90 @@
         </div>
       }
     </div>
-
-    <!-- Panel Lateral de Detalles -->
-    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-6 shadow-sm flex flex-col justify-between overflow-y-auto">
+ 
+    <!-- Panel Lateral de Detalles (Google Drive Style) -->
+    <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-2xl p-5 shadow-sm flex flex-col justify-between overflow-y-auto transition-all duration-300">
       @if (selectedNode(); as node) {
         <div class="space-y-6">
-          <div class="flex items-center justify-between border-b border-slate-100 dark:border-plomo-border pb-4">
-            <h3 class="font-bold text-slate-900 dark:text-white text-base">Detalles</h3>
-            <button (click)="selectedNode.set(null)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          <div class="flex items-center justify-between border-b border-slate-100 dark:border-plomo-border pb-3 shrink-0">
+            <h3 class="font-bold text-slate-900 dark:text-white text-sm">Detalles del Objeto</h3>
+            <button (click)="selectedNode.set(null)" class="text-slate-450 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-plomo-hover/50 transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <!-- Previsualización / Icono -->
-          <div class="flex flex-col items-center justify-center p-6 bg-slate-50 dark:bg-plomo-strong/30 rounded-2xl border border-dashed border-slate-200 dark:border-plomo-border">
+          <!-- Previsualización / Icono del Panel Lateral -->
+          <div class="flex flex-col items-center justify-center p-6 bg-slate-50/50 dark:bg-plomo-strong/30 rounded-2xl border border-dashed border-slate-200 dark:border-plomo-border/60">
             @if (node.type === 'folder') {
-              <span class="text-6xl mb-3">📁</span>
-              <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Carpeta de Archivos</span>
+              <div class="text-indigo-500 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-14 h-14">
+                  <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+                </svg>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded">Carpeta de Archivos</span>
             } @else {
-              <span class="text-6xl mb-3">{{ getFileIcon(node.name) }}</span>
-              <span class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Archivo</span>
+              <div 
+                [ngClass]="{
+                  'text-red-500': node.name.toLowerCase().endsWith('.pdf'),
+                  'text-blue-500': node.name.toLowerCase().endsWith('.docx') || node.name.toLowerCase().endsWith('.doc'),
+                  'text-emerald-500': node.name.toLowerCase().endsWith('.xlsx') || node.name.toLowerCase().endsWith('.xls'),
+                  'text-purple-500': node.name.toLowerCase().endsWith('.png') || node.name.toLowerCase().endsWith('.jpg') || node.name.toLowerCase().endsWith('.jpeg'),
+                  'text-amber-500': node.name.toLowerCase().endsWith('.zip') || node.name.toLowerCase().endsWith('.rar'),
+                  'text-slate-500': !node.name.includes('.')
+                }"
+                class="mb-3"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-14 h-14">
+                  <path fill-rule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm9 9a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm0 3a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5zm-9-5.25a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm0 3a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
+                  <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
+                </svg>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 bg-teal-500/10 px-2.5 py-0.5 rounded">Archivo Documental</span>
             }
           </div>
 
           <!-- Campos de Metadatos -->
-          <div class="space-y-4 text-sm">
+          <div class="space-y-4 text-xs">
             <div>
-              <label class="block text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Nombre</label>
-              <p class="font-medium text-slate-800 dark:text-white break-words mt-0.5">{{ node.name }}</p>
+              <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Nombre</label>
+              <p class="font-bold text-slate-800 dark:text-white break-words mt-0.5">{{ node.name }}</p>
             </div>
 
             @if (node.type === 'file') {
               <div>
-                <label class="block text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Tamaño</label>
-                <p class="font-medium text-slate-800 dark:text-white mt-0.5">{{ formatBytes(node.size) }}</p>
+                <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Tamaño de Archivo</label>
+                <p class="font-medium text-slate-800 dark:text-slate-200 mt-0.5">{{ formatBytes(node.size) }}</p>
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Última Modificación</label>
-                <p class="font-medium text-slate-800 dark:text-white mt-0.5">{{ formatDate(node.lastModified) }}</p>
+                <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Modificado en la Nube</label>
+                <p class="font-medium text-slate-800 dark:text-slate-200 mt-0.5">{{ formatDate(node.lastModified) }}</p>
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Ruta del Objeto (Key)</label>
-                <p class="font-mono text-xs text-slate-500 dark:text-slate-400 break-all bg-slate-50 dark:bg-plomo-strong/30 p-2 rounded-lg border border-slate-100 dark:border-plomo-border mt-1">
+                <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Clave del Objeto S3 (Key)</label>
+                <p class="font-mono text-[10px] text-slate-500 dark:text-slate-400 break-all bg-slate-50 dark:bg-plomo-strong/30 p-2 rounded-xl border border-slate-100 dark:border-plomo-border/60 mt-1 select-all" title="Haz doble clic para seleccionar la clave entera">
                   {{ node.s3Key }}
                 </p>
               </div>
             } @else {
               <div>
-                <label class="block text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Elementos Incluidos</label>
-                <p class="font-medium text-slate-800 dark:text-white mt-0.5">{{ (node.children || []).length }} carpetas/archivos</p>
+                <label class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Elementos Incluidos</label>
+                <p class="font-medium text-slate-800 dark:text-slate-200 mt-0.5">{{ (node.children || []).length }} carpetas/archivos</p>
               </div>
             }
           </div>
         </div>
 
         <!-- Acciones en el pie del panel -->
-        <div class="mt-8 space-y-2 pt-4 border-t border-slate-100 dark:border-plomo-border">
+        <div class="mt-8 space-y-2 pt-4 border-t border-slate-100 dark:border-plomo-border shrink-0">
           @if (node.type === 'file') {
             @if (canDownload()) {
               <button (click)="downloadFile(node)"
-                class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-sm transition-all shadow-md shadow-emerald-500/10">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                class="w-full flex items-center justify-center gap-1.5 py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs transition-all shadow-md shadow-emerald-500/10 transform active:scale-98">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                 </svg>
                 Descargar Archivo
@@ -300,8 +383,8 @@
             }
             @if (canDelete()) {
               <button (click)="deleteFile(node)"
-                class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl font-semibold text-sm transition-all border border-red-100/50 dark:border-red-950/40">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                class="w-full flex items-center justify-center gap-1.5 py-2 px-4 bg-red-555 dark:bg-red-950/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl font-bold text-xs transition-all border border-red-200/50 dark:border-red-900/20 transform active:scale-98">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                 </svg>
                 Eliminar Archivo
@@ -309,8 +392,8 @@
             }
           } @else {
             <button (click)="enterFolder(node)"
-              class="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-xl font-semibold text-sm transition-all border border-indigo-100/50 dark:border-indigo-950/40">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              class="w-full flex items-center justify-center gap-1.5 py-2 px-4 bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 rounded-xl font-bold text-xs transition-all border border-indigo-100/50 dark:border-indigo-900/20 transform active:scale-98">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
               Abrir Carpeta
@@ -318,10 +401,12 @@
           }
         </div>
       } @else {
-        <div class="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-2">
-          <span class="text-4xl text-slate-300 dark:text-slate-650">ℹ️</span>
-          <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Sin Selección</p>
-          <p class="text-xs text-slate-400 dark:text-slate-500">
+        <div class="flex-1 flex flex-col items-center justify-center text-center p-6 space-y-2 select-none">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-10 h-10 text-slate-300 dark:text-slate-700">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.063.852l-.708 2.836a.75.75 0 001.063.852l.041-.028M12 4.75h.007v.008H12V4.75zm0 10.5h.008v.008H12v-.008z" />
+          </svg>
+          <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider select-none">Sin Selección</p>
+          <p class="text-[10px] text-slate-400 dark:text-slate-550 select-none">
             Selecciona una carpeta o archivo para ver los detalles de su tamaño, clave de S3 y fecha de modificación.
           </p>
         </div>

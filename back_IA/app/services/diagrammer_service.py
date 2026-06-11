@@ -3,88 +3,141 @@ import re
 from typing import Optional, Any
 from app.core.config import get_client, Config
 from app.schemas.diagram import DiagramState
-from app.core.example_loader import load_json_examples
 
 
 class DiagrammerService:
-    """Servicio para interactuar con la IA de Groq y generar comandos."""
+    """Servicio para interactuar con la IA de Groq y generar/modificar la estructura del diagrama."""
 
     def __init__(self):
         self.client = get_client()
         self.system_prompt = """
-        Eres un Arquitecto de Software experto en Diagramas de Actividad UML 2.5 con Carriles (Swimlanes).
-        Tu tarea es gestionar el estado COMPLETO del diagrama a través de comandos JSON precisos.
-        
-        CONCEPTOS CLAVE:
-        - LANES (Carriles): Contenedores verticales. Todo nodo debe estar idealmente dentro de un carril, si es que te lo pedi, si es necesario que este dentro.
-        - NODOS: initial (círculo), activity (rectángulo), decision (rombo), final (círculo doble), fork/join (barras).
-        - CONEXIONES: Flechas que unen nodos. Pueden tener etiquetas (labels).
-        
-        COMANDOS PERMITIDOS (Responde SOLO con un array JSON):
-        1. CREATE_LANE: { "action": "CREATE_LANE", "name": "Nombre", "orientation": "vertical|horizontal", "x": 0, "y": 0, "width": 200, "height": 600 }
-        2. CREATE_NODE: { "action": "CREATE_NODE", "type": "activity|decision|initial|final|fork|join", "name": "Texto", "laneId": "id", "x": 50, "y": 50 }
-        3. CREATE_FORM: { "action": "CREATE_FORM", "name": "Nombre Formulario", "laneId": "id", "x": 50, "y": 50, "fields": [{"label": "Nombre", "type": "text", "required": true}] }
-        4. ADD_FIELD: { "action": "ADD_FIELD", "nodeId": "id", "field": {"label": "Email", "type": "email", "required": true} }
-        5. SET_FORM: { "action": "SET_FORM", "nodeId": "id", "fields": [{"label": "C1", "type": "text"}, {"label": "C2", "type": "number"}] }
-        6. CONNECT: { "action": "CONNECT", "from": "id1", "to": "id2", "label": "opcional", "fromPort": "top|bottom|left|right", "toPort": "top|bottom|left|right" }
-        7. MOVE: { "action": "MOVE", "id": "id", "x": 100, "y": 100 }
-        8. UPDATE_PROP: { "action": "UPDATE_PROP", "id": "id", "props": { "name": "Texto", "fill": "#RRGGBB", "stroke": "#RRGGBB", "strokeWidth": 2, "fontSize": 14, "textColor": "#RRGGBB" } }
-        9. DELETE: { "action": "DELETE", "id": "id" }
-        
-        REGLAS DE POSICIONAMIENTO:
-        - Si un nodo pertenece a un carril (laneId), sus coordenadas (x, y) DEBEN estar dentro del área de ese carril.
-        - Ejemplo (Carril Vertical): Si el carril está en x=100 con ancho=200, los nodos dentro deben tener x entre 120 y 280.
-        - Si el flujo requiere varios actores, CREA un carril para cada uno. El segundo carril debe empezar donde termina el primero (ej: Lane1 x=100, width=300 -> Lane2 x=400).
-        - NUNCA posiciones una actividad fuera de los límites laterales de su carril.
-        - Para flujos verticales, incrementa la 'y' en al menos 150px por cada paso para que no se amontonen.
-        
-        REGLAS DE CONEXIÓN:
-        - Distribuye las flechas en distintos puertos (top, bottom, left, right) para evitar superposiciones. NUNCA saques dos flechas del mismo puerto en un mismo nodo.
-        - Para flujos verticales, prefiere de 'bottom' a 'top'.
-        - Para nodos de decisión con múltiples salidas, usa 'left', 'right' o 'bottom' de forma distribuida.
-        - SIEMPRE conecta el nodo 'initial' a la primera actividad.
-        - SIEMPRE conecta la última actividad o decisión al nodo 'final'.
-        - Todos los nodos DEBEN tener un 'name' único para ser referenciados.
-        - Para el nodo 'initial', usa siempre el name: "Inicio".
-        - Para el nodo 'final', usa siempre el name: "Fin".
-        - Usa estos nombres ("Inicio", "Fin", "Nombre de Actividad") en el campo 'from' y 'to' del comando CONNECT.
-        
-        REGLAS DE FORMULARIOS:
-        - Si el usuario pide agregar un formulario a una actividad EXISTENTE, utiliza SET_FORM o ADD_FIELD sobre el 'nodeId' correspondiente. NO crees un nodo nuevo si ya existe uno con ese nombre.
-        - Si el nodo implica recolectar datos (ej: "Registrar", "Llenar Solicitud", "Ingresar Datos"), usa CREATE_FORM en lugar de CREATE_NODE.
-        - Sugiere automáticamente campos relevantes basados en el nombre del nodo. 
-          Ejemplo: Si el nodo es "Pago", agrega campos como "Monto", "Fecha", "Método".
-        - Los formularios SIEMPRE llevan: actionType: "form", stroke: "#10b981" (verde) y strokeWidth: 4.
-        
-        DETALLES TÉCNICOS:
-        - Mantén una separación visual coherente (mínimo 150px entre nodos).
-        - RESPONDE EXCLUSIVAMENTE CON EL ARRAY JSON.
+        Eres un Arquitecto de Software y Diseñador de Procesos experto en Diagramas de Actividad UML 2.5 con Carriles (Swimlanes) y Formularios Dinámicos.
+        Tu misión es analizar el estado actual del diagrama de actividad y el requerimiento del usuario para devolver el estado ACTUALIZADO completo del diagrama en el formato JSON especificado.
+
+        ESTRUCTURA DEL DIAGRAMA DE ACTIVIDAD (JSON):
+        El objeto JSON retornado debe tener tres campos principales en su raíz:
+
+        1. "elementos": Una lista de nodos. Cada nodo contiene:
+           - "id": UUID v4 único (ej: "f7223b1f-080b-401d-b59e-03d77f1e01bc").
+           - "tipo": "start" (inicio), "activity" (actividad/paso), "decision" (decisión/rombo), "end" (fin), "fork" (bifurcación/barra), "join" (unión/barra).
+           - "nombre": Texto visible (ej: "seleccionar producto"). Los tipos "start", "end", "fork" y "join" tienen nombre vacío "".
+           - "posicion": {"x": int, "y": int}
+           - "tamano": {"width": int, "height": int} (Recomendado: start/end: 30x30, activity/decision: 130x60, fork/join: 8x140 vertical o 140x8 horizontal).
+           - "color": Hexadecimal (Recomendado: start: #1e293b, activity: #4f46e5, decision: #fef08a, end: #ffffff).
+           - "calleId": ID de la calle/carril donde está contenido.
+           - "formulario": Lista de campos para capturar información. Cada campo contiene:
+             - "id": ID único de campo (ej: "field_ii4na48").
+             - "name": Nombre/etiqueta del campo (ej: "documento").
+             - "type": "text", "number", "date", "file" (para documentos), "list" (lista), "table" (tabla).
+             - "required": true | false.
+             - "options": Opciones de configuración (ej: para tipo "table", las columnas separadas por comas: "producto, cantidad").
+
+        2. "enlaces": Una lista de conexiones direccionales (flechas). Cada enlace contiene:
+           - "id": UUID v4 único.
+           - "origen": {"elementoId": "id_nodo_origen", "puertoId": "top|bottom|left|right|p1|p2|p3"}
+           - "destino": {"elementoId": "id_nodo_destino", "puertoId": "top|bottom|left|right|p1|p2|p3"}
+           - "condicion": Etiqueta del enlace/bifurcación (ej: "SI", "NO", "aprobar"). Si no hay condición, dejar vacío "".
+           - "vertices": Siempre un array vacío [].
+
+        3. "calles": Una lista de carriles (roles o actores). Cada carril contiene:
+           - "id": UUID v4 único (ej: "4f1123da-9264-4388-bb9d-9cf8b9fe7608").
+           - "tipo": "lane-v" (carril vertical) o "lane-h" (carril horizontal).
+           - "nombre": Rol o actor del carril (ej: "Cliente", "Vendedor", "Aprobador").
+           - "posicion": {"x": int, "y": int}
+           - "tamano": {"width": int, "height": int}
+           - "elementosContenidos": Lista de strings con los IDs de los elementos contenidos en este carril.
+
+        REGLAS DE DISEÑO:
+        - Si creas un nodo, asegúrate de asignarle el "calleId" correspondiente y agregarlo a "elementosContenidos" de esa calle.
+        - Las coordenadas (x, y) de los elementos deben estar físicamente dentro del rectángulo de su carril.
+        - Espacia los nodos verticalmente con al menos 100px a 150px de diferencia en el eje Y para que no se superpongan.
+        - Los enlaces deben fluir de forma lógica: preferentemente de "bottom" (origen) a "top" (destino) en flujos verticales.
+        - Si una actividad implica ingresar archivos, tablas o números, inicializa la propiedad "formulario" con los campos lógicos pertinentes.
+
+        EJEMPLO DE DIAGRAMA:
+        ```json
+        {
+          "elementos": [
+            {
+              "id": "e1",
+              "tipo": "start",
+              "nombre": "",
+              "posicion": {"x": 140, "y": 120},
+              "tamano": {"width": 30, "height": 30},
+              "color": "#1e293b",
+              "calleId": "lane-c",
+              "formulario": []
+            },
+            {
+              "id": "e2",
+              "tipo": "activity",
+              "nombre": "solicitar compra",
+              "posicion": {"x": 90, "y": 200},
+              "tamano": {"width": 130, "height": 60},
+              "color": "#4f46e5",
+              "calleId": "lane-c",
+              "formulario": [
+                { "id": "field_1", "name": "documento", "type": "file", "required": true }
+              ]
+            }
+          ],
+          "enlaces": [
+            {
+              "id": "link-1",
+              "origen": {"elementoId": "e1", "puertoId": "bottom"},
+              "destino": {"elementoId": "e2", "puertoId": "top"},
+              "condicion": "",
+              "vertices": []
+            }
+          ],
+          "calles": [
+            {
+              "id": "lane-c",
+              "tipo": "lane-v",
+              "nombre": "Cliente",
+              "posicion": {"x": 70, "y": 80},
+              "tamano": {"width": 220, "height": 400},
+              "elementosContenidos": ["e1", "e2"]
+            }
+          ]
+        }
+        ```
+
+        RESPONDE EXCLUSIVAMENTE CON EL OBJETO JSON ACTUALIZADO. No incluyas explicaciones en lenguaje natural, solo el JSON estructurado.
         """
 
     async def generate_commands(
         self, prompt: str, state: Optional[DiagramState] = None
     ) -> Any:
         """
-        Genera comandos JSON para modificar el diagrama según el prompt.
+        Analiza el estado actual del diagrama y devuelve el nuevo estado JSON completo.
         """
         if not self.client:
             return {"error": "Cliente de Groq no inicializado."}
 
-        current_state_str = "Vacio"
-        if state and state.cells:
-            current_state_str = json.dumps([c for c in state.cells], indent=2)
+        # Formatear el estado actual en el prompt
+        current_state_str = "{}"
+        if state:
+            if state.elementos is not None or state.enlaces is not None or state.calles is not None:
+                current_state_str = json.dumps({
+                    "elementos": state.elementos or [],
+                    "enlaces": state.enlaces or [],
+                    "calles": state.calles or []
+                }, indent=2)
+            elif state.cells is not None:
+                # Si viene en formato cells, lo enviamos tal cual
+                current_state_str = json.dumps(state.cells, indent=2)
 
         full_prompt = f"""
         {self.system_prompt}
-        
-        EJEMPLOS REALES DEL SISTEMA (Formato JSON esperado):
-        {load_json_examples()}
         
         ESTADO ACTUAL DEL DIAGRAMA:
         {current_state_str}
         
         REQUERIMIENTO DEL USUARIO:
         {prompt}
+        
+        Genera el JSON actualizado completo:
         """
 
         try:
@@ -93,32 +146,22 @@ class DiagrammerService:
                 model=Config.GROQ_MODEL,
                 messages=[{"role": "user", "content": full_prompt}],
                 temperature=0.2,
-                max_completion_tokens=8000,
-                top_p=1,
-                stream=False,
-                stop=None,
-                compound_custom={
-                    "tools": {
-                        "enabled_tools": ["web_search", "code_interpreter", "visit_website"]
-                    }
-                }
+                max_completion_tokens=6000,
+                response_format={"type": "json_object"}
             )
 
             text = completion.choices[0].message.content or ""
             text = text.strip()
 
-            # Extracción robusta de JSON
-            json_match = re.search(r"```json\s*([\s\S]*?)\s*```", text)
-            if not json_match:
-                json_match = re.search(r"(\[[\s\S]*\]|\{[\s\S]*\})", text)
-
-            clean_json = json_match.group(1) if json_match else text
-
             try:
-                return json.loads(clean_json)
+                return json.loads(text)
             except json.JSONDecodeError:
-                return text
+                # Extracción robusta si no es un JSON limpio
+                json_match = re.search(r"(\{[\s\S]*\})", text)
+                if json_match:
+                    return json.loads(json_match.group(1))
+                return {"error": "No se pudo decodificar la respuesta del modelo.", "raw": text}
 
         except Exception as error:
-            print(f"Error en Groq: {error}")
-            return {"error": f"Error al procesar comandos: {str(error)}"}
+            print(f"Error en Groq (Diagrammer): {error}")
+            return {"error": f"Error al procesar el diagrama: {str(error)}"}

@@ -10,6 +10,7 @@ import { ThemeService } from '../../../../core/services/theme.service';
 import { PaletteComponent } from '../../components/palette/palette.component';
 import { PropertiesComponent, CustomField } from '../../components/properties/properties.component';
 import { FinalNode } from '../../components/uml-shapes';
+import { AiChatComponent } from '../../components/ai-chat/ai-chat.component';
 
 function getDefaultPorts() {
   return {
@@ -71,7 +72,7 @@ function getVerticalForkPorts() {
 @Component({
   selector: 'app-diagrammer-editor',
   standalone: true,
-  imports: [RouterLink, PaletteComponent, PropertiesComponent, KeyValuePipe],
+  imports: [RouterLink, PaletteComponent, PropertiesComponent, KeyValuePipe, AiChatComponent],
   templateUrl: './diagrammer-editor.component.html'
 })
 export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -81,6 +82,8 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
   protected readonly authService = inject(AuthService);
   protected readonly collabService = inject(CollaborationService);
   protected readonly themeService = inject(ThemeService);
+
+  readonly activeTab = signal<'properties' | 'chat'>('properties');
 
   constructor() {
     effect(() => {
@@ -1029,16 +1032,22 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
     // 1. Mapear calles a celdas de JointJS
     if (data.calles && Array.isArray(data.calles)) {
       data.calles.forEach((lane: any) => {
-        const isHorizontal = lane.tipo === 'lane-h';
+        const tipo = lane.tipo || lane.type || 'lane-v';
+        const posicion = lane.posicion || (lane.x !== undefined && lane.y !== undefined ? { x: lane.x, y: lane.y } : { x: 50, y: 100 });
+        const tamano = lane.tamano || (lane.width !== undefined && lane.height !== undefined ? { width: lane.width, height: lane.height } : { width: 220, height: 500 });
+        const nombre = lane.nombre || lane.name || 'Calle';
+        const id = lane.id || ('lane_' + Math.random().toString(36).substring(2, 9));
+
+        const isHorizontal = tipo === 'lane-h';
         const cell = new joint.shapes.standard.Rectangle({
-          id: lane.id,
-          position: lane.posicion,
-          size: lane.tamano,
+          id: id,
+          position: posicion,
+          size: tamano,
           attrs: {
             body: { class: 'lane-body', fill: 'rgba(99, 102, 241, 0.02)', stroke: '#6366f1', strokeWidth: 2, strokeDasharray: '5 5' },
             label: isHorizontal 
-              ? { text: lane.nombre, class: 'lane-label', fill: '#6366f1', fontSize: 12, fontWeight: 'bold', refX: 15, refY: 0.5, textAnchor: 'middle', transform: 'rotate(-90)' }
-              : { text: lane.nombre, class: 'lane-label', fill: '#6366f1', fontSize: 12, fontWeight: 'bold', refX: 0.5, refY: 20, textAnchor: 'middle' }
+              ? { text: nombre, class: 'lane-label', fill: '#6366f1', fontSize: 12, fontWeight: 'bold', refX: 15, refY: 0.5, textAnchor: 'middle', transform: 'rotate(-90)' }
+              : { text: nombre, class: 'lane-label', fill: '#6366f1', fontSize: 12, fontWeight: 'bold', refX: 0.5, refY: 20, textAnchor: 'middle' }
           }
         });
         (cell as any).set('isSwimlane', true);
@@ -1050,6 +1059,24 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
     // 2. Mapear elementos a celdas de JointJS
     if (data.elementos && Array.isArray(data.elementos)) {
       data.elementos.forEach((el: any) => {
+        const tipo = el.tipo || el.type || 'activity';
+        const posicion = el.posicion || (el.x !== undefined && el.y !== undefined ? { x: el.x, y: el.y } : { x: 100, y: 100 });
+        
+        let defaultWidth = 130;
+        let defaultHeight = 60;
+        if (tipo === 'start' || tipo === 'end') {
+          defaultWidth = 30;
+          defaultHeight = 30;
+        } else if (tipo === 'fork' || tipo === 'join') {
+          defaultWidth = 8;
+          defaultHeight = 140;
+        }
+        const tamano = el.tamano || (el.width !== undefined && el.height !== undefined ? { width: el.width, height: el.height } : { width: defaultWidth, height: defaultHeight });
+        const id = el.id || ('el_' + Math.random().toString(36).substring(2, 9));
+        const color = el.color || (tipo === 'start' ? '#1e293b' : (tipo === 'decision' ? '#fef08a' : (tipo === 'end' ? '#ffffff' : '#4f46e5')));
+        const nombre = el.nombre || el.name || '';
+        const calleId = el.calleId;
+
         let cell: joint.dia.Element;
         
         const customFields = (el.formulario || []).map((f: any) => ({
@@ -1057,14 +1084,14 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
           value: f.type === 'checkbox' ? false : (f.type === 'number' ? 0 : '')
         }));
 
-        switch (el.tipo) {
+        switch (tipo) {
           case 'start':
             cell = new joint.shapes.standard.Circle({
-              id: el.id,
-              position: el.posicion,
-              size: el.tamano,
+              id: id,
+              position: posicion,
+              size: tamano,
               attrs: {
-                body: { fill: el.color || '#1e293b', stroke: '#0f172a', strokeWidth: 1.5 },
+                body: { fill: color, stroke: '#0f172a', strokeWidth: 1.5 },
                 label: { text: '', display: 'none' }
               },
               ports: getDefaultPorts()
@@ -1073,22 +1100,22 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
             
           case 'end':
             cell = new FinalNode({
-              id: el.id,
-              position: el.posicion,
-              size: el.tamano,
+              id: id,
+              position: posicion,
+              size: tamano,
               ports: getDefaultPorts()
             });
             break;
             
           case 'activity':
             cell = new joint.shapes.standard.Rectangle({
-              id: el.id,
-              position: el.posicion,
-              size: el.tamano,
+              id: id,
+              position: posicion,
+              size: tamano,
               attrs: {
-                body: { fill: el.color || '#4f46e5', stroke: '#3730a3', strokeWidth: 2, rx: 12, ry: 12 },
+                body: { fill: color, stroke: '#3730a3', strokeWidth: 2, rx: 12, ry: 12 },
                 label: {
-                  text: el.nombre,
+                  text: nombre,
                   textWrap: {
                     width: -20,
                     height: -10,
@@ -1107,18 +1134,18 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
             
           case 'decision':
             cell = new joint.shapes.standard.Polygon({
-              id: el.id,
-              position: el.posicion,
-              size: el.tamano,
+              id: id,
+              position: posicion,
+              size: tamano,
               attrs: {
                 body: {
                   refPoints: '0,10 10,0 20,10 10,20',
-                  fill: el.color || '#fef08a',
+                  fill: color,
                   stroke: '#ca8a04',
                   strokeWidth: 2
                 },
                 label: {
-                  text: el.nombre,
+                  text: nombre,
                   textWrap: {
                     width: -40,
                     height: -20,
@@ -1136,13 +1163,13 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
             break;
             
           case 'fork':
-            const isHorizontal = el.tamano.width > el.tamano.height;
+            const isHorizontal = tamano.width > tamano.height;
             cell = new joint.shapes.standard.Rectangle({
-              id: el.id,
-              position: el.posicion,
-              size: el.tamano,
+              id: id,
+              position: posicion,
+              size: tamano,
               attrs: {
-                body: { fill: el.color || '#1e293b', stroke: '#475569', strokeWidth: 1 },
+                body: { fill: color, stroke: '#475569', strokeWidth: 1 },
                 label: { text: '', fill: '#ffffff' }
               },
               ports: isHorizontal ? getHorizontalForkPorts() : getVerticalForkPorts()
@@ -1153,8 +1180,9 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
             return;
         }
         
-        (cell as any).set('elementType', el.tipo);
+        (cell as any).set('elementType', tipo);
         (cell as any).set('customFields', customFields);
+        (cell as any).set('calleId', calleId);
         cells.push(cell);
       });
     }
@@ -1162,20 +1190,40 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
     // 3. Mapear enlaces a celdas de JointJS
     if (data.enlaces && Array.isArray(data.enlaces)) {
       data.enlaces.forEach((link: any) => {
+        const linkId = link.id || ('link_' + Math.random().toString(36).substring(2, 9));
+        
+        let origenId = '';
+        let origenPort = '';
+        if (link.origen) {
+          origenId = link.origen.elementoId || link.origen.id || '';
+          origenPort = link.origen.puertoId || link.origen.port || '';
+        } else if (link.source) {
+          origenId = link.source.id || link.source.elementoId || link.source || '';
+          origenPort = link.source.port || link.source.puertoId || '';
+        }
+
+        let destinoId = '';
+        let destinoPort = '';
+        if (link.destino) {
+          destinoId = link.destino.elementoId || link.destino.id || '';
+          destinoPort = link.destino.puertoId || link.destino.port || '';
+        } else if (link.target) {
+          destinoId = link.target.id || link.target.elementoId || link.target || '';
+          destinoPort = link.target.port || link.target.puertoId || '';
+        }
+
+        if (!origenId || !destinoId) return;
+
         const cell = new joint.shapes.standard.Link({
-          id: link.id,
+          id: linkId,
           router: { name: 'manhattan' },
           connector: { name: 'rounded' },
-          source: link.origen.puertoId 
-            ? { id: link.origen.elementoId, port: link.origen.puertoId } 
-            : { id: link.origen.elementoId },
-          target: link.destino.puertoId 
-            ? { id: link.destino.elementoId, port: link.destino.puertoId } 
-            : { id: link.destino.elementoId },
+          source: origenPort ? { id: origenId, port: origenPort } : { id: origenId },
+          target: destinoPort ? { id: destinoId, port: destinoPort } : { id: destinoId },
           vertices: link.vertices || [],
           labels: [{
             attrs: {
-              text: { text: link.condicion || '', fontSize: 13, fontWeight: '600', fill: '#ffffff', fontFamily: 'Plus Jakarta Sans, sans-serif', class: 'link-label-text' },
+              text: { text: link.condicion || link.condition || '', fontSize: 13, fontWeight: '600', fill: '#ffffff', fontFamily: 'Plus Jakarta Sans, sans-serif', class: 'link-label-text' },
               rect: { fill: '#4f46e5', stroke: '#4338ca', strokeWidth: 1, rx: 6, ry: 6, class: 'link-label-rect' }
             }
           }],
@@ -1291,6 +1339,13 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
       }
     } else if (type === 'CLEAR') {
       this.graph.clear({ remote: true });
+    }
+  }
+
+  onDiagramUpdatedByAgent(newDiagramState: any) {
+    if (newDiagramState) {
+      this.loadFromStructuredJson(newDiagramState);
+      this.saveDiagram();
     }
   }
 }
