@@ -48,10 +48,15 @@ class DiagrammerService:
            - "elementosContenidos": Lista de strings con los IDs de los elementos contenidos en este carril.
 
         REGLAS DE DISEÑO:
-        - Si creas un nodo, asegúrate de asignarle el "calleId" correspondiente y agregarlo a "elementosContenidos" de esa calle.
+        - ASOCIACIÓN OBLIGATORIA DE CALLES: Todos los elementos del diagrama (incluyendo "start" y "end") deben tener obligatoriamente asignado el ID de la calle donde están ubicados en su propiedad `"calleId"` (nunca dejes `calleId: ""`), y ese ID del elemento debe estar listado en el arreglo `"elementosContenidos"` de esa calle.
         - Las coordenadas (x, y) de los elementos deben estar físicamente dentro del rectángulo de su carril.
-        - Espacia los nodos verticalmente con al menos 100px a 150px de diferencia en el eje Y para que no se superpongan.
-        - Los enlaces deben fluir de forma lógica: preferentemente de "bottom" (origen) a "top" (destino) en flujos verticales.
+        - CENTRADO HORIZONTAL OBLIGATORIO: Todo elemento contenido en una calle vertical DEBE centrarse horizontalmente de forma exacta dentro del ancho de dicha calle. La fórmula obligatoria para la coordenada x es: `nodo.posicion.x = calle.posicion.x + (calle.tamano.width / 2) - (nodo.tamano.width / 2)`. Esto evita que los elementos queden fuera de su calle o a caballo/mitad entre dos calles.
+        - EVITAR SOBREPOSICIONES Y COLISIONES: Los elementos nunca deben superponerse. Asegura un espaciamiento vertical (eje Y) de al menos 100px a 150px entre nodos sucesivos en la misma calle.
+        - OBLIGATORIEDAD DE CALLES VERTICALES: Todas las calles/carriles que crees deben ser obligatoriamente verticales (`"tipo": "lane-v"`). No uses nunca calles horizontales (`lane-h`).
+        - OBLIGATORIEDAD DE CONECTIVIDAD Y DIRECCIÓN VERTICAL DEL FLUJO: Todos los elementos/nodos creados en el diagrama deben venir conectados lógicamente desde el inicio. Cuando crees o agregues un nuevo elemento, genera inmediatamente sus conexiones en el arreglo de `enlaces` para que forme parte del flujo.
+          - FLUJO VERTICAL: El flujo dentro de una misma calle debe ser estrictamente vertical, progresando hacia abajo (incrementando la coordenada `y`). Por ende, los enlaces entre nodos de una misma calle deben conectar el puerto `bottom` (origen) al puerto `top` (destino).
+          - FLUJO HORIZONTAL TRANSICIONAL: Solo se permiten enlaces horizontales (salidas por `right` o `left`) cuando el flujo sale de una calle para entrar a otra calle diferente.
+          - EVITAR CRUCE DE FLECHAS SOBRE ELEMENTOS: Las flechas/enlaces deben fluir de forma directa y limpia sin atravesar ni cruzar por encima de otros nodos intermedios.
         - Si una actividad implica ingresar archivos, tablas o números, inicializa la propiedad "formulario" con los campos lógicos pertinentes.
 
         EJEMPLO DE DIAGRAMA:
@@ -59,45 +64,165 @@ class DiagrammerService:
         {
           "elementos": [
             {
-              "id": "e1",
+              "id": "f7223b1f-080b-401d-b59e-03d77f1e01bc",
               "tipo": "start",
               "nombre": "",
-              "posicion": {"x": 140, "y": 120},
-              "tamano": {"width": 30, "height": 30},
+              "posicion": { "x": 165, "y": 120 },
+              "tamano": { "width": 30, "height": 30 },
               "color": "#1e293b",
-              "calleId": "lane-c",
+              "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
               "formulario": []
             },
             {
-              "id": "e2",
+              "id": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+              "tipo": "activity",
+              "nombre": "seleccionar producto",
+              "posicion": { "x": 115, "y": 210 },
+              "tamano": { "width": 130, "height": 60 },
+              "color": "#4f46e5",
+              "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+              "formulario": []
+            },
+            {
+              "id": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
               "tipo": "activity",
               "nombre": "solicitar compra",
-              "posicion": {"x": 90, "y": 200},
-              "tamano": {"width": 130, "height": 60},
+              "posicion": { "x": 115, "y": 310 },
+              "tamano": { "width": 130, "height": 60 },
               "color": "#4f46e5",
-              "calleId": "lane-c",
+              "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
               "formulario": [
-                { "id": "field_1", "name": "documento", "type": "file", "required": true }
+                { "id": "field_ii4na48", "name": "documento", "type": "file", "required": true }
               ]
+            },
+            {
+              "id": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+              "tipo": "activity",
+              "nombre": "Recibir solicitud",
+              "posicion": { "x": 505, "y": 310 },
+              "tamano": { "width": 130, "height": 60 },
+              "color": "#4f46e5",
+              "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+              "formulario": []
+            },
+            {
+              "id": "30b2685d-7c76-430a-a044-6328f3d51f04",
+              "tipo": "decision",
+              "nombre": "¿hay stock del producto?",
+              "posicion": { "x": 505, "y": 420 },
+              "tamano": { "width": 130, "height": 60 },
+              "color": "#fef08a",
+              "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+              "formulario": []
+            },
+            {
+              "id": "ac9b2c49-276f-47a8-833d-6d487e659aef",
+              "tipo": "activity",
+              "nombre": "informar precios",
+              "posicion": { "x": 505, "y": 530 },
+              "tamano": { "width": 130, "height": 60 },
+              "color": "#4f46e5",
+              "calleId": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+              "formulario": []
+            },
+            {
+              "id": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+              "tipo": "activity",
+              "nombre": "recibir informacion",
+              "posicion": { "x": 115, "y": 530 },
+              "tamano": { "width": 130, "height": 60 },
+              "color": "#4f46e5",
+              "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+              "formulario": []
+            },
+            {
+              "id": "97cb090a-321d-409c-88c7-0d684ce5fa53",
+              "tipo": "end",
+              "nombre": "",
+              "posicion": { "x": 165, "y": 660 },
+              "tamano": { "width": 30, "height": 30 },
+              "color": "#ffffff",
+              "calleId": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
+              "formulario": []
             }
           ],
           "enlaces": [
             {
-              "id": "link-1",
-              "origen": {"elementoId": "e1", "puertoId": "bottom"},
-              "destino": {"elementoId": "e2", "puertoId": "top"},
+              "id": "link_1",
+              "origen": { "elementoId": "f7223b1f-080b-401d-b59e-03d77f1e01bc", "puertoId": "bottom" },
+              "destino": { "elementoId": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222", "puertoId": "top" },
+              "condicion": "",
+              "vertices": []
+            },
+            {
+              "id": "link_2",
+              "origen": { "elementoId": "e5450421-14a9-49ed-8bfe-d8fe3bb8e222", "puertoId": "bottom" },
+              "destino": { "elementoId": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41", "puertoId": "top" },
+              "condicion": "",
+              "vertices": []
+            },
+            {
+              "id": "link_3",
+              "origen": { "elementoId": "c6e280c4-dada-4e47-9c9f-ca85a01d2a41", "puertoId": "right" },
+              "destino": { "elementoId": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac", "puertoId": "left" },
+              "condicion": "",
+              "vertices": []
+            },
+            {
+              "id": "link_4",
+              "origen": { "elementoId": "4f6af4cf-48e0-4514-a3e1-b5ec96489eac", "puertoId": "bottom" },
+              "destino": { "elementoId": "30b2685d-7c76-430a-a044-6328f3d51f04", "puertoId": "top" },
+              "condicion": "",
+              "vertices": []
+            },
+            {
+              "id": "link_5",
+              "origen": { "elementoId": "30b2685d-7c76-430a-a044-6328f3d51f04", "puertoId": "bottom" },
+              "destino": { "elementoId": "ac9b2c49-276f-47a8-833d-6d487e659aef", "puertoId": "top" },
+              "condicion": "SI",
+              "vertices": []
+            },
+            {
+              "id": "link_6",
+              "origen": { "elementoId": "ac9b2c49-276f-47a8-833d-6d487e659aef", "puertoId": "left" },
+              "destino": { "elementoId": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894", "puertoId": "right" },
+              "condicion": "",
+              "vertices": []
+            },
+            {
+              "id": "link_7",
+              "origen": { "elementoId": "dbf9de8a-2596-4d45-8ebc-9f56e41bf894", "puertoId": "bottom" },
+              "destino": { "elementoId": "97cb090a-321d-409c-88c7-0d684ce5fa53", "puertoId": "top" },
               "condicion": "",
               "vertices": []
             }
           ],
           "calles": [
             {
-              "id": "lane-c",
+              "id": "4f1123da-9264-4388-bb9d-9cf8b9fe7608",
               "tipo": "lane-v",
               "nombre": "Cliente",
-              "posicion": {"x": 70, "y": 80},
-              "tamano": {"width": 220, "height": 400},
-              "elementosContenidos": ["e1", "e2"]
+              "posicion": { "x": 70, "y": 80 },
+              "tamano": { "width": 220, "height": 800 },
+              "elementosContenidos": [
+                "f7223b1f-080b-401d-b59e-03d77f1e01bc",
+                "e5450421-14a9-49ed-8bfe-d8fe3bb8e222",
+                "c6e280c4-dada-4e47-9c9f-ca85a01d2a41",
+                "dbf9de8a-2596-4d45-8ebc-9f56e41bf894",
+                "97cb090a-321d-409c-88c7-0d684ce5fa53"
+              ]
+            },
+            {
+              "id": "b2cd6f41-00cf-46e2-bddd-83488b4db3fc",
+              "tipo": "lane-v",
+              "nombre": "Vendedor",
+              "posicion": { "x": 460, "y": 80 },
+              "tamano": { "width": 220, "height": 800 },
+              "elementosContenidos": [
+                "4f6af4cf-48e0-4514-a3e1-b5ec96489eac",
+                "30b2685d-7c76-430a-a044-6328f3d51f04",
+                "ac9b2c49-276f-47a8-833d-6d487e659aef"
+              ]
             }
           ]
         }

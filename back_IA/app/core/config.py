@@ -9,7 +9,8 @@ class Config:
     """Clase de configuración global del sistema."""
 
     GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-    GROQ_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"  # Modelo proporcionado por el usuario
+    GROQ_MODEL = "llama-3.3-70b-versatile"  # Modelo proporcionado por el usuario
+    GROQ_DL_MODEL = os.getenv("GROQ_DL_MODEL", "openai/gpt-oss-120b")  # Modelo para deep learning y analítica
     PORT = int(os.getenv("PORT", 8000))
 
 

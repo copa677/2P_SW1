@@ -195,7 +195,7 @@ class DeepLearningService:
         
         try:
             completion = client.chat.completions.create(
-                model=Config.GROQ_MODEL,
+                model=Config.GROQ_DL_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_content}

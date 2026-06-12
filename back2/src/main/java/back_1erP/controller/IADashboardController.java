@@ -1,5 +1,7 @@
 package back_1erP.controller;
 
+import back_1erP.dto.GeneralDashboardStatsDTO;
+import back_1erP.service.GeneralDashboardService;
 import back_1erP.service.IAIntegrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,9 +17,19 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/dashboard")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class IADashboardController {
 
     private final IAIntegrationService iaIntegrationService;
+    private final GeneralDashboardService generalDashboardService;
+
+    /**
+     * Retorna las estadísticas generales consolidadas del sistema.
+     */
+    @GetMapping("/general-stats")
+    public ResponseEntity<GeneralDashboardStatsDTO> getGeneralStats() {
+        return ResponseEntity.ok(generalDashboardService.getGeneralStats());
+    }
 
     /**
      * Retorna las métricas consolidadas del Autoencoder de anomalías y la clasificación de textos.

@@ -63,7 +63,7 @@ class AnalysisService:
 
         try:
             completion = self.client.chat.completions.create(
-                model=Config.GROQ_MODEL,
+                model=Config.GROQ_DL_MODEL,
                 messages=[{"role": "user", "content": full_prompt}],
                 temperature=0.1,
                 max_completion_tokens=4000,

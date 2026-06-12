@@ -11,6 +11,13 @@ export class DashboardIaService {
   private readonly API_URL = `${environment.apiUrl}/dashboard`;
 
   /**
+   * Obtiene las estadísticas generales consolidadas del sistema.
+   */
+  getGeneralStats(): Observable<any> {
+    return this.http.get<any>(`${this.API_URL}/general-stats`);
+  }
+
+  /**
    * Obtiene las métricas calculadas por el motor de Deep Learning.
    */
   getIAMetrics(projectId: string, prompt?: string): Observable<any> {

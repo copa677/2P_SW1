@@ -311,7 +311,7 @@ export class WelcomeTourComponent implements OnInit {
 
   readonly steps: TourStep[] = [
     {
-      title: '¡Bienvenido a POLITICAS Engine!',
+      title: '¡Bienvenido a UML Tracker System!',
       description: 'Te guiaremos en un recorrido corto por las secciones principales del sistema para que aprendas a modelar y ejecutar tus flujos de trabajo.'
     },
     {

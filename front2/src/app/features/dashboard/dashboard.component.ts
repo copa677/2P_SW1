@@ -28,6 +28,10 @@ export class DashboardComponent implements OnInit {
   // Pestañas Horizontales
   readonly activeTab = signal<'general' | 'ia'>('general');
 
+  // Signals para estadísticas generales
+  readonly generalStats = signal<any>(null);
+  readonly isLoadingStats = signal<boolean>(false);
+
   // Signals para voz
   readonly isListeningSpeech = signal<boolean>(false);
   readonly speechError = signal<string>('');
@@ -38,6 +42,28 @@ export class DashboardComponent implements OnInit {
         this.activeTab.set('ia');
       } else {
         this.activeTab.set('general');
+        this.loadGeneralStats();
+      }
+    });
+  }
+
+  setActiveTab(tab: 'general' | 'ia') {
+    this.activeTab.set(tab);
+    if (tab === 'general') {
+      this.loadGeneralStats();
+    }
+  }
+
+  loadGeneralStats() {
+    this.isLoadingStats.set(true);
+    this.iaService.getGeneralStats().subscribe({
+      next: (res) => {
+        this.generalStats.set(res);
+        this.isLoadingStats.set(false);
+      },
+      error: (err) => {
+        console.error('Error al cargar estadísticas generales:', err);
+        this.isLoadingStats.set(false);
       }
     });
   }
@@ -215,5 +241,13 @@ export class DashboardComponent implements OnInit {
         }, 3000);
       }
     });
+  }
+
+  get tasksByLaneEntries(): { lane: string; count: number }[] {
+    const stats = this.generalStats();
+    if (!stats || !stats.tasksByLane) return [];
+    return Object.entries(stats.tasksByLane)
+      .map(([lane, count]) => ({ lane, count: count as number }))
+      .sort((a, b) => b.count - a.count);
   }
 }
