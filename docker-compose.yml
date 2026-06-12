@@ -1,12 +1,12 @@
 services:
   backend:
-    build: ./back_1erP
+    build: ./back2
     ports:
       - "8000:8000"
     environment:
-      - IA_SERVICE_URL=http://back-ia:5000
+      - IA_API_URL=http://back-ia:5000/api/v1/analyzer
     volumes:
-      - ./back_1erP/src/main/resources/firebase-service-account.json:/app/resources/firebase-service-account.json
+      - ./back2/src/main/resources/firebase-service-account.json:/app/resources/firebase-service-account.json
     depends_on:
       - back-ia
 
@@ -19,7 +19,7 @@ services:
     restart: always
 
   frontend:
-    build: ./front_1erP
+    build: ./front2
     ports:
       - "4200:4200"
     depends_on:

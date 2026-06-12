@@ -70,6 +70,25 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  // Marcar manual interactivo como completado
+  completeTour(): Observable<boolean> {
+    const user = this._currentUser();
+    if (!user) return of(false);
+    return this.http.put<User>(`${environment.apiUrl}/users/${user.id}/complete-tour`, {}).pipe(
+      tap(updatedUser => {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('uml_user', JSON.stringify(updatedUser));
+        }
+        this._currentUser.set(updatedUser);
+      }),
+      map(() => true),
+      catchError(err => {
+        console.error('Error completing tour', err);
+        return of(false);
+      })
+    );
+  }
+
   // Comprobar si el usuario actual posee un permiso dinámico específico (traducido para el backend)
   hasPermission(tab: string, action: string): boolean {
     const user = this.currentUser();

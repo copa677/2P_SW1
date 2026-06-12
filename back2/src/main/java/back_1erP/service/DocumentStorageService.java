@@ -190,6 +190,37 @@ public class DocumentStorageService {
         }
 
         return root.children;
+    }    /**
+     * Sobrescribe un documento existente en S3 con el mismo Key.
+     */
+    public Map<String, Object> updateDocument(String s3Key, MultipartFile file) throws IOException {
+        PutObjectRequest putOb = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(s3Key)
+                .contentType(file.getContentType())
+                .build();
+
+        s3Client.putObject(putOb, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("name", s3Key.substring(s3Key.lastIndexOf("/") + 1));
+        result.put("type", file.getContentType());
+        result.put("size", file.getSize());
+        result.put("s3Key", s3Key);
+        return result;
+    }
+
+    /**
+     * Obtiene el contenido de un archivo directamente desde S3 como bytes.
+     */
+    public byte[] getDocumentContent(String s3Key) throws IOException {
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(s3Key)
+                .build();
+        try (software.amazon.awssdk.core.ResponseInputStream<software.amazon.awssdk.services.s3.model.GetObjectResponse> inputStream = s3Client.getObject(getObjectRequest)) {
+            return inputStream.readAllBytes();
+        }
     }
 
     private TreeNode findOrCreateChild(TreeNode parent, String id, String name) {

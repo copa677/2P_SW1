@@ -37,7 +37,6 @@ public class DocumentController {
     }
 
     @GetMapping("/download")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> downloadFile(@RequestParam("key") String key) {
         try {
             String presignedUrl = documentStorageService.generatePreSignedUrl(key);
@@ -55,6 +54,38 @@ public class DocumentController {
         try {
             List<DocumentStorageService.TreeNode> tree = documentStorageService.listDocuments();
             return ResponseEntity.ok(tree);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("/update")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Map<String, Object>> updateFile(
+            @RequestParam("key") String key,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            Map<String, Object> response = documentStorageService.updateDocument(key, file);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/content")
+    public ResponseEntity<byte[]> getFileContent(@RequestParam("key") String key) {
+        try {
+            byte[] content = documentStorageService.getDocumentContent(key);
+            String contentType = "application/octet-stream";
+            String lowerKey = key.toLowerCase();
+            if (lowerKey.endsWith(".txt")) contentType = "text/plain";
+            else if (lowerKey.endsWith(".html")) contentType = "text/html";
+            else if (lowerKey.endsWith(".xlsx")) contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            else if (lowerKey.endsWith(".csv")) contentType = "text/csv";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, contentType)
+                    .body(content);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

@@ -43,6 +43,9 @@ public class User implements UserDetails {
 
     private boolean activo;
 
+    @Builder.Default
+    private boolean isNew = true;
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {

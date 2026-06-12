@@ -384,9 +384,6 @@ public class ProcessService {
     }
 
     private String resolveAssignedUser(String projectId, String laneId, String laneName, String initiatorId) {
-        if (laneName != null && (laneName.equalsIgnoreCase("Cliente") || laneName.equalsIgnoreCase("Clientes"))) {
-            return initiatorId;
-        }
         return flowAssignmentRepository.findByProjectId(projectId)
                 .flatMap(flowAssignment -> flowAssignment.getAssignments().stream()
                         .filter(assign -> laneId.equals(assign.getCalleId()))

@@ -56,4 +56,15 @@ public class UserController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}/complete-tour")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> completeTour(@PathVariable String id) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setNew(false);
+                    return ResponseEntity.ok(userRepository.save(user));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

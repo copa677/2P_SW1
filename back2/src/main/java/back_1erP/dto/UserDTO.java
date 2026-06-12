@@ -18,5 +18,6 @@ public class UserDTO {
     private String correo;
     private Role rol;
     private List<String> permisos;
+    private boolean isNew;
 }
 

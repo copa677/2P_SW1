@@ -97,6 +97,7 @@ public class AuthService {
                 .correo(user.getCorreo())
                 .rol(user.getRol())
                 .permisos(user.getPermisos())
+                .isNew(user.isNew())
                 .build();
     }
 }

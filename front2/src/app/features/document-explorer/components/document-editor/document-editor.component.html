@@ -1,0 +1,220 @@
+<div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 md:p-6 animate-fade-in">
+  
+  <div class="bg-white dark:bg-plomo-card border border-slate-200 dark:border-plomo-border rounded-3xl w-full h-full max-w-7xl flex flex-col shadow-2xl overflow-hidden transition-all duration-300">
+    
+    <!-- Cabecera del Editor -->
+    <div class="px-6 py-4 border-b border-slate-200 dark:border-plomo-border flex items-center justify-between bg-slate-50/50 dark:bg-plomo-strong/30 shrink-0">
+      
+      <!-- Información del archivo -->
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 rounded-xl shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <h3 class="text-sm font-bold text-slate-900 dark:text-white truncate max-w-xs md:max-w-md" [title]="filename">
+            {{ filename }}
+          </h3>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1.5 mt-0.5">
+            @if (editorType() === 'text' || editorType() === 'spreadsheet' || editorType() === 'word') {
+              <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+              <span>Edición Colaborativa en Vivo</span>
+            } @else {
+              <span class="w-1.5 h-1.5 bg-indigo-550 rounded-full"></span>
+              <span>Solo Lectura</span>
+            }
+          </p>
+        </div>
+      </div>
+
+      <!-- Área de control (Colaboradores, Guardado, Cerrar) -->
+      <div class="flex items-center gap-4">
+        
+        <!-- Colaboradores Conectados -->
+        @if (editorType() === 'text' || editorType() === 'spreadsheet' || editorType() === 'word') {
+          <div class="flex items-center -space-x-2.5 overflow-hidden">
+            <!-- Usuario actual en burbuja -->
+            <div class="w-7 h-7 rounded-full border-2 border-white dark:border-plomo-card bg-indigo-600 text-white flex items-center justify-center text-[9px] font-bold" title="Tú (Editando)">
+              TÚ
+            </div>
+            
+            <!-- Demás colaboradores conectados -->
+            @for (cUser of collabService.activeUsers(); track cUser.id) {
+              <div 
+                [style.background-color]="cUser.color" 
+                class="w-7 h-7 rounded-full border-2 border-white dark:border-plomo-card text-white flex items-center justify-center text-[9px] font-bold uppercase cursor-help transition-transform hover:scale-110"
+                [title]="cUser.username"
+              >
+                {{ cUser.initials }}
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Botones de Acción -->
+        <div class="flex items-center gap-2">
+          @if (editorType() === 'text' || editorType() === 'spreadsheet' || editorType() === 'word') {
+            <button 
+              (click)="saveDocument()" 
+              [disabled]="saving() || loading()"
+              class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-600/50 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/10 disabled:cursor-not-allowed transform active:scale-95"
+            >
+              @if (saving()) {
+                <div class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Guardando...</span>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <span>Guardar</span>
+              }
+            </button>
+          }
+
+          <button 
+            (click)="onClose.emit()" 
+            class="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl hover:bg-slate-200/50 dark:hover:bg-plomo-hover/50 transition-all"
+            title="Cerrar Editor"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Cuerpo del Editor / Visualizador -->
+    <div class="flex-1 bg-slate-50 dark:bg-plomo-strong/20 overflow-hidden relative flex flex-col">
+      
+      <!-- Carga inicial -->
+      @if (loading()) {
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/80 dark:bg-plomo-card/80 z-20 space-y-3">
+          <div class="w-9 h-9 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold">Cargando documento...</p>
+        </div>
+      }
+
+      <!-- Errores -->
+      @if (error()) {
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-plomo-card z-20 space-y-4 p-6 text-center">
+          <span class="text-4xl">⚠️</span>
+          <div class="space-y-1">
+            <p class="text-xs font-bold text-red-500">Error al Cargar Archivo</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 max-w-sm font-semibold">{{ error() }}</p>
+          </div>
+          <button (click)="loadInitialContent()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-indigo-500/20">
+            Reintentar Carga
+          </button>
+        </div>
+      }
+
+      <!-- Canvas de Editores -->
+      <div class="flex-1 overflow-auto p-4 md:p-6 flex flex-col">
+        
+        <!-- EDITOR DE TEXTO (Quill) -->
+        @if (editorType() === 'text' || editorType() === 'word') {
+          <div class="flex-1 bg-white dark:bg-[#161b22] border border-slate-200 dark:border-plomo-border rounded-2xl flex flex-col overflow-hidden shadow-sm">
+            <div #quillContainer class="flex-1 min-h-[50vh] dark:text-white dark:bg-transparent"></div>
+          </div>
+        }
+
+        <!-- EDITOR DE TABLA (jSpreadsheet) -->
+        @if (editorType() === 'spreadsheet') {
+          <div class="flex-1 bg-white dark:bg-[#161b22] border border-slate-200 dark:border-plomo-border rounded-2xl p-4 overflow-auto shadow-sm flex flex-col">
+            <div #spreadsheetContainer class="min-w-max flex-1"></div>
+          </div>
+        }
+
+        <!-- VISUALIZADOR DE PDF -->
+        @if (editorType() === 'pdf' && safeUrl) {
+          <div class="flex-1 bg-slate-100 border border-slate-200 dark:border-plomo-border rounded-2xl overflow-hidden shadow-inner">
+            <iframe [src]="safeUrl" class="w-full h-full border-none rounded-2xl bg-white"></iframe>
+          </div>
+        }
+
+        <!-- VISUALIZADOR DE IMAGEN (Pan & Zoom) -->
+        @if (editorType() === 'image') {
+          <div 
+            class="flex-1 border border-slate-200 dark:border-plomo-border rounded-2xl overflow-hidden shadow-inner relative flex items-center justify-center bg-slate-900 select-none cursor-grab"
+            [class.cursor-grabbing]="isDragging"
+            (mousedown)="onImageMouseDown($event)"
+          >
+            <!-- Imagen con Estilos de Pan y Zoom -->
+            <img 
+              [src]="downloadUrl" 
+              alt="Visualizador" 
+              class="max-w-full max-h-full object-contain pointer-events-none select-none transition-transform duration-75 ease-out"
+              [style.transform]="'translate(' + panX() + 'px, ' + panY() + 'px) scale(' + zoomLevel() + ')'"
+            />
+
+            <!-- Controles Flotantes Premium de Zoom -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center bg-slate-800/80 backdrop-blur border border-slate-750 px-4 py-2 rounded-2xl shadow-lg gap-3 text-white">
+              <button 
+                (click)="zoomOut(); $event.stopPropagation()" 
+                class="w-7 h-7 rounded-lg hover:bg-slate-700 active:scale-95 flex items-center justify-center font-bold text-lg"
+                title="Alejar"
+              >
+                -
+              </button>
+              <span class="text-[10px] font-bold font-mono tracking-wider w-12 text-center">
+                {{ (zoomLevel() * 100).toFixed(0) }}%
+              </span>
+              <button 
+                (click)="zoomIn(); $event.stopPropagation()" 
+                class="w-7 h-7 rounded-lg hover:bg-slate-700 active:scale-95 flex items-center justify-center font-bold text-lg"
+                title="Acercar"
+              >
+                +
+              </button>
+              <div class="w-px h-4 bg-slate-700"></div>
+              <button 
+                (click)="resetZoom(); $event.stopPropagation()" 
+                class="px-2.5 py-1 text-[9px] font-bold uppercase bg-indigo-650 hover:bg-indigo-750 rounded-lg active:scale-95 transition-all"
+                title="Restablecer vista"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        }
+
+        <!-- VISUALIZADOR DE VIDEO -->
+        @if (editorType() === 'video') {
+          <div class="flex-1 border border-slate-200 dark:border-plomo-border rounded-2xl overflow-hidden shadow-inner relative flex items-center justify-center bg-slate-900 p-2">
+            <video [src]="downloadUrl" controls class="max-w-full max-h-full rounded-2xl outline-none shadow-md" style="max-height: 65vh;"></video>
+          </div>
+        }
+
+        <!-- FORMATO NO COMPATIBLE -->
+        @if (editorType() === 'unsupported') {
+          <div class="flex-1 flex flex-col items-center justify-center py-20 text-center space-y-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-12 h-12 text-slate-400">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+            <div class="space-y-1">
+              <p class="text-sm font-bold text-slate-700 dark:text-slate-350">Formato no compatible para edición en navegador</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold max-w-sm">
+                No podemos abrir el archivo "{{ filename }}" directamente. Por favor descárgalo para editarlo localmente en tu dispositivo.
+              </p>
+            </div>
+            <a 
+              [href]="downloadUrl" 
+              class="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-emerald-500/10"
+              target="_blank"
+            >
+              Descargar Archivo
+            </a>
+          </div>
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -42,9 +42,9 @@ public class WebSocketEventListener {
     /**
      * Registra la asociación de una sesión con un usuario cuando llega un mensaje de JOIN u otro.
      */
-    public void registerUserSession(String sessionId, String projectId, String userId, String username) {
-        sessionRegistry.put(sessionId, new UserSessionInfo(projectId, userId, username));
-        log.info("Usuario {} registrado en sesión {} para el proyecto {}", username, sessionId, projectId);
+    public void registerUserSession(String sessionId, String type, String targetId, String userId, String username) {
+        sessionRegistry.put(sessionId, new UserSessionInfo(type, targetId, userId, username));
+        log.info("Usuario {} registrado en sesión {} para el {} {}", username, sessionId, type, targetId);
     }
 
     @EventListener
@@ -54,19 +54,20 @@ public class WebSocketEventListener {
 
         UserSessionInfo userInfo = sessionRegistry.remove(sessionId);
         if (userInfo != null) {
-            log.info("Desconexión detectada: Usuario {} dejó el proyecto {}", userInfo.username, userInfo.projectId);
+            log.info("Desconexión detectada: Usuario {} dejó {} {}", userInfo.username, userInfo.type, userInfo.targetId);
 
             CollaborationMessage leaveMessage = CollaborationMessage.builder()
                     .type("USER_LEFT")
-                    .projectId(userInfo.projectId)
+                    .projectId(userInfo.targetId)
                     .userId(userInfo.userId)
                     .username(userInfo.username)
                     .build();
 
-            // Notificar a todos los demás en el proyecto
-            messagingTemplate.convertAndSend("/topic/project/" + userInfo.projectId, leaveMessage);
+            // Notificar a todos los demás en el destino correspondiente
+            String destination = "/topic/" + userInfo.type + "/" + userInfo.targetId;
+            messagingTemplate.convertAndSend(destination, leaveMessage);
         }
     }
 
-    private record UserSessionInfo(String projectId, String userId, String username) {}
+    private record UserSessionInfo(String type, String targetId, String userId, String username) {}
 }

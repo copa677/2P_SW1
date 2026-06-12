@@ -29,6 +29,7 @@
         <!-- Pestaña: Dashboard -->
         @if (authService.hasPermission('dashboard', 'ver')) {
         <a routerLink="/dashboard"
+          id="tour-dashboard"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
           class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Dashboard">
@@ -46,6 +47,7 @@
         <!-- Pestaña: Gestión de Usuarios -->
         @if (authService.hasPermission('usuarios', 'ver')) {
         <a routerLink="/usuarios"
+          id="tour-usuarios"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
           class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Usuarios">
@@ -63,20 +65,20 @@
         <!-- Pestaña: Diagramador (Actividades UML) -->
         @if (authService.hasPermission('diagramador', 'ver')) {
         <a routerLink="/diagramas"
+          id="tour-diagramador"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
           class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Diagramador UML">
-          <!-- Icono de Red / Diagrama -->
+          <!-- Icono de Flujograma / Diagrama -->
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-5 h-5 group-hover:scale-110 transition-transform">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            <rect x="9" y="3" width="6" height="4" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="3" y="14" width="6" height="4" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="15" y="14" width="6" height="4" rx="1" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v3.5m0 0H6v3.5m6-3.5h6v3.5" />
           </svg>
           @if (isSidebarOpen()) {
-          <span
-            class="text-sm font-medium animate-fade-in text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200">
-            Diagramador
-          </span>
+          <span class="text-sm font-medium animate-fade-in">Diagramador</span>
           }
         </a>
         }
@@ -84,19 +86,19 @@
         <!-- Pestaña: Asignaciones de Calles -->
         @if (authService.hasPermission('diagramador', 'ver')) {
         <a routerLink="/asignaciones"
+          id="tour-asignaciones"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
-          class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-350 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
+          class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Asignaciones de Calles">
+          <!-- Icono de Columnas / Swimlanes con Flujo -->
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-5 h-5 group-hover:scale-110 transition-transform">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v18M15 3v18" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2" d="M6 7h12M6 14h12" />
           </svg>
           @if (isSidebarOpen()) {
-          <span
-            class="text-sm font-medium animate-fade-in text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200">
-            Asignaciones
-          </span>
+          <span class="text-sm font-medium animate-fade-in">Asignaciones</span>
           }
         </a>
         }
@@ -104,6 +106,7 @@
         <!-- Pestaña: Funcionario (Bandeja de Entrada de Tareas) -->
         @if (authService.hasPermission('funcionario', 'ver') || authService.currentUser()?.rol === 'CLIENTE') {
         <a routerLink="/mis-tareas"
+          id="tour-tareas"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
           class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Bandeja de Tareas">
@@ -113,18 +116,16 @@
               d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.03 0 1.9.693 2.166 1.638m-7.377 2.24l-.407 14.583c-.015.533.428.972.962.972h9.75c.533 0 .977-.439.962-.972l-.407-14.583M9.75 9.75h.008v.008H9.75V9.75zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0z" />
           </svg>
           @if (isSidebarOpen()) {
-          <span
-            class="text-sm font-medium animate-fade-in text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200">
-            Bandeja de Tareas
-          </span>
+          <span class="text-sm font-medium animate-fade-in">Bandeja de Tareas</span>
           }
         </a>
         }
-             <!-- Pestaña: Gestor Documental (Drive) -->
+        <!-- Pestaña: Gestor Documental (Drive) -->
         @if (authService.hasPermission('documentos', 'ver')) {
         <a routerLink="/documentos"
+          id="tour-documentos"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
-          class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-350 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
+          class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Gestor Documental (Drive)">
           <!-- Folder Icon / Drive Style -->
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -138,28 +139,12 @@
         </a>
         }
 
-        <!-- Pestaña: Reportes Inteligentes (IA) -->
-        @if (authService.hasPermission('reportes', 'ver') || authService.currentUser()?.rol === 'ADMIN' || authService.currentUser()?.rol === 'DIAGRAMADOR' || authService.currentUser()?.rol === 'FUNCIONARIO') {
-        <a routerLink="/dashboard"
-          [queryParams]="{tab: 'ia'}"
-          routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
-          class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-350 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
-          title="Reportes Inteligentes de IA">
-          <!-- Document Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-            stroke="currentColor" class="w-5 h-5 group-hover:scale-110 transition-transform">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-          </svg>
-          @if (isSidebarOpen()) {
-          <span class="text-sm font-medium animate-fade-in">Reportes IA</span>
-          }
-        </a>
-        }
+
 
         <!-- Pestaña: Configurar Permisos (Reemplaza a roles y permisos) -->
         @if (authService.hasPermission('permisos', 'ver')) {
         <a routerLink="/permisos"
+          id="tour-permisos"
           routerLinkActive="bg-indigo-50/70 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 font-semibold border-l-4 border-indigo-600"
           class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-plomo-hover/50 text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all group border-l-4 border-transparent"
           title="Permisos Granulares">
@@ -214,6 +199,7 @@
 
         <!-- INTERRUPTOR DE TEMA CLARO A OSCURO (PLOMO FUERTE) -->
         <button (click)="themeService.toggleTheme()"
+          id="tour-theme"
           class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-plomo-hover hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all duration-300 border border-transparent dark:border-plomo-border"
           title="Alternar modo claro / oscuro plomo">
           @if (themeService.theme() === 'light') {
@@ -281,4 +267,51 @@
 
   </div>
 
-</div>
+  <!-- Toastr Container -->
+  <div class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none">
+    @for (toast of toastrService.toasts(); track toast.id) {
+      <div 
+        [class]="getToastClasses(toast.type)"
+        class="pointer-events-auto flex items-start gap-3 p-4 rounded-xl shadow-lg border backdrop-blur-md transition-all duration-300 transform translate-y-0 opacity-100 animate-slide-in"
+        role="alert"
+      >
+        <!-- Icon based on type -->
+        @if (toast.type === 'success') {
+          <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        } @else if (toast.type === 'error') {
+          <svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        } @else if (toast.type === 'warning') {
+          <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        } @else {
+          <svg class="w-5 h-5 text-blue-500 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        }
+
+        <div class="flex-1">
+          @if (toast.title) {
+            <h4 class="text-xs font-bold text-slate-900 dark:text-white mb-0.5">{{ toast.title }}</h4>
+          }
+          <p class="text-xs font-medium leading-relaxed">{{ toast.message }}</p>
+        </div>
+
+        <button (click)="toastrService.remove(toast.id)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors shrink-0 mt-0.5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (authService.currentUser()?.isNew) {
+    <app-welcome-tour></app-welcome-tour>
+  }
+
+</div>

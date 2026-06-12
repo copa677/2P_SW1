@@ -8,5 +8,6 @@ export interface User {
   password?: string;
   rol: Role;
   permisos: string[]; // Formato: 'pestaña:acción' (ej: 'usuarios:crear')
+  isNew?: boolean;
 }
 

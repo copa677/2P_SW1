@@ -126,8 +126,9 @@ export class FlowAssignmentsComponent implements OnInit {
       const isClient = this.isClientLane(lane.nombre);
       const assignedUserId = assMap[lane.id] || '';
 
-      if (!isClient && !assignedUserId) {
-        this.statusMessage.set(`Por favor, asigne un funcionario a la calle: "${lane.nombre}".`);
+      if (!assignedUserId) {
+        const roleName = isClient ? 'cliente' : 'funcionario';
+        this.statusMessage.set(`Por favor, asigne un ${roleName} a la calle: "${lane.nombre}".`);
         this.statusType.set('error');
         return;
       }
@@ -135,7 +136,7 @@ export class FlowAssignmentsComponent implements OnInit {
       laneAssignments.push({
         calleId: lane.id,
         calleNombre: lane.nombre,
-        assignedUserId: isClient ? '' : assignedUserId, // Si es cliente se resuelve automáticamente
+        assignedUserId: assignedUserId,
         rol: isClient ? 'CLIENTE' : 'FUNCIONARIO'
       });
     }

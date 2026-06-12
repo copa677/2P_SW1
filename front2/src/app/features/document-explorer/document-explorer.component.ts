@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProcessExecutionService } from '../../core/services/process-execution.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ToastrService } from '../../core/services/toastr.service';
+import { DocumentEditorComponent } from './components/document-editor/document-editor.component';
 
 export interface TreeNode {
   id: string;
@@ -17,12 +19,13 @@ export interface TreeNode {
 @Component({
   selector: 'app-document-explorer',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DocumentEditorComponent],
   templateUrl: './document-explorer.component.html'
 })
 export class DocumentExplorerComponent implements OnInit {
   private readonly processService = inject(ProcessExecutionService);
   protected readonly authService = inject(AuthService);
+  private readonly toastrService = inject(ToastrService);
 
   readonly documentTree = signal<TreeNode[]>([]);
   readonly currentPath = signal<TreeNode[]>([]);
@@ -31,6 +34,7 @@ export class DocumentExplorerComponent implements OnInit {
   readonly loading = signal<boolean>(false);
   readonly error = signal<string | null>(null);
   readonly viewMode = signal<'grid' | 'list'>('grid');
+  readonly activeEditNode = signal<TreeNode | null>(null);
 
   ngOnInit() {
     this.loadTree();
@@ -141,11 +145,12 @@ export class DocumentExplorerComponent implements OnInit {
       this.loading.set(true);
       this.processService.deleteS3Document(node.s3Key).subscribe({
         next: () => {
+          this.toastrService.success(`El archivo "${node.name}" ha sido eliminado.`, 'Documento Eliminado');
           this.loadTree();
         },
         error: (err) => {
           console.error('Error deleting document:', err);
-          alert('No se pudo eliminar el archivo.');
+          this.toastrService.error('No se pudo eliminar el archivo.', 'Error');
           this.loading.set(false);
         }
       });
@@ -193,5 +198,16 @@ export class DocumentExplorerComponent implements OnInit {
       case 'rar': return '📦';
       default: return '📄';
     }
+  }
+
+  openEditor(node: TreeNode) {
+    if (node.type === 'file') {
+      this.activeEditNode.set(node);
+    }
+  }
+
+  closeEditor() {
+    this.activeEditNode.set(null);
+    this.loadTree();
   }
 }

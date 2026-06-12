@@ -7,6 +7,7 @@ import { DiagramService } from '../../../../core/services/diagram.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CollaborationService } from '../../../../core/services/collaboration.service';
 import { ThemeService } from '../../../../core/services/theme.service';
+import { ToastrService } from '../../../../core/services/toastr.service';
 import { PaletteComponent } from '../../components/palette/palette.component';
 import { PropertiesComponent, CustomField } from '../../components/properties/properties.component';
 import { FinalNode } from '../../components/uml-shapes';
@@ -82,6 +83,7 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
   protected readonly authService = inject(AuthService);
   protected readonly collabService = inject(CollaborationService);
   protected readonly themeService = inject(ThemeService);
+  private readonly toastrService = inject(ToastrService);
 
   readonly activeTab = signal<'properties' | 'chat'>('properties');
 
@@ -479,7 +481,7 @@ export class DiagrammerEditorComponent implements OnInit, AfterViewInit, OnDestr
     this.paper.on('cell:pointerdown', (cellView: any, evt: any) => {
       const lock = this.collabService.activeLocks().get(cellView.model.id);
       if (lock) {
-        alert(`Este elemento está bloqueado por ${lock.username}`);
+        this.toastrService.warning(`Este elemento está bloqueado por ${lock.username}`, 'Elemento Bloqueado');
         evt.stopPropagation();
         return;
       }

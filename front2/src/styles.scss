@@ -1,7 +1,18 @@
 @import "jointjs/dist/joint.css";
+@import "quill/dist/quill.snow.css";
+@import "jspreadsheet-ce/dist/jspreadsheet.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Estilos para celdas bloqueadas en jSpreadsheet por otros colaboradores */
+.jexcel td.cell-locked,
+.jss td.cell-locked {
+  background-color: rgba(239, 68, 68, 0.08) !important;
+  border: 1.5px dashed rgba(239, 68, 68, 0.5) !important;
+  cursor: not-allowed !important;
+  color: #991b1b !important;
+}
 
 @layer base {
 
@@ -188,4 +199,157 @@
 .dark .joint-paper .lane-body {
   stroke: #818cf8 !important; /* Indigo 400 */
   fill: rgba(129, 140, 248, 0.015) !important;
+}
+
+/* ==========================================================================
+   Quill Editor Premium Dark Mode Overrides
+   ========================================================================== */
+.ql-toolbar.ql-snow {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-color: #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.dark .ql-toolbar.ql-snow {
+  border-color: #30363d;
+  background-color: #1f242c;
+}
+
+.ql-container.ql-snow {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-color: #e2e8f0;
+  font-family: inherit;
+  font-size: 13px;
+  height: 60vh;
+}
+
+.dark .ql-container.ql-snow {
+  border-color: #30363d;
+  background-color: #161b22;
+  color: #f0f6fc;
+}
+
+.ql-editor {
+  padding: 1.5rem;
+  line-height: 1.6;
+}
+
+.dark .ql-snow .ql-stroke {
+  stroke: #c9d1d9 !important;
+}
+
+.dark .ql-snow .ql-fill {
+  fill: #c9d1d9 !important;
+}
+
+.dark .ql-snow .ql-picker {
+  color: #c9d1d9 !important;
+}
+
+.dark .ql-snow .ql-picker-options {
+  background-color: #1f242c !important;
+  border-color: #30363d !important;
+}
+
+/* ==========================================================================
+   jSpreadsheet (jExcel) Premium Dark Mode Overrides
+   ========================================================================== */
+.jexcel, .jss {
+  font-family: inherit !important;
+  font-size: 12px !important;
+}
+
+.jexcel thead tr td,
+.jss thead tr td {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 8px 12px !important;
+}
+
+.dark .jexcel thead tr td,
+.dark .jss thead tr td {
+  background-color: #1f242c !important;
+  color: #8b949e !important;
+  border: 1px solid #30363d !important;
+}
+
+.jexcel tbody tr td,
+.jss tbody tr td {
+  border: 1px solid #e2e8f0 !important;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  padding: 6px 10px !important;
+}
+
+.dark .jexcel tbody tr td,
+.dark .jss tbody tr td {
+  border: 1px solid #30363d !important;
+  background-color: #161b22 !important;
+  color: #c9d1d9 !important;
+}
+
+.jexcel tbody tr td.readonly,
+.jss tbody tr td.readonly {
+  background-color: #f8fafc !important;
+  color: #64748b !important;
+}
+
+.dark .jexcel tbody tr td.readonly,
+.dark .jss tbody tr td.readonly {
+  background-color: rgba(22, 27, 34, 0.6) !important;
+  color: #57606a !important;
+}
+
+/* Editores (inputs y textareas de celdas en caliente) */
+.jexcel_editor,
+.jss_editor,
+.jexcel input,
+.jss input,
+.jexcel textarea,
+.jss textarea {
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+}
+
+.dark .jexcel_editor,
+.dark .jss_editor,
+.dark .jexcel input,
+.dark .jss input,
+.dark .jexcel textarea,
+.dark .jss textarea {
+  color: #c9d1d9 !important;
+  background-color: #1f242c !important;
+}
+
+.jexcel_highlight,
+.jss_highlight {
+  border: 2px solid #6366f1 !important;
+  background-color: rgba(99, 102, 241, 0.05) !important;
+}
+
+/* Barra de Gantt activa (celda con valor 'x', 'X' o '1') */
+.jexcel td.gantt-active,
+.jss td.gantt-active {
+  background-color: #22c55e !important; /* Verde esmeralda */
+  color: #22c55e !important;            /* Ocultar el texto pintándolo del mismo color */
+}
+
+/* Animación de deslizamiento lateral premium para Toastr */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }

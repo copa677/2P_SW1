@@ -30,12 +30,17 @@
     "@angular/router": "^20.3.0",
     "@stomp/stompjs": "^7.3.0",
     "backbone": "^1.6.1",
+    "docx": "^9.7.1",
     "jointjs": "^3.7.7",
     "jquery": "^4.0.0",
+    "jspreadsheet-ce": "^5.0.4",
     "lodash": "^4.18.1",
+    "mammoth": "^1.8.0",
+    "quill": "^2.0.3",
     "rxjs": "~7.8.0",
     "sockjs-client": "^1.6.1",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

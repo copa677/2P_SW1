@@ -75,8 +75,18 @@ export class ProcessExecutionService {
     return this.http.post<any>(`${environment.apiUrl}/documents/upload`, formData);
   }
 
+  updateDocument(s3Key: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.put<any>(`${environment.apiUrl}/documents/update?key=${encodeURIComponent(s3Key)}`, formData);
+  }
+
   getDocumentDownloadUrl(s3Key: string): string {
     return `${environment.apiUrl}/documents/download?key=${encodeURIComponent(s3Key)}`;
+  }
+
+  getDocumentContentUrl(s3Key: string): string {
+    return `${environment.apiUrl}/documents/content?key=${encodeURIComponent(s3Key)}`;
   }
 
   getS3DocumentTree(): Observable<any[]> {

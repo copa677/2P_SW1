@@ -7,7 +7,7 @@
         Asignación de Responsabilidades por Calle (Swimlanes)
       </h2>
       <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-        Asigna funcionarios a las diferentes calles de tus flujos de negocio. Las calles de tipo "Cliente" se resolverán dinámicamente.
+        Asigna funcionarios y clientes a las diferentes calles de tus flujos de negocio.
       </p>
     </div>
   </div>
@@ -74,19 +74,25 @@
                   <!-- Campo de Selección -->
                   <div>
                     @if (isClientLane(lane.nombre)) {
-                      <div class="text-[11px] text-teal-600 dark:text-teal-400 bg-teal-500/5 dark:bg-teal-950/10 border border-teal-500/10 rounded-xl p-2.5 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 shrink-0">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Asignación automática al cliente iniciador</span>
-                      </div>
+                      <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1 uppercase">
+                        Cliente Responsable
+                      </label>
+                      <select 
+                        [(ngModel)]="currentAssignments()[lane.id]"
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-950 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 focus:outline-none transition-all"
+                      >
+                        <option value="">-- Seleccionar Cliente --</option>
+                        @for (user of clients(); track user.id) {
+                          <option [value]="user.id">{{ user.nombres }} {{ user.apellidos }} ({{ user.correo }})</option>
+                        }
+                      </select>
                     } @else {
                       <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1 uppercase">
                         Funcionario Responsable
                       </label>
                       <select 
                         [(ngModel)]="currentAssignments()[lane.id]"
-                        class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-950 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 focus:outline-none transition-all"
+                        class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-plomo-border bg-white dark:bg-plomo-card text-slate-955 dark:text-white text-xs focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 focus:outline-none transition-all"
                       >
                         <option value="">-- Seleccionar Funcionario --</option>
                         @for (user of officials(); track user.id) {
